@@ -1,0 +1,16 @@
+{
+  "name": "KYOEI IT技術者育成プログラム",
+  "short_name": "IT育成",
+  "description": "KYOEI IT事業部の技術者育成eラーニング",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1E2A47",
+  "theme_color": "#1E2A47",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
