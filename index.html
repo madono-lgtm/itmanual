@@ -18,60 +18,33 @@ html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 body{
   font-family:'Zen Kaku Gothic New',system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
-  background:var(--paper); color:var(--ink); line-height:1.65; font-size:15px;
+  background:var(--paper); color:var(--ink); line-height:1.7; font-size:15px;
   padding-bottom:calc(76px + env(safe-area-inset-bottom));
 }
 .wrap{max-width:760px;margin:0 auto;padding:0 16px}
-
-/* ---------- header ---------- */
-header{
-  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-deep) 100%);
-  color:#fff;padding:18px 0 20px;position:relative;overflow:hidden;
-}
-header::after{ /* 塗装ローラーの帯 */
-  content:"";position:absolute;right:-40px;top:-30px;width:180px;height:180px;
-  background:var(--orange);opacity:.12;border-radius:24px;transform:rotate(18deg);
-}
+header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-deep) 100%);color:#fff;padding:18px 0 20px;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;right:-40px;top:-30px;width:180px;height:180px;background:var(--orange);opacity:.12;border-radius:24px;transform:rotate(18deg)}
 .brand{font-size:11px;letter-spacing:.18em;color:#B7C0D6;font-weight:700}
 h1{font-size:20px;font-weight:900;letter-spacing:.02em;margin-top:2px}
 .sub{font-size:12px;color:#B7C0D6;margin-top:2px}
-
-/* ---------- signature: paint progress ---------- */
 .paint{position:relative;height:18px;background:#2A3757;border-radius:10px;overflow:hidden;margin-top:14px}
-.paint-fill{
-  height:100%;background:linear-gradient(90deg,#F08519,#F6A24C);
-  border-radius:10px 6px 12px 4px; position:relative; transition:width .6s cubic-bezier(.22,1,.36,1);
-  min-width:0;
-}
-.paint-fill::after{ /* ローラーの塗り終わり(かすれ) */
-  content:"";position:absolute;right:-6px;top:0;width:12px;height:100%;
-  background:radial-gradient(circle at 30% 30%,#F6A24C 55%,transparent 56%),
-             radial-gradient(circle at 40% 75%,#F08519 45%,transparent 46%);
-  opacity:.9;
-}
+.paint-fill{height:100%;background:linear-gradient(90deg,#F08519,#F6A24C);border-radius:10px 6px 12px 4px;position:relative;transition:width .6s cubic-bezier(.22,1,.36,1);min-width:0}
+.paint-fill::after{content:"";position:absolute;right:-6px;top:0;width:12px;height:100%;background:radial-gradient(circle at 30% 30%,#F6A24C 55%,transparent 56%),radial-gradient(circle at 40% 75%,#F08519 45%,transparent 46%);opacity:.9}
 .paint-label{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;font-size:12px;color:#B7C0D6}
 .paint-label b{font-family:var(--mono);font-size:16px;color:#fff}
-
-/* ---------- tabs ---------- */
-nav{
-  position:fixed;bottom:0;left:0;right:0;z-index:50;
-  background:#fff;border-top:1px solid var(--line);
-  padding-bottom:env(safe-area-inset-bottom);
-}
+.user-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.user-badge{background:rgba(255,255,255,.12);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;color:#fff}
+.user-switch{appearance:none;border:0;background:none;color:#B7C0D6;font-family:inherit;font-size:11px;cursor:pointer;text-decoration:underline}
+.sync{font-size:10.5px;color:#B7C0D6;margin-left:auto}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
 .tabs{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
-.tab{
-  appearance:none;border:0;background:none;cursor:pointer;
-  padding:9px 2px 8px;text-align:center;color:var(--muted);
-  font-family:inherit;font-size:10.5px;font-weight:700;letter-spacing:.02em;
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-}
+.tabs.six{grid-template-columns:repeat(6,1fr)}
+.tab{appearance:none;border:0;background:none;cursor:pointer;padding:9px 2px 8px;text-align:center;color:var(--muted);font-family:inherit;font-size:10.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px}
 .tab .ic{width:22px;height:22px;display:block}
 .tab.on{color:var(--navy)}
 .tab.on .bar{width:18px;height:3px;border-radius:2px;background:var(--orange);margin-top:2px}
 .tab .bar{width:18px;height:3px;margin-top:2px}
 .tab:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:8px}
-
-/* ---------- cards & common ---------- */
 main{padding-top:18px}
 section.page{display:none}
 section.page.on{display:block;animation:fade .25s ease}
@@ -80,111 +53,110 @@ section.page.on{display:block;animation:fade .25s ease}
 .card h2{font-size:15px;font-weight:900;color:var(--navy);display:flex;align-items:center;gap:8px}
 .eyebrow{font-size:10.5px;letter-spacing:.14em;color:var(--orange);font-weight:900}
 .small{font-size:12.5px;color:var(--muted)}
-.btn{
-  appearance:none;border:0;cursor:pointer;font-family:inherit;font-weight:700;
-  background:var(--navy);color:#fff;border-radius:10px;padding:10px 16px;font-size:13.5px;
-}
+.btn{appearance:none;border:0;cursor:pointer;font-family:inherit;font-weight:700;background:var(--navy);color:#fff;border-radius:10px;padding:12px 16px;font-size:14px}
 .btn.ghost{background:#EEF1F6;color:var(--navy)}
+.btn.org{background:var(--orange)}
+.btn:disabled{opacity:.45;cursor:default}
 .btn:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
-.chip{
-  display:inline-block;background:var(--orange-soft);color:#9A5A10;border-radius:999px;
-  padding:2px 10px;font-size:11.5px;font-weight:700;margin:2px 4px 2px 0;cursor:pointer;border:0;font-family:inherit;
-}
+.chip{display:inline-block;background:var(--orange-soft);color:#9A5A10;border-radius:999px;padding:2px 10px;font-size:11.5px;font-weight:700;margin:2px 4px 2px 0;cursor:pointer;border:0;font-family:inherit}
 .chip:focus-visible{outline:2px solid var(--orange);outline-offset:1px}
 .tag{display:inline-block;background:#EEF1F6;color:var(--navy);border-radius:6px;padding:1px 8px;font-size:11px;font-weight:700}
-
-/* ---------- home ---------- */
 .phasebar{display:flex;align-items:center;gap:10px;margin:10px 0}
-.phasebar .nm{width:118px;font-size:12px;font-weight:700;color:var(--navy);flex:none}
+.phasebar .nm{width:130px;font-size:12px;font-weight:700;color:var(--navy);flex:none}
 .phasebar .tr{flex:1;height:10px;background:#EDF0F5;border-radius:6px;overflow:hidden}
 .phasebar .fl{height:100%;background:linear-gradient(90deg,#F08519,#F6A24C);border-radius:6px 3px 6px 2px;transition:width .5s ease}
 .phasebar .pc{font-family:var(--mono);font-size:11.5px;color:var(--muted);width:42px;text-align:right;flex:none}
-.banner{
-  background:var(--red-soft);border:1px solid #F0C9C6;border-radius:var(--radius);
-  padding:14px 16px;margin-bottom:14px;
-}
+.banner{background:var(--red-soft);border:1px solid #F0C9C6;border-radius:var(--radius);padding:14px 16px;margin-bottom:14px}
 .banner b{color:var(--red)}
 .banner ol{margin:6px 0 0 18px;font-size:13px}
-
-/* ---------- curriculum ---------- */
-.phase{border:1px solid var(--line);border-radius:var(--radius);background:#fff;margin-bottom:12px;overflow:hidden}
-.phase-h{
-  width:100%;appearance:none;border:0;background:#fff;cursor:pointer;font-family:inherit;text-align:left;
-  display:flex;align-items:center;gap:12px;padding:14px 14px;
-}
-.phase-h:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
-.phase-no{
-  flex:none;width:44px;height:44px;border-radius:10px;background:var(--navy);color:#fff;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;
-}
-.phase-no .k{font-size:8.5px;letter-spacing:.1em;color:#B7C0D6;font-weight:700}
-.phase-no .n{font-family:var(--mono);font-size:17px;font-weight:600}
-.phase-t{flex:1;min-width:0}
-.phase-t .t{font-size:14.5px;font-weight:900;color:var(--navy)}
-.phase-t .w{font-size:11.5px;color:var(--muted)}
-.phase-h .arw{flex:none;color:var(--muted);transition:transform .2s}
-.phase.open .arw{transform:rotate(180deg)}
-.phase-body{display:none;border-top:1px solid var(--line);padding:12px 14px 14px;background:#FBFCFB}
-.phase.open .phase-body{display:block}
-.goal{background:var(--orange-soft);border-radius:10px;padding:10px 12px;font-size:12.5px;color:#7A4A0E;margin-bottom:12px}
-.goal b{color:#9A5A10}
-.week{margin-bottom:14px}
-.week-h{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.week-h .wk{font-family:var(--mono);font-size:11px;font-weight:600;background:var(--navy);color:#fff;border-radius:6px;padding:2px 8px}
-.week-h .wt{font-size:13px;font-weight:900;color:var(--navy)}
-.day{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px}
-.day.done{border-color:#BFE3D2;background:var(--green-soft)}
-.day-h{display:flex;align-items:baseline;gap:8px}
-.day-h .dd{font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--orange);flex:none}
-.day-h .dt{font-size:13.5px;font-weight:700;color:var(--ink)}
-.day-g{font-size:12px;color:var(--muted);margin:3px 0 8px}
+/* course & lesson list */
+.course{border:1px solid var(--line);border-radius:var(--radius);background:#fff;margin-bottom:12px;overflow:hidden}
+.course-h{width:100%;appearance:none;border:0;background:#fff;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:12px;padding:14px}
+.course-h:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
+.course-no{flex:none;width:46px;height:46px;border-radius:12px;background:var(--navy);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.course-no .k{font-size:8px;letter-spacing:.1em;color:#B7C0D6;font-weight:700}
+.course-no .n{font-family:var(--mono);font-size:18px;font-weight:600}
+.course.locked .course-no{background:#B9C0D2}
+.course-t{flex:1;min-width:0}
+.course-t .t{font-size:14.5px;font-weight:900;color:var(--navy)}
+.course-t .d{font-size:11.5px;color:var(--muted)}
+.course-h .arw{flex:none;color:var(--muted);transition:transform .2s}
+.course.open .arw{transform:rotate(180deg)}
+.course-body{display:none;border-top:1px solid var(--line);background:#FBFCFB;padding:10px 14px 14px}
+.course.open .course-body{display:block}
+.lesson{width:100%;appearance:none;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;margin-top:8px;display:flex;align-items:center;gap:11px;font-family:inherit;text-align:left;cursor:pointer}
+.lesson:focus-visible{outline:2px solid var(--orange)}
+.lesson .st{flex:none;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:#EEF1F6;color:var(--muted);font-family:var(--mono)}
+.lesson.done .st{background:var(--green-soft);color:var(--green)}
+.lesson.next .st{background:var(--orange-soft);color:#9A5A10}
+.lesson.lock{opacity:.45;cursor:not-allowed}
+.lesson .li{flex:1;min-width:0}
+.lesson .lt{font-size:13.5px;font-weight:700;color:var(--ink)}
+.lesson .lm{font-size:11px;color:var(--muted)}
+/* lesson sheet */
+.sheet{position:fixed;inset:0;background:var(--paper);z-index:120;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sheet.on{display:block}
+.sheet-h{position:sticky;top:0;z-index:5;background:var(--navy);color:#fff;display:flex;align-items:center;gap:10px;padding:12px 14px;padding-top:calc(12px + env(safe-area-inset-top))}
+.sheet-h .back{appearance:none;border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:9px;padding:7px 12px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;flex:none}
+.sheet-h .ti{font-size:14px;font-weight:900;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sheet-c{max-width:760px;margin:0 auto;padding:16px 16px calc(40px + env(safe-area-inset-bottom))}
+.lesson-body h3{font-size:15px;font-weight:900;color:var(--navy);margin:20px 0 8px;padding-left:10px;border-left:4px solid var(--orange)}
+.lesson-body h3:first-child{margin-top:4px}
+.lesson-body p{font-size:14px;margin-bottom:10px}
+.lesson-body ul{margin:0 0 10px 20px;font-size:14px}
+.lesson-body li{margin-bottom:4px}
+.pointbox{background:var(--orange-soft);border-radius:10px;padding:12px 14px;font-size:13.5px;color:#7A4A0E;margin:10px 0}
+.pointbox b{color:#9A5A10}
+.exbox{background:#1B2440;color:#DDE3F0;border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.7;margin:10px 0;font-family:var(--mono);white-space:pre-wrap;word-break:break-word}
+.exlabel{display:inline-block;border-radius:6px;padding:1px 9px;font-size:11px;font-weight:900;margin-bottom:4px}
+.exlabel.bad{background:var(--red-soft);color:var(--red)}
+.exlabel.good{background:var(--green-soft);color:var(--green)}
+.taskbox{background:#fff;border:1px dashed var(--orange);border-radius:12px;padding:12px 14px;margin:14px 0}
+.taskbox .tt{font-size:13px;font-weight:900;color:var(--orange);margin-bottom:6px}
 .task{display:flex;gap:9px;align-items:flex-start;padding:5px 0;cursor:pointer}
-.task input{margin-top:3px;width:17px;height:17px;accent-color:var(--orange);flex:none;cursor:pointer}
-.task span{font-size:13px}
+.task input{margin-top:4px;width:18px;height:18px;accent-color:var(--orange);flex:none;cursor:pointer}
+.task span{font-size:13.5px}
 .task input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:#C8CDD9}
-.terms-row{margin-top:6px;padding-top:8px;border-top:1px dashed var(--line)}
-.terms-row .lb{font-size:10.5px;color:var(--muted);font-weight:700;margin-right:4px}
-.exam{background:var(--navy);color:#fff;border-radius:12px;padding:14px;margin-top:4px}
-.exam .et{font-weight:900;font-size:13.5px;display:flex;align-items:center;gap:8px}
-.exam .et .pt{font-family:var(--mono);font-size:11px;background:var(--orange);border-radius:6px;padding:1px 8px}
-.exam ul{margin:8px 0 0 18px;font-size:12.5px;color:#D7DDEA}
-.exam .ps{margin-top:8px;font-size:11.5px;color:#F6A24C;font-weight:700}
-
-/* ---------- glossary ---------- */
-.search{
-  width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:14px;
-  background:#fff;margin-bottom:10px;color:var(--ink);
-}
+.terms-row{margin:12px 0}
+.terms-row .lb{font-size:11px;color:var(--muted);font-weight:700;margin-right:4px}
+/* quiz */
+.quiz-intro{background:var(--navy);color:#fff;border-radius:12px;padding:14px;margin-top:18px}
+.quiz-intro .t{font-weight:900;font-size:14px}
+.quiz-intro .d{font-size:12px;color:#C9D2E4;margin-top:2px}
+.qcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px}
+.qcard .qq{font-size:14px;font-weight:700;margin-bottom:10px}
+.qcard .qq .qn{color:var(--orange);font-family:var(--mono);font-size:12px;margin-right:6px}
+.opt{width:100%;appearance:none;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:11px 13px;font-family:inherit;font-size:13.5px;text-align:left;cursor:pointer;margin-bottom:8px;color:var(--ink)}
+.opt.sel{border-color:var(--orange);background:var(--orange-soft)}
+.opt.correct{border-color:var(--green);background:var(--green-soft)}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt:disabled{cursor:default}
+.qexp{display:none;font-size:12.5px;color:var(--muted);background:#F3F5F9;border-radius:8px;padding:8px 11px;margin-top:2px}
+.qexp.show{display:block}
+.result{border-radius:12px;padding:16px;margin-top:14px;text-align:center;display:none}
+.result.pass{display:block;background:var(--green-soft);border:1px solid #BFE3D2}
+.result.fail{display:block;background:var(--red-soft);border:1px solid #F0C9C6}
+.result .rt{font-size:17px;font-weight:900}
+.result.pass .rt{color:var(--green)}
+.result.fail .rt{color:var(--red)}
+.result .rd{font-size:12.5px;color:var(--muted);margin-top:4px}
+/* glossary / templates / login / admin */
+.search{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:14px;background:#fff;margin-bottom:10px;color:var(--ink)}
 .search:focus{outline:2px solid var(--orange);border-color:transparent}
 .cats{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px;-webkit-overflow-scrolling:touch}
-.cat{
-  flex:none;appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;
-  padding:5px 13px;font-family:inherit;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;
-}
+.cat{flex:none;appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;font-family:inherit;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer}
 .cat.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-.cat:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 .term{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
 .term .tt{font-weight:900;color:var(--navy);font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .term .td{font-size:13px;margin-top:4px;color:#3A415A}
 .noresult{text-align:center;color:var(--muted);padding:30px 0;font-size:13px}
-
-/* ---------- templates ---------- */
 .tpl{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;overflow:hidden}
 .tpl-h{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;gap:10px}
 .tpl-h .t{font-weight:900;color:var(--navy);font-size:14px}
 .tpl-h .d{font-size:11.5px;color:var(--muted)}
-.copy{
-  flex:none;appearance:none;border:0;background:var(--orange);color:#fff;font-family:inherit;font-weight:700;
-  border-radius:9px;padding:7px 14px;font-size:12.5px;cursor:pointer;
-}
+.copy{flex:none;appearance:none;border:0;background:var(--orange);color:#fff;font-family:inherit;font-weight:700;border-radius:9px;padding:7px 14px;font-size:12.5px;cursor:pointer}
 .copy.ok{background:var(--green)}
-.copy:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
-.tpl pre{
-  background:#1B2440;color:#DDE3F0;font-size:12px;line-height:1.6;padding:14px;overflow-x:auto;
-  font-family:var(--mono);white-space:pre-wrap;word-break:break-word;
-}
-
-/* ---------- rules ---------- */
+.tpl pre{background:#1B2440;color:#DDE3F0;font-size:12px;line-height:1.6;padding:14px;overflow-x:auto;font-family:var(--mono);white-space:pre-wrap;word-break:break-word}
 .rule{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}
 .rule:last-child{border-bottom:0}
 .rule .no{flex:none;font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;background:var(--navy);width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin-top:2px}
@@ -192,45 +164,24 @@ section.page.on{display:block;animation:fade .25s ease}
 .rule p{font-size:13.5px}
 .rule p b{color:var(--navy)}
 .rule.bad p b{color:var(--red)}
-.flow{counter-reset:st;margin-top:8px}
-.flow li{list-style:none;position:relative;padding:0 0 14px 34px;font-size:13px}
-.flow li::before{
-  counter-increment:st;content:counter(st);position:absolute;left:0;top:0;
-  width:22px;height:22px;border-radius:50%;background:var(--orange);color:#fff;
-  font-family:var(--mono);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;
-}
-.flow li:not(:last-child)::after{content:"";position:absolute;left:10.5px;top:24px;bottom:2px;width:1.5px;background:var(--line)}
-
-/* ---------- modal ---------- */
-.modal-bg{position:fixed;inset:0;background:rgba(20,30,56,.55);z-index:90;display:none;align-items:flex-end;justify-content:center}
+.modal-bg{position:fixed;inset:0;background:rgba(20,30,56,.55);z-index:150;display:none;align-items:flex-end;justify-content:center}
 .modal-bg.on{display:flex}
-.modal{
-  background:#fff;border-radius:18px 18px 0 0;width:100%;max-width:760px;padding:20px 18px calc(20px + env(safe-area-inset-bottom));
-  animation:up .25s cubic-bezier(.22,1,.36,1);
-}
+.modal{background:#fff;border-radius:18px 18px 0 0;width:100%;max-width:760px;padding:20px 18px calc(20px + env(safe-area-inset-bottom));animation:up .25s cubic-bezier(.22,1,.36,1)}
 @keyframes up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
 .modal .mt{font-weight:900;color:var(--navy);font-size:16px}
 .modal .mc{font-size:11px;margin-left:8px}
 .modal .md{font-size:14px;margin-top:8px;color:#3A415A}
 .modal .close{margin-top:16px;width:100%}
-.storage-note{font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
-
-/* ---------- login ---------- */
 .login-bg{position:fixed;inset:0;background:linear-gradient(160deg,var(--navy),var(--navy-deep));z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
 .login{background:#fff;border-radius:18px;width:100%;max-width:400px;padding:24px 20px}
 .login .lg-brand{font-size:10px;letter-spacing:.18em;color:var(--orange);font-weight:900}
 .login .lg-t{font-size:18px;font-weight:900;color:var(--navy);margin:2px 0 12px}
 .userbtn{display:flex;align-items:center;gap:10px;width:100%;appearance:none;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer;margin-bottom:8px;text-align:left}
 .userbtn .av{flex:none;width:34px;height:34px;border-radius:50%;background:var(--orange-soft);color:#9A5A10;display:flex;align-items:center;justify-content:center;font-weight:900}
-.userbtn:focus-visible{outline:2px solid var(--orange)}
-.user-row{display:flex;align-items:center;gap:8px;margin-top:10px}
-.user-badge{background:rgba(255,255,255,.12);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;color:#fff}
-.user-switch{appearance:none;border:0;background:none;color:#B7C0D6;font-family:inherit;font-size:11px;cursor:pointer;text-decoration:underline}
-.sync{font-size:10.5px;color:#B7C0D6;margin-left:auto}
-.tabs.six{grid-template-columns:repeat(6,1fr)}
 .au-row{display:flex;gap:8px;margin-top:8px}
 .au-row input,.au-row select{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:14px;background:#fff;min-width:0;color:var(--ink)}
 .admin-user{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.storage-note{font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -240,16 +191,15 @@ section.page.on{display:block;animation:fade .25s ease}
   <div class="wrap">
     <div class="brand">KYOEI IT DIVISION</div>
     <h1>IT技術者育成プログラム</h1>
-    <div class="sub">6ヶ月で「AI活用 → CraftFile開発補佐」へ</div>
+    <div class="sub">6コースで「AI基礎 → 3大AI徹底 → Web制作 → 社内システム開発」へ</div>
     <div class="paint"><div class="paint-fill" id="paintAll" style="width:0%"></div></div>
-    <div class="paint-label"><span>全体進捗(タスク完了率)</span><b id="pctAll">0%</b></div>
+    <div class="paint-label"><span>全体進捗(合格レッスン率)</span><b id="pctAll">0%</b></div>
     <div class="user-row"><span class="user-badge" id="userName">—</span><button class="user-switch" id="switchUser">ユーザー切替</button><span class="sync" id="syncState"></span></div>
   </div>
 </header>
 
 <main class="wrap">
 
-<!-- ================= HOME ================= -->
 <section class="page on" id="pg-home">
   <div class="banner">
     <b>⚠ 三大禁止事項(毎日見る)</b>
@@ -259,45 +209,39 @@ section.page.on{display:block;animation:fade .25s ease}
       <li>--force系・履歴改変コマンドを使わない</li>
     </ol>
   </div>
-
   <div class="card">
     <div class="eyebrow">PROGRESS</div>
-    <h2>フェーズ別の塗り進み</h2>
+    <h2>コース別の塗り進み</h2>
     <div id="phaseBars" style="margin-top:8px"></div>
-    <button class="btn" id="resumeBtn" style="margin-top:10px;width:100%">▶ 続きから研修をひらく</button>
+    <button class="btn org" id="resumeBtn" style="margin-top:10px;width:100%">▶ 次のレッスンをはじめる</button>
+    <button class="btn ghost" id="reviewBtn" style="margin-top:8px;width:100%">🔁 復習クイズ(合格済みからランダム10問)</button>
     <div class="storage-note" id="storageNote"></div>
   </div>
-
+  <div class="card">
+    <div class="eyebrow">HOW IT WORKS</div>
+    <h2>進め方</h2>
+    <p class="small" style="margin-top:4px">①教材を読む → ②実践課題(実技)を全部やってチェック → ③確認テストで全問正解 → 知識と実技の両方そろって合格、次のレッスンが解放される。<br>合格した問題はホームの「復習クイズ」にランダムで出てくる。反復して満点を維持できてこそ定着や。分からん用語はレッスン内のオレンジのチップか用語集タブで調べる。それでも詰まったら質疑提出シート(テンプレタブ)で真殿さんへ。</p>
+  </div>
   <div class="card">
     <div class="eyebrow">TODAY'S WORDS</div>
     <h2>今日の用語 3つ</h2>
-    <p class="small">タップで意味を表示。毎日3つずつ覚えたら半年で全部いける。</p>
     <div id="todayTerms" style="margin-top:8px"></div>
   </div>
-
-  <div class="card">
-    <div class="eyebrow">HOW TO ASK</div>
-    <h2>質問のしかた(AI資料化方式)</h2>
-    <p class="small" style="margin-top:4px">質問はチャットの単発ではなく、AIで調べて「質疑提出シート」にまとめて真殿さんへ提出する。シートのテンプレは「テンプレ」タブにある。<br>※本番影響のある操作・緊急事態・体調の相談だけは即・直接声かけでOK。</p>
-  </div>
 </section>
 
-<!-- ================= CURRICULUM ================= -->
 <section class="page" id="pg-curr">
   <div class="card" style="padding:12px 16px">
-    <p class="small">各Phaseをひらいて、終わったタスクにチェック。チェックはこの端末に保存される。<span style="color:var(--orange);font-weight:700">オレンジのチップ</span>はその日の新出用語(タップで意味)。</p>
+    <p class="small">コースを開いてレッスンをタップ。<b style="color:var(--green)">✓</b>=合格済み、<b style="color:#9A5A10">▶</b>=次にやるレッスン、鍵付きはまだ解放されてへん。</p>
   </div>
-  <div id="phases"></div>
+  <div id="courses"></div>
 </section>
 
-<!-- ================= GLOSSARY ================= -->
 <section class="page" id="pg-terms">
   <input class="search" id="q" type="search" placeholder="用語をさがす(例:コミット、Flexbox)" aria-label="用語検索">
   <div class="cats" id="cats"></div>
   <div id="termList"></div>
 </section>
 
-<!-- ================= TEMPLATES ================= -->
 <section class="page" id="pg-tpl">
   <div class="card" style="padding:12px 16px">
     <p class="small">よく使う型の置き場。「コピー」で全文コピーして、AIやチャットに貼って使う。</p>
@@ -305,7 +249,6 @@ section.page.on{display:block;animation:fade .25s ease}
   <div id="tpls"></div>
 </section>
 
-<!-- ================= RULES ================= -->
 <section class="page" id="pg-rules">
   <div class="card">
     <div class="eyebrow" style="color:var(--red)">FORBIDDEN</div>
@@ -316,7 +259,6 @@ section.page.on{display:block;animation:fade .25s ease}
       <div class="rule bad"><div class="no">3</div><p><b>--force系・履歴改変コマンドを使わない。</b>push --force / reset --hard(共有ブランチ)/ rebase(共有ブランチ)は真殿さん同席時のみ。</p></div>
     </div>
   </div>
-
   <div class="card">
     <div class="eyebrow">CRAFTFILE RULES</div>
     <h2>開発ルール 7ヶ条</h2>
@@ -330,19 +272,11 @@ section.page.on{display:block;animation:fade .25s ease}
       <div class="rule"><div class="no">7</div><p><b>タップターゲットは44px以上</b>。スマホで押しやすいことを実機で確認</p></div>
     </div>
   </div>
-
   <div class="card">
     <div class="eyebrow">QUESTION FLOW</div>
     <h2>質疑ルール(AI資料化方式)</h2>
-    <ol class="flow" style="margin-top:10px">
-      <li>詰まったら、まず<b>15分は自力で調べる</b>(AIに状況・やったこと・エラー全文・期待する結果をセットで渡す)</li>
-      <li>解決しなければ、AIを使って<b>質疑提出シート</b>を作る(テンプレタブにある)</li>
-      <li>真殿さんに提出 → 回答・赤入れをもらう</li>
-      <li>回答を自分の<b>ナレッジベースに反映</b>して完結(同じシートを2回作らない)</li>
-    </ol>
-    <div class="goal" style="margin-top:6px"><b>例外(すぐ直接声かけてOK):</b>①本番に影響しうる操作(git push・DB操作・削除系)の実行判断 ②お客様・納期の緊急事態 ③体調・メンタルの相談</div>
+    <p class="small" style="margin-top:6px">①まず15分は自力で調べる(AIに状況・やったこと・エラー全文・期待する結果をセットで渡す)→ ②解決しなければAIで質疑提出シートを作成(テンプレタブ)→ ③真殿さんに提出 → ④回答をナレッジベースに反映。<br><b style="color:var(--red)">例外(即・直接声かけOK):</b>本番影響のある操作の実行判断/お客様・納期の緊急事態/体調・メンタルの相談。</p>
   </div>
-
   <div class="card">
     <div class="eyebrow">BRAND</div>
     <h2>KYOEIブランドカラー</h2>
@@ -355,7 +289,6 @@ section.page.on{display:block;animation:fade .25s ease}
   </div>
 </section>
 
-<!-- ================= ADMIN ================= -->
 <section class="page" id="pg-admin">
   <div class="card">
     <div class="eyebrow">TEAM</div>
@@ -382,8 +315,13 @@ section.page.on{display:block;animation:fade .25s ease}
 
 </main>
 
+<div class="sheet" id="lessonSheet">
+  <div class="sheet-h"><button class="back" id="sheetBack">← もどる</button><div class="ti" id="sheetTitle"></div></div>
+  <div class="sheet-c" id="sheetBody"></div>
+</div>
+
 <nav aria-label="メインメニュー">
-  <div class="tabs">
+  <div class="tabs" id="tabBar">
     <button class="tab on" data-pg="home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v9a2 2 0 01-2 2h-4v-7h-6v7H5a2 2 0 01-2-2z"/></svg>ホーム<div class="bar"></div></button>
     <button class="tab" data-pg="curr"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M21 12v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h11"/></svg>研修<div class="bar"></div></button>
     <button class="tab" data-pg="terms"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>用語集<div class="bar"></div></button>
@@ -404,7 +342,7 @@ section.page.on{display:block;animation:fade .25s ease}
 <div class="login-bg" id="loginBg" style="display:none">
   <div class="login">
     <div class="lg-brand">KYOEI IT DIVISION</div>
-    <div class="lg-t">研修アプリにログイン</div>
+    <div class="lg-t">育成プログラムにログイン</div>
     <div id="loginStep1">
       <p class="small" style="margin-bottom:8px">自分の名前を選んでください</p>
       <div id="loginUsers"></div>
@@ -420,7 +358,15 @@ section.page.on{display:block;animation:fade .25s ease}
 </div>
 
 <script>
-/* ================= 安全ストレージ(localStorageが使えない環境でも動く) ================= */
+/* ================= Supabase設定 ================= */
+const SUPABASE_CONFIG = {
+  url: "https://kggzjdhmcsykgaxltvck.supabase.co",
+  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZ3pqZGhtY3N5a2dheGx0dmNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ1MzM5NzUsImV4cCI6MjEwMDEwOTk3NX0.au0JS8JFubi4F9Xk9SgnEf8zRFVBGF7vG3lFVzfdTJQ"
+};
+const sb = (SUPABASE_CONFIG.url && SUPABASE_CONFIG.anonKey && window.supabase)
+  ? window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey) : null;
+
+/* ================= 安全ストレージ ================= */
 const store = (() => {
   let mem = {}; let persistent = true;
   try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }
@@ -431,18 +377,10 @@ const store = (() => {
     set(k,v){ try { if(persistent){ localStorage.setItem(k,v); return; } } catch(e){} mem[k]=v; }
   };
 })();
-/* ================= Supabase設定(真殿さん:ここを書き換える) ================= */
-const SUPABASE_CONFIG = {
-  url: "https://kggzjdhmcsykgaxltvck.supabase.co",
-  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZ3pqZGhtY3N5a2dheGx0dmNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ1MzM5NzUsImV4cCI6MjEwMDEwOTk3NX0.au0JS8JFubi4F9Xk9SgnEf8zRFVBGF7vG3lFVzfdTJQ"
-};
-const sb = (SUPABASE_CONFIG.url && SUPABASE_CONFIG.anonKey && window.supabase)
-  ? window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey)
-  : null;
 
-/* ================= ユーザー別進捗(ローカルキャッシュ+クラウド同期) ================= */
-let currentUser = null;   // {id, name, role}
-let progress = {};        // {taskId: 1}
+/* ================= ユーザー別進捗 ================= */
+let currentUser = null;
+let progress = {};   // {"c1-01":1, "c1-01:t0":1, ...}  レッスン合格 と 課題チェック
 let syncTimer = null;
 
 function isDone(id){ return progress[id] === 1; }
@@ -450,11 +388,10 @@ function setDone(id, v){ if(v) progress[id] = 1; else delete progress[id]; cache
 function cacheKey(){ return 'prog:' + (currentUser ? currentUser.id : 'local'); }
 function cacheLocal(){ store.set(cacheKey(), JSON.stringify(progress)); }
 function loadLocal(){ try{ progress = JSON.parse(store.get(cacheKey()) || '{}'); }catch(e){ progress = {}; } }
-function setSync(t){ const el = document.getElementById('syncState'); if(el) el.textContent = t; }
+function setSync(t){ const el=document.getElementById('syncState'); if(el) el.textContent=t; }
 function scheduleSync(){
   if(!sb || !currentUser) return;
-  setSync('保存待ち…');
-  clearTimeout(syncTimer);
+  setSync('保存待ち…'); clearTimeout(syncTimer);
   syncTimer = setTimeout(pushSync, 800);
 }
 async function pushSync(){
@@ -527,7 +464,7 @@ const TERMS = [
 ["Web基礎","API","プログラム同士がデータをやり取りする窓口。「天気APIを叩く」=天気データをもらいに行く。"],
 ["Web基礎","fetch","JavaScriptからAPIにデータを取りに行く命令。"],
 ["Web基礎","非同期処理","時間のかかる処理(通信など)を「待っている間に他をやる」仕組み。async/awaitで扱う。"],
-["Web基礎","LocalStorage","ブラウザの中にデータを保存できる小さな倉庫。ページを閉じても残る。このアプリのチェック保存もこれ。"],
+["Web基礎","LocalStorage","ブラウザの中にデータを保存できる小さな倉庫。ページを閉じても残る。"],
 ["Web基礎","モーダル","画面の上にかぶさる小窓。確認や入力フォームでよく使う。"],
 ["Web基礎","バリデーション","入力チェック。「メール形式が正しいか」「必須が空でないか」を確認する処理。"],
 ["Web基礎","デバッグ","バグの原因を探して直す作業。エラー文を読む→切り分ける→直す、の繰り返し。"],
@@ -535,7 +472,7 @@ const TERMS = [
 ["Git・環境","拡張機能","VSCodeに後付けする便利機能。スマホのアプリみたいなもの。"],
 ["Git・環境","ターミナル","文字(コマンド)でパソコンに指示を出す画面。開発では必須。"],
 ["Git・環境","コマンド","ターミナルに打つ命令文。ls(一覧)、cd(移動)など。"],
-["Git・環境","パス","ファイルの住所。/Users/kataoka/Desktop/test.html のように場所を表す。"],
+["Git・環境","パス","ファイルの住所。/Users/name/Desktop/test.html のように場所を表す。"],
 ["Git・環境","Node.js","パソコン上でJavaScriptを動かす土台。Next.jsもこの上で動く。"],
 ["Git・環境","npm","Node.jsの部品を取ってくる道具。npm install で必要な部品を一括ダウンロード。"],
 ["Git・環境","node_modules","他の人が作った部品の置き場フォルダ。巨大なのでGitに入れたらあかん(.gitignore対象)。"],
@@ -579,7 +516,7 @@ const TERMS = [
 ["CraftFile","Coolify","KYOEIのデプロイの仕組み(自社サーバ)。git pushすると自動で本番反映される。だからpushは指示があるまで禁止。"],
 ["CraftFile","Claude Code","AIがコードを書いてくれる開発ツール。「爆速の同僚」。ただし出力の検品責任は人間にある。"],
 ["CraftFile","SaaS","ネット経由で使ってもらうソフトウェアサービス。CraftFileはこの形態。"],
-["仕事術","OJT","On the Job Training。実際の仕事をやりながら学ぶ研修方式。Phase 5後半がこれ。"],
+["仕事術","OJT","On the Job Training。実際の仕事をやりながら学ぶ研修方式。社内システム開発コースの仕上げがこれ。"],
 ["仕事術","ルーブリック","評価の採点表。「何ができたら何点か」を先に決めておく仕組み。毎週の1on1で使う。"],
 ["仕事術","1on1","上司と1対1の定例振り返り。毎週金曜30分。"],
 ["仕事術","ナレッジベース","学んだこと・解決したことを蓄積する自分専用メモ(Notionなど)。同じことを二度調べないための資産。"],
@@ -589,474 +526,2456 @@ const TERMS = [
 ["仕事術","エラーログ","エラー時にシステムが出す記録・メッセージ。全文コピペしてAIに渡すのが解決の近道。"]
 ];
 
-/* ================= カリキュラムデータ ================= */
-/* d:{t:タイトル, g:ねらい, k:[タスク], m:[用語]} */
-const PHASES = [
-{no:0,name:"オンボーディング",wk:"Week 1",
- goal:"事業とゴールを理解し、道具を全部そろえる週。",
- weeks:[{w:"W1",t:"準備週",days:[
-  {t:"キックオフ",g:"プログラム全体と評価制度を理解する",k:["全体設計書を読み合わせる","6ヶ月後のゴールを自分の言葉で言う","キャリアパスを確認する"],m:["ルーブリック","1on1"]},
-  {t:"アカウント・道具の準備",g:"研修で使う道具を全部そろえる",k:["ChatGPT/Gemini/Claudeの環境確認","Canvaチーム招待を受ける","Notionでナレッジベースを作る"],m:["ナレッジベース"]},
-  {t:"事業理解と質疑の練習",g:"KYOEIの2事業とCraftFileを知る",k:["2事業(塗装/IT)を人に説明できる","CraftFileを閲覧で触ってみる","質疑提出シートを練習で1枚書く"],m:["SaaS","質疑提出シート"]},
- ]}],
- exam:null},
+/* ================= コース1:AI基礎・プロンプト習得 ================= */
+const COURSE1 = {
+id:"c1", no:1, name:"AI基礎・プロンプト習得",
+desc:"AIの種類と仕組みから始めて、業務品質の資料作成ができるようになる",
+lessons:[
+{id:"c1-01",t:"AIとは何か・AIの種類",min:"20分",terms:["生成AI","LLM(大規模言語モデル)"],
+body:`<h3>AIには種類がある</h3>
+<p>ひとことで「AI」と言っても中身は色々ある。まず大きく2つに分けて理解しよう。</p>
+<ul>
+<li><b>識別AI</b>:見分けるAI。「この写真は犬か猫か」「この黒板の文字は何か」を判定する。昔からあるタイプ。</li>
+<li><b>生成AI</b>:作り出すAI。文章・画像・音楽・コードを新しく生み出す。ChatGPTやGeminiはこっち。KYOEIの業務で主に使うのもこっち。</li>
+</ul>
+<h3>KYOEIで使う3つの生成AI</h3>
+<ul>
+<li><b>ChatGPT</b>:画像生成が得意。汎用的な対話も強い。社内では画像生成の主力。</li>
+<li><b>Gemini</b>:長い文書の読解、Googleサービス連携、画像内の文字読み取り(OCR)が得意。CraftFileの黒板文字読み取りにも採用されている。</li>
+<li><b>Claude</b>:長文の生成、コード、論理的な文章が得意。開発補佐や仕様書づくりの主力。</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>「どのAIが一番賢いか」ではなく「この仕事はどのAIが得意か」で使い分けるのがプロの使い方。同じ質問を複数のAIに投げて比べるのも普通のこと。</div>
+<h3>AIは「答えている」のではなく「続きを書いている」</h3>
+<p>生成AIの中身はLLM(大規模言語モデル)というプログラムで、大量の文章を学習して「この文章の続きに来る一番自然な言葉」を予測している。質問に答えているように見えるが、実際は「続きを書いている」。この理解が次のレッスン以降の全ての土台になる。</p>`,
+task:["ChatGPT・Gemini・Claudeを実際に開いて、同じ質問「外壁塗装の魅力を100字で教えて」を3つに投げる","3つの回答の違いを2〜3行でメモする"],
+quiz:[
+{q:"ChatGPTやGeminiのような、文章や画像を新しく作り出すAIを何と呼ぶ?",c:["識別AI","生成AI","検索AI","翻訳AI"],a:1,exp:"作り出す=生成AI。見分けるのは識別AI。"},
+{q:"LLM(大規模言語モデル)がやっていることの説明として最も正しいのは?",c:["インターネットを検索して答えを探している","データベースから正解を取り出している","次に来る自然な言葉を予測して続きを書いている","人間が裏で回答を書いている"],a:2,exp:"LLMは「次の言葉の予測機」。検索エンジンとは別物。"},
+{q:"KYOEIの業務でCraftFileの黒板文字読み取り(OCR)に採用されているAIは?",c:["ChatGPT","Claude","Gemini","Siri"],a:2,exp:"Geminiは画像内の文字読み取りや長文読解が得意で、CraftFileでも採用されている。"},
+{q:"「黒板の写真から文字が何かを判定する」AIはどの種類?",c:["生成AI","識別AI","翻訳AI","音楽AI"],a:1,exp:"見分ける=識別AI。作り出すのが生成AI。"},
+{q:"AIを選ぶときの正しい考え方は?",c:["一番有名なものを常に使う","この仕事はどのAIが得意かで使い分ける","毎回全部に聞く","1つに固定して他は禁止"],a:1,exp:"得意分野での使い分けがプロの使い方。"}
+]},
+{id:"c1-02",t:"AIの仕組み:トークンとコンテキスト",min:"20分",terms:["トークン","コンテキスト","コンテキストウィンドウ"],
+body:`<h3>AIは文章を「トークン」で数える</h3>
+<p>AIは文章をトークンという単位で区切って処理する。おおまかに「文字数の親戚」と思えばいい。大事なのは、<b>AIには一度に扱えるトークン数の上限がある</b>ということ。この上限をコンテキストウィンドウと呼ぶ。</p>
+<h3>長い会話では最初の指示が薄れる</h3>
+<p>会話が長くなると、序盤に伝えた条件や指示の影響が弱くなっていく。人間でも2時間前の会話の細かい条件は忘れるのと同じ。だから:</p>
+<ul>
+<li>大事な条件(文字数・トーン・禁止事項)は<b>節目ごとに言い直す</b></li>
+<li>会話が長くなったら「ここまでの決定事項をまとめて」と頼み、<b>新しいチャットに貼って再開</b>する</li>
+</ul>
+<h3>コンテキスト=AIに渡す文脈</h3>
+<p>AIの出力の質は「どれだけ文脈(コンテキスト)を渡したか」でほぼ決まる。AIは君の会社のことも、お客様のことも、何のための文章かも知らない。<b>知らない相手に説明するつもりで前提を渡す</b>のがプロンプトの基本姿勢や。</p>
+<div class="pointbox"><b>例え:</b>新人バイトに「チラシ作っといて」とだけ言うか、「築15年以上の戸建て向けに、押し売り感を出さず、無料診断に誘導するチラシ」と言うか。AIも同じで、渡した情報の分だけ賢く働く。</div>`,
+task:["長めの会話をしているチャットで「ここまでの決定事項を箇条書きでまとめて」と頼んでみる","そのまとめを新しいチャットに貼って会話を再開してみる"],
+quiz:[
+{q:"AIが一度に覚えていられる会話量の上限を何と呼ぶ?",c:["メモリカード","コンテキストウィンドウ","ストレージ","キャッシュ"],a:1,exp:"コンテキストウィンドウ。これを超えると古い情報の影響が薄れる。"},
+{q:"会話が長くなってAIが序盤の指示を守らなくなってきた。正しい対処は?",c:["AIを叱る","もっと長い文章で指示し直す","決定事項をまとめさせて新しいチャットで再開する","別のAIに乗り換える"],a:2,exp:"まとめ→新チャット再開がKYOEI標準の対処法。"},
+{q:"AIの出力の質を最も左右するのは?",c:["敬語を使うかどうか","渡した文脈(前提情報)の量と質","質問の文字数の少なさ","課金額"],a:1,exp:"AIは渡された文脈の分だけ的確に働く。前提を渡すのがプロンプトの基本。"},
+{q:"大事な条件を会話の節目ごとに言い直す理由は?",c:["AIが喜ぶから","長い会話では序盤の指示の影響が薄れるから","文字数稼ぎ","ルールだから"],a:1,exp:"コンテキストウィンドウの性質への対策。"},
+{q:"トークンとは?",c:["AIの料金プランのこと","AIが文章を数える処理単位","パスワード","画像の形式"],a:1,exp:"おおまかに文字数の親戚。上限の単位になる。"}
+]},
+{id:"c1-03",t:"ハルシネーション:AIの嘘を見抜く",min:"20分",terms:["ハルシネーション","ファクトチェック"],
+body:`<h3>AIは「もっともらしい嘘」を作る</h3>
+<p>AIは知らないことを聞かれたとき、「知りません」と言う代わりに<b>それっぽい架空の情報を作ってしまう</b>ことがある。これをハルシネーション(幻覚)と呼ぶ。存在しない補助金制度、間違った金額、架空の法律条文——どれも自信満々の文章で出てくるから厄介や。</p>
+<h3>なぜ起きるのか</h3>
+<p>前のレッスンでやった通り、AIは「自然な続き」を書く機械。「堺市の外壁塗装補助金は…」と聞かれたら、実在するかどうかに関係なく<b>それっぽい続き</b>を書いてしまう。仕組み上ゼロにはできない。</p>
+<h3>KYOEIのファクトチェックルール</h3>
+<p>以下の4つは、AIの回答を<b>必ず一次情報(公式サイト・公的機関)で確認</b>してから使う:</p>
+<ul>
+<li><b>固有名詞</b>(制度名・会社名・製品名)</li>
+<li><b>数値</b>(金額・面積・期間・割合)</li>
+<li><b>法律・制度</b>(補助金・建築基準・契約関連)</li>
+<li><b>塗料や工法の仕様</b>(耐用年数・成分など)</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>お客様に出す資料に間違いが1つあると、資料全体とKYOEIの信用が失われる。「AIが言ってたから」は理由にならへん。検品するのは人間の仕事。</div>`,
+task:["AIに「堺市の外壁塗装の補助金制度を詳しく教えて」と聞く","出てきた回答のうち、検証が必要な箇所に印をつける","堺市の公式サイトで実際に確認して、合っていたか答え合わせする"],
+quiz:[
+{q:"AIがもっともらしい嘘(架空の情報)を作ってしまう現象を何と呼ぶ?",c:["バグ","フリーズ","ハルシネーション","スパム"],a:2,exp:"ハルシネーション(幻覚)。仕組み上ゼロにはできない。"},
+{q:"AIの回答のうち、必ず一次情報で確認すべきものはどれ?",c:["文章のトーン","補助金の金額や制度名","文字数","絵文字の使い方"],a:1,exp:"固有名詞・数値・法律・制度は必ず公式サイトで確認する。"},
+{q:"お客様向け資料でAIの出した情報が間違っていた場合、責任があるのは?",c:["AI","AIを作った会社","検品せずに使った自分","誰にもない"],a:2,exp:"AIの出力を検品して使うのは人間の責任。「AIが言ってた」は通用しない。"},
+{q:"ハルシネーションが仕組み上ゼロにできない理由は?",c:["開発者が怠けているから","AIは実在性でなく「自然な続き」を書く機械だから","ネットが遅いから","日本語だから"],a:1,exp:"もっともらしい続きを作る仕組みそのものが原因。"},
+{q:"「一次情報」の例として正しいのは?",c:["まとめサイト","市の公式サイト","SNSの噂","AIの回答"],a:1,exp:"公式・公的機関で確認するのがファクトチェック。"}
+]},
+{id:"c1-04",t:"プロンプトの型:RCGCO",min:"25分",terms:["プロンプト","RCGCO"],
+body:`<h3>KYOEI式プロンプトフレームワーク「RCGCO」</h3>
+<p>プロンプトは思いつきで書かず、5つの要素で設計する。これがKYOEIの標準の型や。</p>
+<ul>
+<li><b>R - Role(役割)</b>:AIに誰として振る舞わせるか。「ベテラン営業ライター」「塗装業界に詳しいデザイナー」</li>
+<li><b>C - Context(文脈)</b>:背景・前提・対象読者。誰が読む何のための文章か</li>
+<li><b>G - Goal(目的)</b>:最重要。この出力で何を達成したいのか</li>
+<li><b>C - Constraints(制約)</b>:文字数・トーン・禁止事項・必須要素</li>
+<li><b>O - Output(出力形式)</b>:形式・構成・パターン数</li>
+</ul>
+<h3>実例で比較</h3>
+<span class="exlabel bad">悪い例</span>
+<div class="exbox">外壁塗装のチラシの文章を書いて</div>
+<span class="exlabel good">良い例(RCGCO)</span>
+<div class="exbox"># 役割
+あなたは大阪の外壁塗装会社のベテラン営業ライターです。
 
-{no:1,name:"AI活用・プロンプト",wk:"Week 2-5",
- goal:"「なんとなくAIに聞く」から「設計してAIを使う」へ。初見の依頼でも1〜2往復で実用レベルを出せるようになる。",
- weeks:[
- {w:"W2",t:"生成AIの仕組み",days:[
-  {t:"LLMの基本構造",g:"AIは「次の言葉の予測機」だと理解する",k:["同じ依頼を3つのAIに投げて比較メモを書く","違いを言語化して提出"],m:["生成AI","LLM","トークン","コンテキスト"]},
-  {t:"ハルシネーション体験",g:"AIの嘘を見抜く目を作る",k:["わざと誤情報を出させる実験をする","堺市の補助金情報を公式サイトで検証する"],m:["ハルシネーション","ファクトチェック"]},
-  {t:"RCGCOフレームワーク",g:"KYOEI式プロンプトの型を覚える",k:["RCGCOの5要素を暗記する","悪い例と良い例を見比べて差を説明する"],m:["プロンプト","RCGCO"]},
-  {t:"演習:悪い例→良い例",g:"型を使うと出力が変わることを体感",k:["お礼メール文を悪い例/RCGCOで比較","求人文を悪い例/RCGCOで比較"],m:[]},
-  {t:"演習:実務5本",g:"実務題材でRCGCOを回す",k:["CraftFile機能紹介文を作る","画像生成プロンプト(ブランド色準拠)を作る","学習内容の要約を作る"],m:["カラーコード"]},
- ]},
- {w:"W3",t:"テクニック編",days:[
-  {t:"Few-shotと出力固定",g:"お手本を貼ると品質が跳ねると知る",k:["過去の良い成果物でお手本ライブラリを作り始める","表形式・穴埋め形式の出力指定を練習"],m:["Few-shot"]},
-  {t:"分解と段階実行",g:"大きい依頼は工程に割る",k:["構成→修正→執筆→統一の4工程で提案資料を1本作る"],m:[]},
-  {t:"役割対話と壁打ち",g:"AIに批評家・お客様役をさせる",k:["先週の成果物をお客様役AIにレビューさせる","指摘をふまえた改善版を作る"],m:["壁打ち"]},
-  {t:"修正指示の出し方",g:"「なんかいい感じに」を卒業する",k:["保持する部分+変える部分を分けた差分指示を5回練習"],m:["イテレーション"]},
-  {t:"長い文脈の管理",g:"会話の整理と前提プロンプト",k:["決定事項まとめ→新チャット再開を練習","KYOEI用の前提プロンプトを自作する"],m:["コンテキストウィンドウ"]},
- ]},
- {w:"W4",t:"用途別実践",days:[
-  {t:"文章系実務(お客様向け)",g:"実案件レベルの文章を量産",k:["見積もり送付メールを作る","着工前挨拶文を作る","完工お礼状を作る"],m:[]},
-  {t:"文章系実務(社内・販促)",g:"議事録・SNSの型を覚える",k:["議事録要約の流れを練習","Instagram/X向けの書き分けを練習"],m:[]},
-  {t:"画像生成:一貫性",g:"同じテイストを出し続ける技術",k:["参照画像方式を練習する","スタイル記述の定型化を作る"],m:["透過(アルファチャンネル)"]},
-  {t:"画像生成:Canva前提",g:"後工程を考えた生成",k:["テキストなし・余白ありで生成する","施工事例アイキャッチを3案作る"],m:[]},
-  {t:"コード系プロンプト入門",g:"Phase 3への布石",k:["エラー相談テンプレ(4点セット)を練習","AIに自己紹介ページHTMLを生成→全行解説させる→3箇所改造"],m:["HTML","エラーログ"]},
- ]},
- {w:"W5",t:"総仕上げ",days:[
-  {t:"模擬案件 前半",g:"CraftFile機能の販促パッケージを通しで作る",k:["紹介文(A4構成)を作る","SNS投稿文2種を作る"],m:[]},
-  {t:"模擬案件 後半",g:"画像とプロンプト設計書まで仕上げる",k:["アイキャッチ画像2案を作る","プロンプト設計書(型と理由)を添付する"],m:[]},
-  {t:"レビューと修正",g:"指摘を受けて1巡直す",k:["真殿さんレビューを受ける","差分指示の型で修正する"],m:[]},
-  {t:"ナレッジ整備",g:"4週間の資産を整理する",k:["お手本ライブラリを整理","前提プロンプト・型テンプレ集を整理"],m:["ナレッジベース"]},
-  {t:"卒業試験",g:"初見お題で実力を証明する",k:["実技試験(120分)を受ける"],m:[]},
- ]}],
- exam:{t:"Phase 1 卒業試験",pt:"80点で合格",items:["プロンプト設計(RCGCO5要素) 30点","出力品質(修正なしで社外に出せるか) 30点","イテレーション(差分指示) 20点","検証(ファクトチェック) 10点","説明(型の選択理由) 10点"],ps:"不合格なら該当週を再走して1週間後に再試験。恥ではなく仕組み。"}},
+# 文脈
+株式会社KYOEI(堺市)のチラシ。対象は築15〜25年の戸建てに住む
+50〜60代の夫婦。訪問販売で嫌な思いをした人が多いエリア。
 
-{no:2,name:"デザイン・資料作成",wk:"Week 6-8",
- goal:"AI+Canvaを「業務品質・ブランド準拠・再現可能」に。指示書1枚で一人で完成できる状態へ。",
- weeks:[
- {w:"W6",t:"ブランドとCanva基盤",days:[
-  {t:"KYOEIブランドの理解",g:"色とトーンの規定を叩き込む",k:["ブランドカラー3色+使い分けを暗記","過去資料3点のルール適用を分析","NG資料の違反箇所を3つ指摘"],m:["カラーコード","トーン&マナー"]},
-  {t:"Canva基本操作",g:"整列・ブランドキットを使い切る",k:["ブランドキットの登録と呼び出し","整列・等間隔・グループ化の練習"],m:["ブランドキット"]},
-  {t:"Canva応用+Bulk Create",g:"量産の仕組みを覚える",k:["書き出し設定の使い分けを覚える","架空社員5名の名刺をBulk Createで一括生成"],m:["Bulk Create","PNG / JPEG / PDF"]},
-  {t:"AI画像→Canva連携",g:"KYOEI標準ワークフロー6工程を覚える",k:["6工程(目的→生成→選定→組版→検品→書き出し)を暗記","命名規則でファイルを保存する"],m:[]},
-  {t:"検品の型",g:"検品チェックリストを使いこなす",k:["検品リスト5項目を暗記","過去成果物1点を検品してみる"],m:["セーフエリア"]},
- ]},
- {w:"W7",t:"実務パターン別",days:[
-  {t:"SNS投稿セット",g:"保存したくなる投稿の構成",k:["施工事例のカルーセル4枚を作る","キャプション+ハッシュタグ設計"],m:["カルーセル","CTA"]},
-  {t:"営業チラシA4",g:"視線誘導と印刷前提の設計",k:["外壁診断チラシを作る(塗り足し込み)"],m:["塗り足し","トンボ"]},
-  {t:"提案書(複数ページ)",g:"ネイビー×ゴールドの提案トーン",k:["6ページ提案書を通しで作る(構成→文章→組版)"],m:[]},
-  {t:"CraftFile販促物",g:"プロダクトトーンの資料",k:["機能紹介スライド3枚を作る","スクショの見せ方(枠・影・モック)を練習"],m:[]},
-  {t:"印刷入稿の知識",g:"入稿で事故らない知識",k:["解像度/RGB・CMYK/塗り足しを説明できる","チラシを入稿可能データで書き出し+チェックリスト自作"],m:["解像度 / dpi","RGB / CMYK"]},
- ]},
- {w:"W8",t:"総合演習",days:[
-  {t:"模擬案件 1/2",g:"1つの施工事例から販促一式を作る",k:["カルーセル4枚+キャプション"],m:[]},
-  {t:"模擬案件 2/2",g:"チラシと完工報告書まで",k:["A4チラシ(印刷PDF)","完工報告書2ページ"],m:[]},
-  {t:"納品仕上げ",g:"検品と命名規則で仕上げる",k:["検品リスト添付","命名規則で全ファイル整理"],m:[]},
-  {t:"テンプレ資産化",g:"作ったものを会社の仕組みにする",k:["Canvaテンプレとして整備","KYOEI販促テンプレ集として共有"],m:[]},
-  {t:"卒業試験",g:"初見題材で実技",k:["実技試験(180分)を受ける"],m:[]},
- ]}],
- exam:{t:"Phase 2 卒業試験",pt:"80点で合格",items:["ブランド準拠 25点","完成度(整列・余白・誤字ゼロ) 25点","ワークフロー6工程の遵守 20点","AI画像の設計と選定眼 15点","納品品質(書き出し・命名・検品) 15点"],ps:"感覚ではなくルールで採点される。検品リスト添付は必須。"}},
+# 目的
+「この会社なら話を聞いてもいいかな」と思わせ、
+無料診断の問い合わせにつなげる。
 
-{no:3,name:"Web開発基礎",wk:"Week 9-14",
- goal:"コードが読める・単一HTMLプロトタイプが作れる状態へ。学び方は「写経→改造→ゼロから」。AIは使ってよいが、必ず自分で書いてから添削させる。",
- weeks:[
- {w:"W9",t:"HTML/CSS 1",days:[
-  {t:"HTMLの構造",g:"タグと骨組みを理解",k:["基本タグ10種を使って自己紹介ページを書く(AIなし)","AIに添削させて指摘を自分の言葉で説明"],m:["HTML","タグ"]},
-  {t:"CSSの基本",g:"ボックスモデルを図で説明できる",k:["ボックスモデルの図を自分で描く","自己紹介ページをKYOEIカラーで装飾"],m:["CSS","セレクタ","ボックスモデル","margin / padding"]},
-  {t:"Flexbox",g:"「並べる」を解決する",k:["ヘッダー/カード横並び/中央寄せの3パターンを作る"],m:["Flexbox"]},
-  {t:"Grid",g:"マス目レイアウト",k:["施工事例ギャラリー(3列)を作る","FlexとGridの使い分けを説明できる"],m:["Grid","クラス(class)"]},
-  {t:"週次課題:LP前半",g:"1ページLP(PC版)を作る",k:["ヒーロー〜CTA〜フッターの構成で自力制作","完成後AIレビュー→反映"],m:[]},
- ]},
- {w:"W10",t:"HTML/CSS 2",days:[
-  {t:"レスポンシブ",g:"スマホ対応はKYOEIの最重点",k:["メディアクエリでLPをスマホ対応","dvhを使う理由を説明できる"],m:["レスポンシブ","メディアクエリ","vh / dvh"]},
-  {t:"フォームとUI部品",g:"入力UIの基本",k:["無料診断フォームUIを作る","タップターゲット44pxを守る"],m:["タップターゲット","バリデーション"]},
-  {t:"CSS発展",g:"配置と動き",k:["position4種を試す","CSS変数でブランドカラーを一元管理"],m:[]},
-  {t:"UIパターン",g:"モーダル・タブ・アコーディオン",k:["モーダルを作る","アコーディオンを作る"],m:["モーダル"]},
-  {t:"週次課題:LP完成",g:"完全レスポンシブ+モーダル",k:["スマホ実機で崩れなしを確認","診断申込モーダルを追加"],m:["DevTools"]},
- ]},
- {w:"W11",t:"JavaScript 1",days:[
-  {t:"変数・型・演算",g:"console.log習慣を作る",k:["const/letと基本型を練習","全部console.logで確認する癖をつける"],m:["JavaScript(JS)","変数","console.log"]},
-  {t:"条件分岐と関数",g:"処理を部品化する",k:["築年数→推奨メンテ時期を返す関数を書く"],m:["関数"]},
-  {t:"配列とループ",g:"map/filterを厚めに",k:["施工事例データから堺市のみ抽出","金額合計を出す"],m:["配列"]},
-  {t:"オブジェクトとJSON",g:"データの形を理解する",k:["見積もりデータをオブジェクトで設計","合計金額を計算する関数を書く"],m:["オブジェクト","JSON"]},
-  {t:"週次課題:見積もりロジック",g:"計算部分だけ完成させる",k:["面積・塗料・オプション→概算を返す(console上でOK)"],m:[]},
- ]},
- {w:"W12",t:"JavaScript 2",days:[
-  {t:"DOM操作",g:"JSでページを書き換える",k:["ボタンで文言と色が変わるページを作る"],m:["DOM"]},
-  {t:"イベント",g:"操作をきっかけに動かす",k:["入力文字数のリアルタイム表示を作る"],m:["イベント"]},
-  {t:"UI×ロジック結合",g:"最初の大きな山。動く見積もりツールへ",k:["W11のロジックをW10のフォームに接続する"],m:[]},
-  {t:"動的リスト描画",g:"Reactの前身となる考え方",k:["配列→カードギャラリーを動的生成","市区別フィルタボタンを付ける"],m:[]},
-  {t:"週次課題:シミュレータ",g:"単一HTMLで完成させる",k:["入力→計算→結果表示→再計算まで作る"],m:["プロトタイプ"]},
- ]},
- {w:"W13",t:"JavaScript 3",days:[
-  {t:"非同期の概念",g:"待つ処理の考え方",k:["setTimeout/Promise/async-awaitを写経で体験"],m:["非同期処理"]},
-  {t:"fetchとAPI",g:"外からデータを取ってくる",k:["公開API(天気/郵便番号)から取得して表示"],m:["API","fetch"]},
-  {t:"LocalStorage",g:"保存と復元",k:["シミュレータの入力値を保存・復元できるようにする"],m:["LocalStorage"]},
-  {t:"エラーと向き合う日",g:"デバッグ力はここで決まる",k:["DevToolsの使い方を覚える","バグ5個入りHTMLを全部直す"],m:["デバッグ","DevTools","エラーログ"]},
-  {t:"週次課題:シミュレータ完成版",g:"総仕上げ",k:["レスポンシブ・保存・エラー処理込みで完成"],m:[]},
- ]},
- {w:"W14",t:"総合制作",days:[
-  {t:"要件確認",g:"作る前に聞くのも仕事",k:["出題(CraftFile検討中機能)の不明点を質問してから着手"],m:["要件 / 要件定義"]},
-  {t:"制作 1/3",g:"構造とレイアウト",k:["画面骨格をHTML/CSSで作る"],m:[]},
-  {t:"制作 2/3",g:"動きをつける",k:["JSでロジックと操作を実装"],m:[]},
-  {t:"制作 3/3+申告",g:"AI協業の透明化",k:["完成させる","AI任せ/自分で書いた/修正した部分を申告"],m:[]},
-  {t:"卒業試験",g:"初見お題を4時間で",k:["実技試験(半日)を受ける"],m:[]},
- ]}],
- exam:{t:"Phase 3 卒業試験",pt:"80点で合格",items:["動作(要件通り・スマホで崩れない) 30点","コード理解(任意の10行を口頭で説明) 30点","品質(ブランド・UI基本) 15点","デバッグ(自力+AIで解決) 15点","要件確認の質 10点"],ps:"コード理解が20点未満なら他が満点でも不合格。写しただけでは先に進めない。"}},
+# 制約
+- 見出し15字以内+本文200字以内+CTA1行
+- 不安を煽る表現は禁止
+- 専門用語には一言説明を添える
 
-{no:4,name:"開発環境・Git",wk:"Week 15-16",
- goal:"チーム開発の作法を習得し、CraftFileのリポジトリに安全に触れる状態を作る。最初の30分で禁止事項を叩き込む。",
- weeks:[
- {w:"W15",t:"VSCode・ターミナル・Git",days:[
-  {t:"⚠禁止事項+VSCode",g:"三大禁止事項を最初に刷り込む",k:["三大禁止事項+開発ルールを紙に書いて貼る","VSCodeと標準拡張機能7種をセットアップ","ショートカット8種の練習開始"],m:["VSCode","拡張機能"]},
-  {t:"ターミナル基礎",g:"文字でPCに指示を出す",k:["基本コマンド10種を練習","パス概念(絶対/相対)を図で理解","ターミナルだけでフォルダ構成を作る"],m:["ターミナル","コマンド","パス","Node.js","npm"]},
-  {t:"Gitの概念と基本",g:"コミット=セーブポイント",k:["練習リポジトリでinit/status/add/commit","変更→status→diff→add→commitを20回回して手癖にする"],m:["Git","リポジトリ","コミット"]},
-  {t:"ブランチとマージ",g:"並行世界とその合流",k:["ブランチを切って作業→マージ","わざとコンフリクトを起こして解決する"],m:["ブランチ","マージ","コンフリクト"]},
-  {t:"GitHub接続",g:"クラウドと繋がる",k:["GitHubアカウント作成・認証","sandboxで clone/pull/push を練習",".gitignoreの意味を説明できる"],m:["GitHub","clone","push / pull",".gitignore",".env(環境変数)","sandbox"]},
- ]},
- {w:"W16",t:"チーム開発フロー",days:[
-  {t:"Pull Requestの作法",g:"KYOEI標準フロー5工程",k:["PRテンプレを覚える","sandboxでPRを3本通す(作成→レビュー→修正→マージ)"],m:["PR(プルリクエスト)"]},
-  {t:"レビューの受け方",g:"指摘は品質工程",k:["厳しめレビュー1本への対応を練習","修正コミットの積み方を覚える"],m:["コードレビュー"]},
-  {t:"困った時のGit",g:"復旧術と相談ライン",k:["restore/stashで3パターンの復旧演習","「やらかしたらコマンド前に相談」を確認"],m:[]},
-  {t:"CraftFile見学",g:"本物に触れる日(変更禁止)",k:["cloneしてローカル起動(真殿さん同席)","フォルダ構成ツアー(app/components/prisma)"],m:["ローカル環境","開発サーバ"]},
-  {t:"卒業試験",g:"clone→PRまで一人で",k:["実技+口頭試問(120分)を受ける"],m:[]},
- ]}],
- exam:{t:"Phase 4 卒業試験",pt:"80点で合格",items:["実技:clone→ブランチ→修正→commit→push(許可済)→PR 60点","口頭:pushの前に確認することは? 他3問 40点"],ps:"KYOEIルールの設問(git push確認)を落としたら即不合格・再試験。"}},
+# 出力形式
+見出し/本文/CTAの3ブロックで3パターン</div>
+<div class="pointbox"><b>5つの黄金ルール:</b>①目的を先に書く ②読者を指定する ③禁止事項を書く ④出力形式を指定する ⑤お手本があれば渡す</div>`,
+task:["テンプレタブの「RCGCOプロンプトの型」をコピーする","「施工完了のお礼メール」をRCGCOで設計してAIに投げる","同じ依頼を1行だけの雑なプロンプトでも投げて、出力の差を見比べる"],
+quiz:[
+{q:"RCGCOの5要素のうち「最重要」とされているのは?",c:["Role(役割)","Goal(目的)","Constraints(制約)","Output(出力形式)"],a:1,exp:"目的が伝われば、AIは細部を適切に埋められる。目的を先に書くのが黄金ルール1。"},
+{q:"「不安を煽る表現は禁止」はRCGCOのどの要素?",c:["Role","Context","Constraints","Output"],a:2,exp:"やってほしくないことは制約(Constraints)に書く。明示しないと必ずやってくる。"},
+{q:"プロンプトに「読者は50〜60代の戸建て所有者」と書く理由は?",c:["AIが年齢確認するから","読者によって適切な語彙やトーンが変わるから","法律で決まっているから","文字数を稼ぐため"],a:1,exp:"誰が読むかで語彙・トーン・内容が全部変わる。読者指定は黄金ルール2。"},
+{q:"Role(役割)を指定する効果は?",c:["料金が下がる","その専門家の観点・語彙で出力されるようになる","文字が増える","速くなる"],a:1,exp:"「ベテラン営業ライター」と指定すればその視点で書く。"},
+{q:"出力形式(Output)を指定する利点は?",c:["特にない","毎回同じ形で返り、転記や比較が楽になる","AIが緊張する","消費が減る"],a:1,exp:"形式の固定は実務効率に直結する。"}
+]},
+{id:"c1-05",t:"Few-shot:お手本を渡す技術",min:"20分",terms:["Few-shot(例示)"],
+body:`<h3>お手本1つで品質が跳ね上がる</h3>
+<p>言葉でトーンを説明するより、<b>過去の良い成果物を1〜3個プロンプトに貼る</b>方が圧倒的に伝わる。これをFew-shot(例示)と呼ぶ。プロンプト技術の中で最も費用対効果が高いテクニックや。</p>
+<span class="exlabel good">使い方の例</span>
+<div class="exbox">以下は当社の過去のInstagram投稿文です。
+このテイスト・構成・絵文字の使い方を踏襲して、
+新しい施工事例(堺市・築20年・屋根と外壁の同時塗装)の
+投稿文を書いてください。
 
-{no:5,name:"CraftFile開発補佐",wk:"Week 17-24",
- goal:"技術スタックを理解し、Claude Codeを活用して実タスク(UI修正・軽微な機能追加)を一人称で完遂できる開発補佐になる。",
- weeks:[
- {w:"W17",t:"TypeScript",days:[
-  {t:"TypeScriptとは",g:"型=間違いを実行前に見つける仕組み",k:["基本の型注釈を練習","見積もり計算関数をTS化する"],m:["TypeScript","型"]},
-  {t:"オブジェクトの型",g:"CraftFileのデータの形を知る",k:["type/interfaceを練習","案件・顧客・見積もりの型を自分で設計"],m:[]},
-  {t:"関数の型",g:"読めるレベルのジェネリクス",k:["引数と戻り値の型を練習","useState<Project[]>が読める状態にする"],m:[]},
-  {t:"型エラーの読み方",g:"エラー文が怖くなくなる",k:["頻出エラー2種の意味を説明できる","型エラー10個入りファイルを全部直す"],m:[]},
-  {t:"週次課題",g:"シミュレータの完全TS化",k:["Phase 3成果物のロジックをTypeScript化"],m:[]},
- ]},
- {w:"W18",t:"React",days:[
-  {t:"コンポーネントとJSX",g:"画面=部品の組み合わせ",k:["案件カード部品を作る"],m:["React","コンポーネント"]},
-  {t:"props",g:"親から子へデータを渡す",k:["カードに案件データを渡してmapで一覧描画"],m:["props"]},
-  {t:"useState",g:"状態が変わると再描画される",k:["ステータス絞り込みフィルタ付き一覧を作る"],m:["state(useState)"]},
-  {t:"イベントとフォーム",g:"制御コンポーネント",k:["案件の新規追加フォームを作る"],m:[]},
-  {t:"週次課題:案件管理ミニアプリ",g:"一覧・追加・絞り込み・詳細",k:["Reactでミニアプリを完成させる"],m:[]},
- ]},
- {w:"W19",t:"Next.js",days:[
-  {t:"Next.jsの構造",g:"フォルダ=URL",k:["CraftFileのapp/を読んでURL対応表を作る"],m:["Next.js","App Router","フレームワーク"]},
-  {t:"Server/Client Component",g:"use clientの判断基準",k:["CraftFileの画面でServer/Clientを仕分けして理由を書く"],m:[]},
-  {t:"Tailwind CSS",g:"クラスでスタイルを書く",k:["頻出クラス15種を覚える","実コンポーネント1つの全クラスを解説する"],m:["Tailwind CSS"]},
-  {t:"データ取得の読解",g:"実コードを読む日",k:["CraftFileのデータ取得コードを真殿さんと読む"],m:[]},
-  {t:"週次課題",g:"ミニアプリをNext.jsへ移植",k:["一覧ページ+詳細ページをApp Routerで作る"],m:[]},
- ]},
- {w:"W20",t:"Prisma・DB読解",days:[
-  {t:"DBの基礎",g:"テーブルとリレーション",k:["顧客-案件-見積もりのER図を紙に描く"],m:["データベース(DB)","PostgreSQL"]},
-  {t:"schema.prismaの読解",g:"tenantIdが全モデルにある理由",k:["主要モデル10個の関係図を作る","tenantIdの意味を完全に説明できる"],m:["Prisma","スキーマ","tenantId(マルチテナント)"]},
-  {t:"Prisma Clientの読解",g:"クエリを日本語に翻訳できる",k:["実クエリ5箇所を日本語訳する"],m:[]},
-  {t:"マイグレーションの考え方",g:"冪等なSQLというKYOEI方式",k:["冪等の意味を説明できる","スキーマ変更は提案→レビュー→真殿さん実行の運用を確認"],m:["マイグレーション","冪等(べきとう)"]},
-  {t:"読解総合テスト",g:"最重要ゲート",k:["1機能の「画面→部品→データ取得→DB」の流れを図解して口頭発表(合格までW21に進まない)"],m:[]},
- ]},
- {w:"W21",t:"Claude Code協業",days:[
-  {t:"セットアップと基本",g:"爆速の同僚、責任は人間",k:["Claude Codeをセットアップ","基本的な指示を試す"],m:["Claude Code"]},
-  {t:"KYOEI式要件プロンプト",g:"社内の型を継承する",k:["要件プロンプトの型(目的/対象/要件/制約/確認方法)を覚える","過去の実物3本を読んで分析"],m:[]},
-  {t:"AI出力の検品",g:"diffは全行読む",k:["検品観点4種(ルール違反/不要変更/型エラー/build)を覚える","問題入り生成結果から問題点を全部見つける"],m:["ビルド(next build)"]},
-  {t:"ペアプロ演習 1/2",g:"sandboxで小タスク",k:["文言修正+余白調整を全工程(要件→生成→検品→build→PR)で完遂"],m:[]},
-  {t:"ペアプロ演習 2/2",g:"仕上げ",k:["絞り込み1条件追加を完遂","仕込みバグ修正を完遂"],m:[]},
- ]},
- {w:"W22",t:"OJT 1",days:[
-  {t:"OJT開始",g:"実タスクの週。push権限付与(確認ルール継続)",k:["★タスク(文言・色・余白)を2〜3本完遂","全タスクでbuildグリーン+実機確認+PR+セルフレビュー"],m:["OJT","本番環境","Coolify","デプロイ"]},
- ]},
- {w:"W23",t:"OJT 2",days:[
-  {t:"OJT継続",g:"難易度を上げる",k:["★★タスク(項目追加・バリデーション)を1〜2本完遂","モバイルUI検証の作法(dvh/44px/横スクロール/セーフエリア)でスクショ添付"],m:[]},
- ]},
- {w:"W24",t:"OJT 3+最終試験",days:[
-  {t:"OJT仕上げ",g:"小機能を一人称で",k:["★★★タスク(モーダル1枚完結の小機能)に挑戦"],m:[]},
-  {t:"最終卒業試験",g:"要件確認からPRまで一人で1日",k:["最終実技試験を受ける"],m:[]},
- ]}],
- exam:{t:"最終卒業試験(プログラム全体)",pt:"80点で合格",items:["完遂(動く・buildグリーン・PR提出) 25点","ルール遵守(7ヶ条違反ゼロ/push違反は即不合格) 20点","コード理解(全変更行を口頭説明) 20点","検品力(AI出力の問題を自力発見) 15点","モバイル品質(実機+スクショ) 10点","コミュニケーション(要件確認・日報・PR説明) 10点"],ps:"合格でCraftFile開発チーム正式アサイン+担当領域の付与。"}},
+--- お手本 ---
+(過去の良い投稿文をここに貼る)
+--- ここまで ---</div>
+<h3>出力フォーマットの固定</h3>
+<p>表形式・箇条書き・穴埋めテンプレなど、<b>出力の形を指定する</b>のも同じ発想。「以下のフォーマットで出力して」と枠を渡せば、毎回同じ形で返ってくるので、資料への転記が一気に楽になる。</p>
+<div class="exbox">以下のフォーマットで出力してください:
+【見出し】(15字以内)
+【本文】(200字)
+【CTA】(1行)
+【ハッシュタグ】(5個)</div>
+<div class="pointbox"><b>資産化のすすめ:</b>良い出力が出たら、それを「お手本ライブラリ」としてNotionに貯めていく。次からはそれを貼るだけで同じ品質が出せる。ライブラリは君の武器庫になる。</div>`,
+task:["過去の社内の良い成果物(投稿文・メールなど)を1つ選ぶ","それをお手本にFew-shotで新しい文章を生成する","良い出力をNotionの「お手本ライブラリ」に保存する(ライブラリ開設)"],
+quiz:[
+{q:"Few-shotとはどんなテクニック?",c:["短い文で指示すること","お手本を1〜3個プロンプトに貼ること","何度も同じ質問をすること","AIを複数使うこと"],a:1,exp:"few=少数の、shot=例。少数の例を見せる技術。"},
+{q:"「毎回同じ形式で出力させたい」ときに最も効果的なのは?",c:["丁寧にお願いする","出力フォーマットの枠を明示して渡す","短い文で聞く","英語で聞く"],a:1,exp:"フォーマットを枠として渡せば毎回同じ形で返る。転記も楽になる。"},
+{q:"「お手本ライブラリ」を作る一番の目的は?",c:["AIに褒めてもらうため","良い品質を再現可能にするため","ストレージを埋めるため","上司への報告のため"],a:1,exp:"良い出力を資産化すれば、次から同じ品質を安定して出せる。"},
+{q:"Few-shotで貼るお手本の目安の個数は?",c:["10個以上","1〜3個","0個","100個"],a:1,exp:"少数の良い例で十分。多すぎると逆に混乱する。"},
+{q:"Few-shotが特に効く場面は?",c:["単純な計算","トーンや構成を言葉で説明しにくいとき","翻訳のみ","画像生成のみ"],a:1,exp:"「こんな感じ」を伝えるには例が最速。"}
+]},
+{id:"c1-06",t:"タスク分解:大きい依頼は工程に割る",min:"20分",terms:["イテレーション"],
+body:`<h3>一発で完成させようとしない</h3>
+<p>「提案資料を丸ごと作って」のような大きい依頼を一発で投げると、構成も文章も中途半端なものが返ってくる。プロは<b>工程に分けて段階的に</b>進める:</p>
+<ul>
+<li><b>工程1:</b>構成案を出させる(「まず目次案を3パターン出して」)</li>
+<li><b>工程2:</b>構成を人間が選んで修正する</li>
+<li><b>工程3:</b>確定した構成に沿って、各章を順番に書かせる</li>
+<li><b>工程4:</b>全体を通しでトーン統一させる</li>
+</ul>
+<h3>考えさせるテクニック</h3>
+<p>複雑な依頼では、いきなり答えを書かせず考える段取りを指定すると精度が上がる:</p>
+<div class="exbox">・「ステップバイステップで考えてから答えて」
+・「まず前提として確認したいことを質問してから始めて」
+・「先に候補を5つ出して、それぞれの長所短所を比較してから
+   最終案を1つ選んで」</div>
+<div class="pointbox"><b>ポイント:</b>各工程の間に人間の判断が入るのがミソ。構成の段階で軌道修正すれば、全部書き直しの無駄がなくなる。建築で言えば「基礎の検査をしてから上物を建てる」のと同じや。</div>`,
+task:["「CraftFileの機能を1つ紹介するA4資料」を、構成→修正→執筆→統一の4工程でAIと作ってみる","一発で丸投げした場合とどう違うか、体感をメモする"],
+quiz:[
+{q:"大きい資料をAIに作らせるとき、最初にやらせるべきことは?",c:["いきなり全文を書かせる","構成案(目次)を出させる","画像を作らせる","文字数を数えさせる"],a:1,exp:"構成→修正→執筆→統一の順。構成段階で軌道修正するのが効率的。"},
+{q:"工程の間に「人間の判断」を挟む理由は?",c:["AIを休ませるため","早い段階で軌道修正して手戻りを防ぐため","料金を節約するため","ルールで決まっているから"],a:1,exp:"基礎検査をしてから上物を建てるのと同じ。後からの全部書き直しを防ぐ。"},
+{q:"複雑な依頼の精度を上げる指示として適切なのは?",c:["「早くして」","「まず前提として確認したいことを質問してから始めて」","「間違えないで」","「頑張って」"],a:1,exp:"考える段取りを指定すると精度が上がる。確認質問をさせるのは特に有効。"},
+{q:"「まず候補を5つ→長所短所を比較→1つ選ぶ」という指示は何をしている?",c:["時間稼ぎ","考える段取りの指定","お世辞","省略"],a:1,exp:"段取りを指定すると出力の精度が上がる。"},
+{q:"構成案を3パターン出させる目的は?",c:["数が多いと偉いから","比較・選定で方向性を早く固めるため","AIの練習","保存用"],a:1,exp:"選定を挟むことで手戻りを防ぐ。"}
+]},
+{id:"c1-07",t:"壁打ち:AIに役を演じさせる",min:"20分",terms:["壁打ち"],
+body:`<h3>AIは相談相手にも批評家にもなる</h3>
+<p>AIの使い方は「作らせる」だけやない。<b>役割を与えて対話する</b>ことで、自分の成果物を客観的に鍛えられる。これを壁打ちと呼ぶ。</p>
+<h3>使える役割パターン</h3>
+<span class="exlabel good">お客様役(不安の発見)</span>
+<div class="exbox">あなたは訪問販売に不信感を持つ60代のお客様です。
+以下のチラシ文を読んで、疑問・不信に思う点を
+遠慮なく指摘してください。
+
+(自分の作った文章を貼る)</div>
+<span class="exlabel good">批評家役(品質の穴探し)</span>
+<div class="exbox">あなたはプロの編集者です。以下の文章の
+「分かりにくい箇所」「根拠が弱い箇所」「冗長な箇所」を
+それぞれ指摘し、改善案を添えてください。</div>
+<span class="exlabel good">先輩役(学習の壁打ち)</span>
+<div class="exbox">あなたは優しい先輩社員です。私が今日学んだ内容を
+説明するので、理解が曖昧な部分を質問で突いてください。</div>
+<div class="pointbox"><b>ポイント:</b>自分の成果物は自分では客観視できへん。提出前にAIのお客様役・批評家役に一度攻撃させるのを習慣にすると、真殿さんレビューでの指摘が激減する。</div>`,
+task:["前のレッスンで作った資料や文章を、お客様役AIにレビューさせる","指摘のうち納得できるものを反映した改善版を作る"],
+quiz:[
+{q:"「壁打ち」とはAIのどんな使い方?",c:["AIに謝らせること","役割を与えて対話し、考えや成果物を鍛えること","同じ質問を壁のように繰り返すこと","AIをリセットすること"],a:1,exp:"お客様役・批評家役などを演じさせて客観的な視点をもらう使い方。"},
+{q:"提出前に自分の文章をAIのお客様役にレビューさせる目的は?",c:["提出を遅らせるため","自分では気づけない不安や疑問点を発見するため","文字数を増やすため","AIを褒めるため"],a:1,exp:"自分の成果物は客観視しづらい。第三者視点の攻撃で穴を見つける。"},
+{q:"壁打ちで最も効果的な役割の与え方は?",c:["「あなたはAIです」","「あなたは訪問販売に不信感を持つ60代のお客様です」のように具体的に","役割は与えない","「あなたは神です」"],a:1,exp:"具体的な人物像を与えるほど、リアルで役に立つ反応が返る。"},
+{q:"壁打ちで「遠慮なく指摘して」と付け加える理由は?",c:["礼儀のため","AIは指示しないと肯定的・遠慮がちになりやすいから","文字数調整","意味はない"],a:1,exp:"批判的視点は明示的に求めないと出てきにくい。"},
+{q:"学んだ内容の定着に効く壁打ちの役は?",c:["お客様役","理解の曖昧な部分を質問で突いてくる先輩役","批評家役","通訳役"],a:1,exp:"質問に答えることで理解の穴が見つかる。"}
+]},
+{id:"c1-08",t:"修正指示:差分指示の技術",min:"20分",terms:["イテレーション"],
+body:`<h3>「なんかいい感じにして」を卒業する</h3>
+<p>1回で完成しないのは当たり前。大事なのは<b>修正指示の質</b>や。修正もプロンプト設計の一部で、雑な修正指示は雑な修正しか生まへん。</p>
+<span class="exlabel bad">悪い修正指示</span>
+<div class="exbox">なんか違う。もっといい感じにして</div>
+<span class="exlabel good">良い修正指示(差分指示)</span>
+<div class="exbox">見出しは良いのでそのまま。
+本文の2文目が説明的すぎるので、
+お客様の悩みの描写に置き換えて。
+文字数とトーンは維持。</div>
+<h3>差分指示の3点セット</h3>
+<ul>
+<li><b>保持:</b>変えないでほしい部分を明示する(これがないと良い部分まで変わる)</li>
+<li><b>変更:</b>どこを・どう変えるかを具体的に</li>
+<li><b>理由:</b>なぜ変えるのか(理由が伝わると意図に沿った修正になる)</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>「違和感がある」と感じたら、まず<b>自分で違和感を言語化する</b>。それができへんうちは、AIにも伝わらへん。言語化の練習こそが修正指示の練習や。テンプレタブに「修正指示(差分指示)の型」があるから使うこと。</div>`,
+task:["過去に作った文章をAIに1つ修正させる。ただし必ず「保持・変更・理由」の3点セットで指示する","「もっといい感じに」で修正させた場合と結果を見比べる"],
+quiz:[
+{q:"良い修正指示に必ず含めるべき「3点セット」は?",c:["感想・希望・お礼","保持する部分・変更する部分・理由","日付・名前・件名","起承転結"],a:1,exp:"保持を明示しないと良い部分まで変わってしまう。差分指示が基本。"},
+{q:"「なんかいい感じにして」という修正指示の問題点は?",c:["失礼だから","何をどう変えるべきかAIに伝わらないから","長すぎるから","英語ではないから"],a:1,exp:"違和感を言語化できていない指示は、意図と違う修正を生む。"},
+{q:"修正指示に「理由」を添えると何が良くなる?",c:["AIの機嫌","意図に沿った修正になる","処理速度","文字数"],a:1,exp:"なぜ変えるかが伝わると、AIは指示の意図を汲んだ修正ができる。"},
+{q:"修正指示で「保持」を書かないと起きることは?",c:["何も起きない","良かった部分まで変わってしまう","高速化する","保存される"],a:1,exp:"変えたくない部分の明示が差分指示の肝。"},
+{q:"「違和感の言語化」が必要な理由は?",c:["日記のため","言語化できないものはAIにも伝わらないから","義務だから","かっこいいから"],a:1,exp:"言語化の練習こそが修正指示の練習。"}
+]},
+{id:"c1-09",t:"前提プロンプト:会社情報の定型化",min:"25分",terms:["コンテキスト","ナレッジベース"],
+body:`<h3>毎回同じ説明をするのは無駄</h3>
+<p>KYOEIの会社概要・ブランド・トーン規定を毎回打つのは非効率や。<b>「前提プロンプト」として定型文化</b>しておき、新しいチャットの最初に貼るのがKYOEI流。</p>
+<span class="exlabel good">前提プロンプトの構成例</span>
+<div class="exbox"># 前提情報(以後この条件で回答して)
+
+## 会社
+株式会社KYOEI(大阪府堺市)。
+事業は2つ:①外壁塗装・大規模修繕 ②IT事業(CraftFile開発)
+
+## CraftFileとは
+建設・塗装業界向けのSaaS(業務管理システム)
+
+## ブランド
+- ネイビー #1E2A47 / オレンジ #F08519 / オフホワイト #F7F8F6
+- オレンジは強調・CTAのみ(面積10〜20%まで)
+
+## トーン
+- お客様向け:あたたかく誠実。不安を煽る表現は禁止
+- 専門用語には一言説明を添える</div>
+<h3>育て方</h3>
+<p>前提プロンプトは一度作って終わりやなく、業務で「また同じ説明してるな」と気づくたびに追記して育てる。3ヶ月後には君専用の最強の相棒になってるはずや。</p>
+<div class="pointbox"><b>ポイント:</b>この前提プロンプトはNotionのナレッジベースに置いて、いつでもコピペできるようにする。お手本ライブラリと並ぶ二大資産や。</div>`,
+task:["上の構成例を参考に、自分用のKYOEI前提プロンプトを作る","Notionのナレッジベースに保存する","実際に新しいチャットの冒頭に貼って1つ業務文章を作り、効果を確認する"],
+quiz:[
+{q:"「前提プロンプト」を作る目的は?",c:["AIに挨拶するため","毎回同じ会社説明を打つ無駄をなくし、出力を安定させるため","文字数を稼ぐため","AIをテストするため"],a:1,exp:"定型化した前提を最初に貼れば、毎回のプロンプトが短く・出力が安定する。"},
+{q:"前提プロンプトに入れるべき情報として適切でないのは?",c:["ブランドカラー","会社の事業内容","トーン規定","自分のログインパスワード"],a:3,exp:"パスワードやAPIキーなどの秘密情報は絶対にプロンプトに書かない。"},
+{q:"前提プロンプトの正しい育て方は?",c:["一度作ったら変えない","「また同じ説明してる」と気づくたびに追記して育てる","毎日ゼロから作り直す","他社のものをコピーする"],a:1,exp:"業務の中で繰り返し説明していることを吸収させて育てるのが正解。"},
+{q:"前提プロンプトを貼るタイミングは?",c:["会話の最後","新しいチャットの最初","気が向いたとき","貼らない"],a:1,exp:"最初に前提を渡してから本題に入る。"},
+{q:"前提プロンプトを「育てる」とは?",c:["長くすればよい","繰り返し説明していることに気づいたら追記していく","毎日書き直す","他人に任せる"],a:1,exp:"業務の中で吸収させて自分専用に強くする。"}
+]},
+{id:"c1-10",t:"実務:お客様向け文章を作る",min:"30分",terms:["ファクトチェック"],
+body:`<h3>ここからは実務そのものが教材</h3>
+<p>ここまでの型(RCGCO・Few-shot・分解・壁打ち・差分指示)を総動員して、お客様向け文章を作る。KYOEIの現場で実際に必要になる文章や。</p>
+<h3>お客様向け文章の鉄則</h3>
+<ul>
+<li><b>不安を煽らない。</b>「放置すると大変なことに!」は禁止。事実を伝えて判断を委ねる</li>
+<li><b>専門用語に一言説明。</b>「チョーキング(外壁を触ると白い粉がつく劣化サイン)」のように</li>
+<li><b>次の行動を1つだけ示す。</b>CTAを複数並べると人は動かへん</li>
+<li><b>固有名詞・数値はファクトチェック。</b>お客様向けは特に厳格に</li>
+</ul>
+<h3>作る文章の種類と場面</h3>
+<ul>
+<li><b>見積もり送付メール</b>:金額だけ送らず、見どころ(どこにお金がかかるか)を添える</li>
+<li><b>着工前の挨拶文</b>:工期・作業時間・騒音への配慮を明記</li>
+<li><b>完工お礼状</b>:感謝+アフターフォロー(定期点検)への橋渡し</li>
+<li><b>ご近所への挨拶文</b>:迷惑をかける内容と期間を正直に、連絡先を明記</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>提出前チェック3点:①誤字ゼロか ②数値・固有名詞を検証したか ③お客様役AIの壁打ちを通したか。この3点はこの先ずっと全成果物に適用する。</div>`,
+task:["「見積もり送付メール」「着工前挨拶文」「完工お礼状」の3本をRCGCOで作る","3本ともお客様役AIの壁打ちを通して改善版にする","完成版を真殿さんに提出してレビューを受ける"],
+quiz:[
+{q:"お客様向け文章でKYOEIが禁止している表現は?",c:["感謝の言葉","不安を煽る表現","専門用語の説明","挨拶"],a:1,exp:"「放置すると大変なことに!」のような煽りは禁止。事実を伝えて判断を委ねる。"},
+{q:"CTA(行動喚起)の正しい設計は?",c:["選択肢を多く並べる","次の行動を1つだけ示す","CTAは入れない","全部太字にする"],a:1,exp:"行動の選択肢が多いと人は動かない。1つに絞る。"},
+{q:"提出前チェック3点に含まれないのは?",c:["誤字ゼロか","数値・固有名詞を検証したか","お客様役AIの壁打ちを通したか","文章をできるだけ長くしたか"],a:3,exp:"長さは価値ではない。チェック3点は誤字・検証・壁打ち。"},
+{q:"専門用語をお客様向け文章で使うときのルールは?",c:["使わない","一言説明を添える","英語にする","太字にする"],a:1,exp:"「チョーキング(触ると白い粉がつく劣化サイン)」のように。"},
+{q:"完工お礼状の役割は?",c:["請求のみ","感謝+アフターフォロー(定期点検)への橋渡し","広告","日報"],a:1,exp:"次の関係につなげるのがお礼状の実務的価値。"}
+]},
+{id:"c1-11",t:"画像生成の基礎",min:"25分",terms:["透過(アルファチャンネル)","PNG / JPEG / PDF"],
+body:`<h3>画像生成もプロンプト設計</h3>
+<p>画像生成AI(ChatGPTのImagesなど)も、文章と同じで<b>指示の具体性が品質を決める</b>。感覚的な単語(「かっこいい」「いい感じ」)は伝わらへん。</p>
+<span class="exlabel bad">悪い例</span>
+<div class="exbox">かっこいい会社っぽい画像を作って</div>
+<span class="exlabel good">良い例</span>
+<div class="exbox">Instagram投稿用の正方形画像(1080x1080)を生成してください。
+
+# 内容
+戸建て住宅の外観イラスト。左半分がくすんだ色、
+右半分が塗装後の鮮やかな色(ビフォーアフターの表現)
+
+# スタイル
+- フラットデザイン、清潔感のあるミニマルなイラスト
+- メイン:ネイビー #1E2A47 / アクセント:オレンジ #F08519
+- 背景:オフホワイト #F7F8F6
+
+# 構図
+- 中央に住宅、上下に余白(あとでテキストを載せるため)
+- テキストは画像内に入れない</div>
+<h3>画像プロンプトの指定要素</h3>
+<ul>
+<li><b>用途とサイズ</b>(SNS用1080x1080、バナー用など)</li>
+<li><b>内容</b>(何が描かれているか)</li>
+<li><b>スタイル</b>(フラット/写実/水彩…+ブランドカラー)</li>
+<li><b>構図</b>(配置・余白・テキストの有無)</li>
+</ul>
+<h3>絶対NGルール</h3>
+<p>実在の人物・他社のロゴ・キャラクターや作品に似せる指示は<b>権利リスクがあるので禁止</b>。「〇〇風」という指示も避ける。</p>
+<div class="pointbox"><b>ポイント:</b>テキスト(文字)は画像に入れさせない。AIの文字は崩れやすいし、あとでCanvaで載せる方が修正も効く。「文字はCanvaで」がKYOEIの鉄則。</div>`,
+task:["上の良い例を参考に、施工事例紹介用のアイキャッチ画像をブランドカラー指定で生成する","3案生成して1案選ぶ(1発採用しない練習)"],
+quiz:[
+{q:"画像生成プロンプトで指定すべき要素に含まれないのは?",c:["用途とサイズ","スタイルとブランドカラー","構図と余白","AIの好きな色"],a:3,exp:"用途・内容・スタイル・構図を人間が指定する。AI任せにしない。"},
+{q:"KYOEIで画像内にテキストを入れさせない理由は?",c:["文字が有料だから","AIの文字は崩れやすく、Canvaで後入れの方が修正も効くから","法律で禁止だから","読めると困るから"],a:1,exp:"「文字はCanvaで」が鉄則。生成時は余白を確保しておく。"},
+{q:"画像生成で権利リスクがあるため禁止されている指示は?",c:["ブランドカラーの指定","実在人物や他社ロゴ・キャラに似せる指示","余白の指定","正方形サイズの指定"],a:1,exp:"実在人物・他社IP・「〇〇風」は権利リスク。KYOEIでは禁止。"},
+{q:"画像を3案生成して1案選ぶ理由は?",c:["料金が同じだから","生成はブレるので選定を挟むと品質が安定する","時間潰し","保存のため"],a:1,exp:"1発採用しないのがプロの進め方。"},
+{q:"画像生成で用途とサイズを最初に決める理由は?",c:["特にない","用途で構図・比率・余白の設計が変わるから","料金のため","AIの希望"],a:1,exp:"目的定義が最初の工程。"}
+]},
+{id:"c1-12",t:"Canvaとブランドルール",min:"25分",terms:["ブランドキット","カラーコード","Bulk Create"],
+body:`<h3>KYOEIブランドカラー(暗記必須)</h3>
+<ul>
+<li><b>ネイビー #1E2A47</b>:メイン。信頼・堅実</li>
+<li><b>オレンジ #F08519</b>:アクセント。強調・CTAのみ、<b>面積10〜20%まで</b></li>
+<li><b>オフホワイト #F7F8F6</b>:ベース背景</li>
+<li>経営層向け提案書だけは<b>ネイビー×シャンパンゴールド</b>の上位トーン</li>
+</ul>
+<h3>Canvaで押さえる機能</h3>
+<ul>
+<li><b>ブランドキット</b>:会社の色・ロゴ・フォントを登録。毎回スポイトで色を探さない</li>
+<li><b>整列・等間隔配置</b>:1pxのズレも直す。ズレた資料は信用を失う</li>
+<li><b>テンプレート複製</b>:ゼロから作らない。過去の良い資料を複製して改変する</li>
+<li><b>Bulk Create</b>:CSVを流し込んで名刺などを一括量産(社内の名刺制作で実績あり)</li>
+<li><b>書き出し設定</b>:SNS→PNG / 印刷→PDF(印刷用) / 共有→PDF(標準)</li>
+</ul>
+<h3>ファイル命名規則</h3>
+<div class="exbox">YYYYMMDD_用途_内容_版数
+例:20260720_IG投稿_施工事例堺市A邸_v2.png</div>
+<div class="pointbox"><b>ポイント:</b>デザインの上手さより先に「規定を守る・整列する・命名する」。この3つができてる人の資料は、それだけでプロに見える。センスは型の反復から後で生まれる。</div>`,
+task:["Canvaのブランドキットを確認し、KYOEIカラー3色が登録されているか確かめる(なければ真殿さんに確認)","過去資料を1つ複製し、整列機能だけで見た目を整えてみる","作ったファイルを命名規則で保存する"],
+quiz:[
+{q:"KYOEIのメインカラー(ネイビー)のカラーコードは?",c:["#F08519","#1E2A47","#F7F8F6","#000000"],a:1,exp:"ネイビー#1E2A47がメイン。オレンジ#F08519はアクセント、#F7F8F6が背景。"},
+{q:"オレンジ(#F08519)の正しい使い方は?",c:["全面に使う","強調・CTAのみ、面積10〜20%まで","使ってはいけない","背景色として使う"],a:1,exp:"オレンジはアクセント。使いすぎると安っぽくなる。"},
+{q:"ファイル名「20260720_IG投稿_施工事例堺市A邸_v2.png」の命名規則の並び順は?",c:["内容_日付_用途_版数","日付_用途_内容_版数","版数_日付_内容_用途","自由"],a:1,exp:"YYYYMMDD_用途_内容_版数。ファイル管理も品質のうち。"},
+{q:"経営層向け提案書に使う上位トーンの配色は?",c:["赤×黒","ネイビー×シャンパンゴールド","緑×紫","全部オレンジ"],a:1,exp:"通常はネイビー×オレンジ、提案書は上位トーン。"},
+{q:"Canvaのブランドキットの利点は?",c:["料金が無料になる","誰が作ってもKYOEIらしい色・フォントになる","自動投稿できる","印刷が不要になる"],a:1,exp:"毎回スポイトで色を探す手間も消える。"}
+]},
+{id:"c1-13",t:"制作ワークフローと検品",min:"25分",terms:["セーフエリア","トーン&マナー"],
+body:`<h3>KYOEI標準ワークフロー6工程</h3>
+<p>AI画像+Canvaの制作は、毎回この6工程で進める。体に染み込むまで意識的に:</p>
+<ul>
+<li><b>①目的定義</b>:何に使う・サイズ・テキストの有無を先に決める</li>
+<li><b>②生成プロンプト設計</b>:RCGCO+ブランドカラー+余白指定+テキストなし</li>
+<li><b>③生成→選定</b>:3案出して1案選ぶ。1発採用しない</li>
+<li><b>④Canvaで組版</b>:テキスト・ロゴ・CTAはCanva側で載せる</li>
+<li><b>⑤検品</b>:下のチェックリストを通す</li>
+<li><b>⑥書き出し→命名規則で保存</b></li>
+</ul>
+<h3>検品チェックリスト(全成果物に適用)</h3>
+<ul>
+<li>誤字脱字ゼロか(AI生成文は固有名詞・数字を重点的に)</li>
+<li>色がブランドコード通りか(スポイトで確認)</li>
+<li>余白・セーフエリアは適切か(端ギリギリに文字を置かない)</li>
+<li>AI特有の破綻(指・文字化け・歪み)がないか</li>
+<li>実在人物・他社ロゴ・著作物に似ていないか</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>検品は「やったつもり」が一番危ない。チェックリストを物理的に見ながら1項目ずつ潰す。提出物には「検品済み」と添えて出す習慣をつける。</div>`,
+task:["6工程を守って、SNS投稿画像を1枚完成させる(生成→Canva組版→検品→命名保存)","検品チェックリストの5項目を1つずつ確認した記録を添えて真殿さんに提出"],
+quiz:[
+{q:"ワークフロー③で「3案出して1案選ぶ」理由は?",c:["時間を潰すため","1発採用より選定を挟む方が品質が安定するから","AIの練習のため","料金が同じだから"],a:1,exp:"生成はブレる。複数案からの選定を挟むのがプロの進め方。"},
+{q:"検品チェックリストに含まれないのは?",c:["誤字脱字の確認","ブランドカラーのスポイト確認","AI特有の破綻の確認","ファイルサイズを最大にする"],a:3,exp:"検品は誤字・色・余白・破綻・権利の5観点。"},
+{q:"テキストやロゴを載せる工程はどこ?",c:["AI生成時に画像内に入れる","Canvaでの組版時に載せる","検品後に手書きする","載せない"],a:1,exp:"文字はCanvaで。生成画像はテキストなし+余白確保が前提。"},
+{q:"提出物に「検品済み」と添える目的は?",c:["文字数稼ぎ","検品を工程として定着させ、受け手の信頼を作る","義務","飾り"],a:1,exp:"検品の習慣化と可視化。"},
+{q:"AI特有の破綻の例は?",c:["ファイルサイズ","指の本数や文字の崩れ・歪み","色が付くこと","保存形式"],a:1,exp:"生成画像は破綻チェックが検品項目に入る。"}
+]},
+{id:"c1-14",t:"AI基礎 修了テスト",min:"60分",terms:[],
+body:`<h3>このコースの総仕上げ</h3>
+<p>ここまでの13レッスンで学んだことを総動員する修了レッスンや。下の実践課題(制作課題)を完成させて真殿さんに提出したうえで、確認テストに合格したらコース2(ChatGPT徹底活用)が解放される。</p>
+<h3>制作課題:販促ミニパッケージ</h3>
+<p>テーマ:<b>「KYOEIの外壁無料診断サービス」</b>を題材に、以下の3点セットを作る:</p>
+<ul>
+<li><b>①案内文</b>(お客様向け・200字前後・RCGCOで設計)</li>
+<li><b>②SNS投稿文</b>(Instagram向け・ハッシュタグ付き)</li>
+<li><b>③アイキャッチ画像</b>(生成→Canva組版・ブランドカラー準拠)</li>
+</ul>
+<h3>提出条件</h3>
+<ul>
+<li>使ったプロンプトを全部記録して添付(プロンプト設計書)</li>
+<li>お客様役AIの壁打ちを最低1回通すこと</li>
+<li>検品チェックリスト5項目の確認記録を添付</li>
+<li>ファイルは命名規則で保存</li>
+</ul>
+<div class="pointbox"><b>合格基準:</b>下の確認テスト全問正解+制作課題の真殿さんレビューで「修正なしで社外に出せるレベル」の評価。テストだけ通して課題を飛ばすのはナシやで。</div>`,
+task:["制作課題3点セットを完成させる","プロンプト設計書・壁打ち記録・検品記録を添付して真殿さんに提出する","レビューの指摘があれば差分指示の型で修正する"],
+quiz:[
+{q:"RCGCOの5要素を順番に並べたものはどれ?",c:["役割・文脈・目的・制約・出力形式","目的・役割・感想・制約・結論","文脈・役割・理由・確認・出力","役割・目標・期限・予算・担当"],a:0,exp:"Role/Context/Goal/Constraints/Output。KYOEIの標準の型。"},
+{q:"AIの回答に「堺市の補助金は最大30万円」とあった。正しい行動は?",c:["そのまま資料に使う","数字を切りの良い50万円に変える","堺市の公式サイトで確認してから使う","補助金の話を削除する"],a:2,exp:"数値・制度はハルシネーションの危険地帯。必ず一次情報で確認。"},
+{q:"修正指示として最も適切なのは?",c:["「もっといい感じに」","「全部やり直して」","「見出しは維持。本文2文目を悩みの描写に置き換えて。トーンは維持」","「上手にお願いします」"],a:2,exp:"保持・変更・理由の差分指示。これがコース1で身につけるべき修正の型。"},
+{q:"画像生成→Canvaの正しい役割分担は?",c:["文字も画像もAIで完結","画像はAI・文字とロゴはCanva","文字はAI・画像はCanva","全部手描き"],a:1,exp:"AIの文字は崩れやすい。「文字はCanvaで」が鉄則。"},
+{q:"提出前チェック3点として正しい組み合わせは?",c:["誤字ゼロ・数値検証・壁打ち済み","文字数最大・画像多め・提出は早朝","AI任せ・未確認・即提出","印刷・製本・郵送"],a:0,exp:"誤字・ファクトチェック・壁打ち。全成果物に適用する。"},
+{q:"Few-shot(例示)とは?",c:["短く聞く技術","お手本を1〜3個貼って品質を安定させる技術","何度も聞くこと","例を禁止すること"],a:1,exp:"最も費用対効果の高いプロンプト技術。"},
+{q:"壁打ちの目的は?",c:["AIと雑談する","役割を与えた対話で成果物や考えを客観的に鍛える","時間を潰す","記録を残す"],a:1,exp:"お客様役・批評家役で提出前に穴を見つける。"},
+{q:"前提プロンプトの保管場所として適切なのは?",c:["記憶だけ","ナレッジベース(Notion等)でいつでもコピペできる状態","紙のみ","保管しない"],a:1,exp:"お手本ライブラリと並ぶ二大資産。"}
+]},
+]};
+
+/* ================= Web制作コース:プロンプトでWeb制作 ================= */
+const COURSE2 = {
+id:"c2", no:5, name:"プロンプトでWeb制作",
+desc:"HTML/CSS/JSを理解し、AIと協業して単一HTMLのプロトタイプを作れるようになる",
+lessons:[
+{id:"c2-01",t:"Webの仕組み:3つの言語の役割",min:"20分",terms:["HTML","CSS","JavaScript(JS)"],
+body:`<h3>Webページは3つの言語でできている</h3>
+<p>どんなWebサイトも、この3つの組み合わせでできている。家づくりに例えると:</p>
+<ul>
+<li><b>HTML = 骨組み(構造)</b>:柱・壁・部屋の間取り。見出し・文章・ボタンがどこにあるか</li>
+<li><b>CSS = 内装(見た目)</b>:壁紙・塗装・家具の配置。色・大きさ・並び方</li>
+<li><b>JavaScript = 設備(動き)</b>:スイッチを押すと電気がつく。ボタンを押すと計算が動く</li>
+</ul>
+<h3>ブラウザが翻訳している</h3>
+<p>ChromeやSafariなどのブラウザは、この3つの言語で書かれたファイルを受け取って、人間が見られる画面に変換(描画)している。つまり<b>Web制作=ブラウザへの指示書を書くこと</b>や。</p>
+<h3>このコースの学び方(重要)</h3>
+<p>KYOEI流の学習順序は<b>「写経 → 改造 → ゼロから」</b>:</p>
+<ul>
+<li><b>写経</b>:動くコードを自分の手で打って動かす(コピペせず打つ)</li>
+<li><b>改造</b>:色・文言・数を変えて、どこが何に対応するか体で覚える</li>
+<li><b>ゼロから</b>:何も見ずに書いてみて、詰まったらAIに聞く</li>
+</ul>
+<div class="pointbox"><b>AI使用ルール:</b>AIは常時使ってOK。ただし順番は「まず自分で書く→AIに添削させる→差分を理解する」。AIの出力を理解せず写すのは、このコースで一番やったらあかんことや。</div>`,
+task:["メモ帳(またはVSCode)に「こんにちは」とだけ書いたファイルを test.html として保存し、ブラウザで開いてみる","AIに「HTML/CSS/JSの役割を家づくりに例えて説明して」と聞き、自分の言葉で1分で説明できるようにする"],
+quiz:[
+{q:"Webページの「見た目(色・配置)」を担当する言語は?",c:["HTML","CSS","JavaScript","Python"],a:1,exp:"HTMLが骨組み、CSSが見た目、JSが動き。"},
+{q:"「ボタンを押したら計算結果が表示される」機能を担当するのは?",c:["HTML","CSS","JavaScript","PDF"],a:2,exp:"動き・処理はJavaScriptの担当。"},
+{q:"KYOEI流の学習順序として正しいのは?",c:["ゼロから→写経→改造","写経→改造→ゼロから","AIに全部書かせて終わり","暗記→試験→忘れる"],a:1,exp:"動くものを打つ→変えて理解→自力で書く、の順で body に染み込ませる。"},
+{q:"ブラウザの役割は?",c:["ファイルの保存","3つの言語で書かれた指示書を画面に描画(翻訳)する","メール送信","印刷"],a:1,exp:"Web制作=ブラウザへの指示書を書くこと。"},
+{q:"写経で「コピペせず手で打つ」理由は?",c:["伝統だから","打つ過程で構造が体に入り、エラーにも気づけるから","速いから","かっこいいから"],a:1,exp:"体で覚えるのが写経の目的。"}
+]},
+{id:"c2-02",t:"HTML:タグと文書構造",min:"30分",terms:["タグ","クラス(class)"],
+body:`<h3>HTMLはタグの入れ子でできている</h3>
+<p>タグは <b>&lt;開始タグ&gt;中身&lt;/終了タグ&gt;</b> の形で書く部品や。まず最低限の骨格:</p>
+<div class="exbox">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;ページのタイトル&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  ここに見える内容を書く
+&lt;/body&gt;
+&lt;/html&gt;</div>
+<h3>最初に覚えるタグ10個</h3>
+<ul>
+<li><b>h1〜h3</b>:見出し(h1が最重要。1ページ1個)</li>
+<li><b>p</b>:段落(文章)</li>
+<li><b>a</b>:リンク(href属性で行き先を指定)</li>
+<li><b>img</b>:画像(src属性でファイル指定)</li>
+<li><b>ul / li</b>:箇条書きリスト</li>
+<li><b>div</b>:汎用の箱(グループ化に使う)</li>
+<li><b>button</b>:ボタン</li>
+<li><b>input</b>:入力欄</li>
+<li><b>header / footer</b>:ページの上部/下部</li>
+</ul>
+<h3>class:部品に名前をつける</h3>
+<div class="exbox">&lt;div class="price-card"&gt;
+  &lt;h2&gt;シリコン塗料プラン&lt;/h2&gt;
+  &lt;p&gt;耐用年数 約10〜13年&lt;/p&gt;
+&lt;/div&gt;</div>
+<p>classで名前をつけると、あとでCSSやJSから「price-cardという名前の部品」を狙い撃ちできる。</p>
+<div class="pointbox"><b>ポイント:</b>タグは暗記大会やない。「見出しはh、段落はp、箱はdiv」くらいの感覚を持って、あとは書きながら覚える。分からんタグはAIに「このタグ何?」と聞けばええ。</div>`,
+task:["自己紹介ページを自力で書く(名前・趣味の箇条書き・好きな言葉の見出し・画像1枚)。AIは使わない","完成したらAIに全文を貼って添削させ、指摘を1つずつ自分の言葉で説明する"],
+quiz:[
+{q:"ブラウザに実際に表示される内容を書く場所は?",c:["<head>の中","<body>の中","<title>の中","ファイル名"],a:1,exp:"headはページの設定情報、bodyが表示される中身。"},
+{q:"箇条書きリストを作るタグの組み合わせは?",c:["<p>と<a>","<ul>と<li>","<h1>と<h2>","<img>と<div>"],a:1,exp:"ul(リストの箱)の中にli(項目)を並べる。"},
+{q:"HTMLの部品にclassで名前をつける主な理由は?",c:["ファイルが軽くなるから","CSSやJSからその部品を狙い撃ちできるから","法律で必要だから","見た目が変わるから"],a:1,exp:"classは後工程(CSS装飾・JS操作)のための名札。"},
+{q:"headとbodyの違いは?",c:["同じもの","head=ページの設定情報、body=表示される中身","headが下にある","bodyは省略必須"],a:1,exp:"表示したいものはbodyに書く。"},
+{q:"h1タグの正しい使い方は?",c:["何個でも使う","1ページ1個の最重要見出しとして使う","装飾用","使わない"],a:1,exp:"h1は1ページ1個が基本。"}
+]},
+{id:"c2-03",t:"CSS:ボックスモデルと装飾",min:"30分",terms:["セレクタ","ボックスモデル","margin / padding"],
+body:`<h3>CSSの基本形</h3>
+<div class="exbox">セレクタ {
+  プロパティ: 値;
+}
+
+/* 例:price-cardクラスの部品を装飾 */
+.price-card {
+  background: #F7F8F6;
+  color: #1E2A47;
+  padding: 16px;
+  border-radius: 12px;
+}</div>
+<p>セレクタで「どの部品に」、プロパティで「何を」、値で「どうする」を指定する。classを狙うときは頭にドット(.price-card)。</p>
+<h3>ボックスモデル:全部品は「箱」</h3>
+<p>HTMLの部品はすべて4層の箱でできている。<b>これはWeb制作で一番大事な概念</b>や:</p>
+<ul>
+<li><b>中身(content)</b>:テキストや画像そのもの</li>
+<li><b>padding</b>:箱の内側の余白(壁と家具の間)</li>
+<li><b>border</b>:枠線(壁そのもの)</li>
+<li><b>margin</b>:箱の外側の余白(家と塀の間)</li>
+</ul>
+<h3>最初に覚えるプロパティ</h3>
+<div class="exbox">color: #1E2A47;        /* 文字色 */
+background: #F7F8F6;   /* 背景色 */
+font-size: 16px;       /* 文字サイズ */
+font-weight: 700;      /* 太さ(700=太字) */
+padding: 16px;         /* 内側余白 */
+margin: 8px;           /* 外側余白 */
+border-radius: 12px;   /* 角丸 */
+border: 1px solid #ccc;/* 枠線 */</div>
+<div class="pointbox"><b>ポイント:</b>「余白が変」と感じたら、まずmarginとpaddingのどっちの問題かを切り分ける。ブラウザのDevTools(F12)で部品をクリックすると、箱の4層が色分け表示されるから活用すること。</div>`,
+task:["前レッスンの自己紹介ページを、KYOEIカラー3色(#1E2A47/#F08519/#F7F8F6)を使って装飾する","ボックスモデルの4層の図を紙に描いて、marginとpaddingの違いを説明できるようにする"],
+quiz:[
+{q:"箱の「内側の余白」を指定するプロパティは?",c:["margin","padding","border","color"],a:1,exp:"padding=内側(壁と家具の間)、margin=外側(家と塀の間)。"},
+{q:"classが「card」の部品をCSSで狙うセレクタの書き方は?",c:["card","#card",".card","@card"],a:2,exp:"classはドット始まり(.card)。#はid用。"},
+{q:"「カードとカードの間隔を広げたい」。主にどのプロパティを触る?",c:["color","font-size","margin(またはgap)","border-radius"],a:2,exp:"部品同士の間隔は外側余白=margin(並べる場合はgapも)。"},
+{q:"DevToolsでボックスモデルを確認する方法は?",c:["印刷する","要素をクリックすると4層が色分け表示される","再起動する","音で聞く"],a:1,exp:"margin/paddingの切り分けに必須の道具。"},
+{q:"border-radiusの効果は?",c:["文字色を変える","角を丸くする","余白を消す","太字にする"],a:1,exp:"角丸はカードUIの基本。"}
+]},
+{id:"c2-04",t:"Flexbox/Gridで並べる",min:"30分",terms:["Flexbox","Grid"],
+body:`<h3>「並べる」問題はFlexboxでほぼ解決</h3>
+<p>横並び・中央寄せ・等間隔——レイアウトの悩みの8割はFlexboxで解決する。親の箱に display:flex を指定すると、中の子どもたちが一列に並ぶ:</p>
+<div class="exbox">.card-row {
+  display: flex;          /* 子を横一列に */
+  gap: 12px;              /* 子同士の間隔 */
+  justify-content: center;/* 横方向の寄せ(左/中央/右/等間隔) */
+  align-items: center;    /* 縦方向の寄せ */
+}</div>
+<h3>覚える値</h3>
+<ul>
+<li><b>justify-content</b>:flex-start(左)/ center(中央)/ space-between(両端+等間隔)</li>
+<li><b>align-items</b>:center で縦の中央揃え</li>
+<li><b>flex-direction: column</b>:縦並びに切り替え</li>
+</ul>
+<h3>Gridはマス目レイアウト</h3>
+<p>「3列のギャラリー」のようなマス目状はGridの出番:</p>
+<div class="exbox">.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 等幅3列 */
+  gap: 12px;
+}</div>
+<div class="pointbox"><b>使い分け:</b>一列に並べる(1次元)=Flex、マス目に並べる(2次元)=Grid。迷ったらまずFlexでやってみて、表みたいになってきたらGridに切り替えたらええ。</div>`,
+task:["「ヘッダー(ロゴ左・メニュー右)」「カード3枚横並び」「画面中央寄せ」の3パターンをFlexboxで作る","施工事例ギャラリー(3列)をGridで作る"],
+quiz:[
+{q:"子要素を横一列に並べる指定は?",c:["display:block","display:flex","display:none","display:table"],a:1,exp:"親にdisplay:flexで子が一列に並ぶ。並べる問題の基本解。"},
+{q:"Flexの子同士の間隔を指定するプロパティは?",c:["gap","space","distance","between"],a:0,exp:"gap:12px のように指定。marginを個別に振るよりきれい。"},
+{q:"「写真を3列のマス目状に並べたい」。適切なのは?",c:["display:flexのみ","display:grid + grid-template-columns","tableタグ","改行を入れる"],a:1,exp:"2次元のマス目はGrid。repeat(3,1fr)で等幅3列。"},
+{q:"Flexの並びを縦に切り替える指定は?",c:["flex-direction: column","display:none","gap:0","align:top"],a:0,exp:"columnで縦並びになる。"},
+{q:"justify-content: space-between の意味は?",c:["中央寄せ","両端に寄せて間を等間隔にする","非表示にする","右寄せのみ"],a:1,exp:"ヘッダー(ロゴ左・メニュー右)の定番。"}
+]},
+{id:"c2-05",t:"レスポンシブとdvh(KYOEI最重点)",min:"30分",terms:["レスポンシブ","メディアクエリ","vh / dvh"],
+body:`<h3>KYOEIはモバイル最優先の会社</h3>
+<p>お客様も職人もスマホで見る。<b>スマホで崩れる画面は存在しないのと同じ</b>——これがKYOEIの品質基準や。画面幅に応じて見た目を変える仕組みがレスポンシブデザイン。</p>
+<h3>メディアクエリ</h3>
+<div class="exbox">/* 基本はスマホ向けに書く(モバイルファースト) */
+.gallery { grid-template-columns: 1fr; }
+
+/* 画面幅768px以上(タブレット/PC)ならこっち */
+@media (min-width: 768px) {
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+}</div>
+<h3>100vh禁止・100dvhを使う(KYOEIルール5)</h3>
+<p>「画面の高さいっぱい」を指定する単位に vh と dvh がある。スマホのブラウザはアドレスバーが出たり消えたりして画面の高さが動くんやけど、<b>vhはそれを考慮せず、下がはみ出したりガタつく</b>。dvh(dynamic viewport height)は動きに追従する。</p>
+<div class="exbox">/* NG(KYOEIでは禁止) */
+.hero { height: 100vh; }
+
+/* OK */
+.hero { height: 100dvh; }</div>
+<p>実はCraftFileでも過去に100vh→100dvhへ53ファイル全部を移行した歴史がある。実プロダクトの教訓としてルール化されてるんや。</p>
+<div class="pointbox"><b>確認の作法:</b>DevTools(F12)のスマホ表示モードだけやなく、<b>必ず自分のスマホ実機でも確認</b>する。実機でしか出ない崩れが必ずある。</div>`,
+task:["前レッスンのギャラリーページをモバイルファーストで書き直す(スマホ1列→768px以上で3列)","自分のスマホ実機で開いて崩れがないか確認する"],
+quiz:[
+{q:"KYOEIで100vhが禁止されている理由は?",c:["古い書き方だから","スマホのアドレスバーの出入りに追従せず表示が崩れるから","有料だから","PCで動かないから"],a:1,exp:"vhはスマホの画面高の変動を考慮しない。dvhを使うのが全社方針。"},
+{q:"「画面幅768px以上のときだけ適用するCSS」を書く仕組みは?",c:["コメント","メディアクエリ @media","変数","タグの順番"],a:1,exp:"@media (min-width: 768px){...} で切り替える。"},
+{q:"レスポンシブ確認の正しい作法は?",c:["PCで見れば十分","DevToolsのスマホモード+自分のスマホ実機の両方で確認","印刷して確認","確認しない"],a:1,exp:"実機でしか出ない崩れがある。実機確認はKYOEIの必須工程。"},
+{q:"モバイルファーストとは?",c:["スマホを最後に確認する","基本をスマホ向けに書き、広い画面をメディアクエリで上書きする","PC専用に設計する","アプリを作ること"],a:1,exp:"KYOEIはモバイル最優先の会社。"},
+{q:"100dvhルールがKYOEIで生まれた背景は?",c:["流行だから","CraftFileで実際に53ファイルをvhからdvhへ移行した教訓","偶然","外部の指示"],a:1,exp:"実プロダクトの不具合経験がルール化されている。"}
+]},
+{id:"c2-06",t:"フォームUIとタップターゲット",min:"25分",terms:["バリデーション","タップターゲット","モーダル"],
+body:`<h3>入力UIの部品たち</h3>
+<div class="exbox">&lt;label&gt;お名前
+  &lt;input type="text" placeholder="山田太郎"&gt;
+&lt;/label&gt;
+
+&lt;label&gt;築年数
+  &lt;select&gt;
+    &lt;option&gt;10年未満&lt;/option&gt;
+    &lt;option&gt;10〜20年&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/label&gt;
+
+&lt;label&gt;ご相談内容
+  &lt;textarea&gt;&lt;/textarea&gt;
+&lt;/label&gt;
+
+&lt;button&gt;無料診断を申し込む&lt;/button&gt;</div>
+<ul>
+<li><b>label</b>:入力欄の名前。labelで包むと、文字をタップしても入力欄が反応する(スマホで超大事)</li>
+<li><b>placeholder</b>:入力例の薄い文字。「説明」の代わりにはならへんので注意</li>
+<li><b>required属性</b>:必須入力の指定(バリデーションの第一歩)</li>
+</ul>
+<h3>タップターゲット44px(KYOEIルール7)</h3>
+<p>スマホで指で押す部品(ボタン・リンク・チェックボックス)は<b>44px以上の大きさ</b>を確保する。小さいボタンは「押せない」んやなくて「押し間違える」。お客様のストレスに直結する。</p>
+<div class="exbox">button {
+  min-height: 44px;
+  padding: 12px 16px;
+}</div>
+<div class="pointbox"><b>ポイント:</b>CraftFileのモバイルUI監査でも、タップターゲット不足は実際に修正対象になった観点や。「自分の親指で押しやすいか」を実機で確かめるのが一番確実。</div>`,
+task:["無料診断申し込みフォームのUIを作る(名前・住所・築年数・相談内容・送信ボタン)。送信機能はまだ不要","全ボタン・入力欄が44px以上あるか実機で親指チェックする"],
+quiz:[
+{q:"labelで入力欄を包む利点は?",c:["色が変わる","ラベル文字をタップしても入力欄が反応する","送信が速くなる","文字が大きくなる"],a:1,exp:"タップ領域が広がる。スマホUIでは特に重要。"},
+{q:"KYOEIのタップターゲット基準は?",c:["10px以上","24px以上","44px以上","特になし"],a:2,exp:"44px以上。開発ルール7ヶ条のひとつ。"},
+{q:"placeholder(入力例の薄い文字)の注意点は?",c:["必ず赤にする","入力すると消えるので「説明」の代わりにしてはいけない","英語で書く","長いほど良い"],a:1,exp:"入力を始めると消える。項目の説明はlabelに書く。"},
+{q:"required属性の役割は?",c:["装飾","必須入力の指定(バリデーションの第一歩)","高速化","削除"],a:1,exp:"空のまま送信させないための基本。"},
+{q:"タップターゲット44pxを確認する一番確実な方法は?",c:["目測","実機で自分の親指で押してみる","印刷して測る","AIに聞くだけ"],a:1,exp:"実機の親指チェックが最終確認。"}
+]},
+{id:"c2-07",t:"JavaScript基礎1:変数と関数",min:"30分",terms:["変数","関数","console.log"],
+body:`<h3>変数:データに名前をつけた箱</h3>
+<div class="exbox">const companyName = "KYOEI";  // 変わらない値
+let total = 0;                 // 変わる値
+
+const pricePerSqm = 2800;      // 数値
+const isCampaign = true;       // 真偽値(true/false)
+const message = \`\${companyName}の見積もり\`; // 文字の埋め込み</div>
+<p>基本は<b>constで宣言</b>、後から変わるものだけlet。</p>
+<h3>console.log:中身を見る習慣</h3>
+<p>ブラウザでF12→Consoleタブを開くと、console.logで出力した中身が見える。<b>「変数の中身が想像と合ってるか」を常に確認する習慣</b>が、この先のデバッグ力を決める:</p>
+<div class="exbox">console.log(total);         // 0
+console.log("合計:", total); // ラベル付きで出すと見やすい</div>
+<h3>関数:処理に名前をつけた機械</h3>
+<div class="exbox">// 面積と単価を入れると金額が出てくる機械
+function calcPrice(area, unitPrice) {
+  const price = area * unitPrice;
+  return price;  // 結果を返す
+}
+
+const result = calcPrice(120, 2800);
+console.log(result); // 336000</div>
+<p>引数(材料)を受け取り、returnで結果を返す。<b>「材料を入れると結果が出てくる機械」</b>のイメージや。</p>
+<div class="pointbox"><b>ポイント:</b>書いたら必ずconsole.logで確認。「たぶん動いてる」は禁止。1行書いて1回確認、くらいのペースでちょうどええ。</div>`,
+task:["「築年数を入れると推奨メンテ時期(築年数+12年)を返す関数」を自力で書き、console.logで確認する","AIに添削させ、指摘を自分の言葉で説明する"],
+quiz:[
+{q:"後から値が変わらない変数の宣言に使うのは?",c:["let","const","var","new"],a:1,exp:"基本はconst。変わるものだけlet。"},
+{q:"console.logの役割は?",c:["ファイルを保存する","変数の中身などをConsoleに表示して確認する","画面を装飾する","AIに送信する"],a:1,exp:"中身の確認=デバッグの原点。習慣にする。"},
+{q:"関数のreturnがやっていることは?",c:["処理を中止する","結果を呼び出し元に返す","画面に表示する","変数を削除する"],a:1,exp:"returnで結果を返すから、受け取って次の処理に使える。"},
+{q:"letで宣言するのはどんな変数?",c:["すべての変数","後から値が変わる変数","定数","文字列専用"],a:1,exp:"基本はconst、変わるものだけlet。"},
+{q:"「1行書いて1回確認」の目的は?",c:["作業を遅くするため","想定と実際のズレを早期発見するため","義務だから","保存のため"],a:1,exp:"「たぶん動いてる」を禁止する習慣。"}
+]},
+{id:"c2-08",t:"JavaScript基礎2:配列・オブジェクト・JSON",min:"30分",terms:["配列","オブジェクト","JSON"],
+body:`<h3>配列:順番のあるリスト</h3>
+<div class="exbox">const areas = ["堺市", "岸和田市", "和泉市"];
+console.log(areas[0]);      // "堺市"(0から数える)
+console.log(areas.length);  // 3</div>
+<h3>オブジェクト:名前つきのデータまとめ</h3>
+<div class="exbox">const project = {
+  name: "堺市A邸",
+  area: 120,
+  status: "見積もり中"
+};
+console.log(project.name); // "堺市A邸"</div>
+<p>案件・顧客・見積もり——業務データはぜんぶこの形。CraftFileの中身も突き詰めればオブジェクトの集まりや。</p>
+<h3>配列×オブジェクト+3つの必修メソッド</h3>
+<div class="exbox">const projects = [
+  { name: "堺市A邸", area: 120, city: "堺市" },
+  { name: "岸和田B邸", area: 95, city: "岸和田市" },
+  { name: "堺市C邸", area: 140, city: "堺市" }
 ];
 
-/* ================= テンプレデータ ================= */
+// forEach:1件ずつ処理
+projects.forEach(p => console.log(p.name));
+
+// filter:条件で絞り込み
+const sakai = projects.filter(p => p.city === "堺市");
+
+// map:変換して新しい配列を作る
+const names = projects.map(p => p.name);</div>
+<p><b>filterとmapは、この先ReactでもCraftFileでも毎日使う。</b>ここで完全に手に馴染ませること。</p>
+<div class="pointbox"><b>JSONとは:</b>オブジェクトを文字として保存・通信するための世界共通の書き方。システム間のデータのやり取りはほぼJSON。「オブジェクトの宅配便用の箱詰め」と思えばええ。</div>`,
+task:["施工事例5件の配列(名前・市・金額)を自分で作る","filterで「堺市のみ」を抽出、mapで「名前だけの配列」を作り、console.logで確認する","金額の合計を計算するコードを書く"],
+quiz:[
+{q:"配列の最初の要素を取り出す書き方は?",c:["areas[1]","areas[0]","areas.first","areas(1)"],a:1,exp:"配列は0から数える。最初は[0]。"},
+{q:"配列から「条件に合うものだけ」を絞り込むメソッドは?",c:["map","filter","push","join"],a:1,exp:"filterが絞り込み、mapが変換。Reactでも毎日使う。"},
+{q:"JSONの説明として正しいのは?",c:["画像の形式","オブジェクトを文字として保存・通信する世界共通の書き方","日本発の規格","パスワードの一種"],a:1,exp:"データのやり取りの標準形式。オブジェクトの箱詰め。"},
+{q:"mapメソッドの役割は?",c:["条件で絞り込む","各要素を変換して新しい配列を作る","削除する","並び替える"],a:1,exp:"filterが絞り込み、mapが変換。"},
+{q:"projects.length が返すものは?",c:["最後の要素","配列の要素数","合計金額","最初の要素"],a:1,exp:"件数の表示や判定に使う。"}
+]},
+{id:"c2-09",t:"DOMとイベント:ページを動かす",min:"30分",terms:["DOM","イベント"],
+body:`<h3>DOM:JSから見たHTMLの設計図</h3>
+<p>ブラウザはHTMLを読み込むとDOMという設計図を作る。JavaScriptはこのDOMを通じてページの中身を書き換える。部品を取得する基本:</p>
+<div class="exbox">// class="result" の部品を取得
+const resultEl = document.querySelector(".result");
+
+// 中身のテキストを書き換える
+resultEl.textContent = "概算:33.6万円";
+
+// classを付け外しして見た目を変える
+resultEl.classList.add("highlight");</div>
+<h3>イベント:操作をきっかけに動かす</h3>
+<div class="exbox">const btn = document.querySelector(".calc-btn");
+
+btn.addEventListener("click", () => {
+  console.log("押された!");
+  resultEl.textContent = "計算しました";
+});</div>
+<p>addEventListenerで「clickされたらこの処理」と登録する。input(入力のたび)、change(値の確定)、submit(フォーム送信)もよく使うイベントや。</p>
+<h3>流れをつかむ</h3>
+<ul>
+<li>①部品を取得(querySelector)</li>
+<li>②イベントを登録(addEventListener)</li>
+<li>③イベントの中で、値を読む・計算する・表示を書き換える</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>「取得→登録→書き換え」の3ステップが動きの基本形。どんな複雑なアプリも、突き詰めればこの繰り返しでできてる。</div>`,
+task:["ボタンを押すと文言と背景色が変わるページを作る","入力欄に文字を打つたびに文字数がリアルタイム表示される機能を作る(inputイベント)"],
+quiz:[
+{q:"class=\"result\"の部品をJSで取得する書き方は?",c:["document.querySelector(\".result\")","document.get(\"result\")","html.find(result)","select .result"],a:0,exp:"querySelectorにCSSと同じセレクタを渡す。"},
+{q:"「クリックされたら処理を動かす」ための登録方法は?",c:["console.log","addEventListener(\"click\", 処理)","alert","setTimeout"],a:1,exp:"addEventListenerでイベントと処理を結びつける。"},
+{q:"部品のテキストを書き換えるプロパティは?",c:["textContent","fontSize","className","href"],a:0,exp:"el.textContent = \"新しい文字\" で書き換え。"},
+{q:"inputイベントが発火するタイミングは?",c:["ページ読み込み時","入力欄に文字が入力されるたび","1日1回","保存時のみ"],a:1,exp:"リアルタイム反映に使う。changeは値の確定時。"},
+{q:"classList.add の用途は?",c:["ファイルを追加する","要素にクラスを付けて見た目を切り替える","配列に追加する","保存する"],a:1,exp:"JSから見た目を変える基本手段。"}
+]},
+{id:"c2-10",t:"結合:動く見積もりツールを作る",min:"45分",terms:["プロトタイプ"],
+body:`<h3>ここが最初の大きな山や</h3>
+<p>これまで別々に学んだ「フォームUI(c2-06)」と「計算ロジック(c2-07,08)」を<b>DOMとイベント(c2-09)で接続</b>して、動く見積もりツールを完成させる。</p>
+<h3>設計図</h3>
+<ul>
+<li><b>入力:</b>外壁面積(数値)、塗料グレード(select:シリコン/フッ素/無機)、足場の有無(チェック)</li>
+<li><b>処理:</b>面積 × グレード別単価 + 足場代 を計算する関数</li>
+<li><b>出力:</b>「概算:○○万円」を画面に表示</li>
+</ul>
+<h3>実装のヒント</h3>
+<div class="exbox">const unitPrices = { silicon: 2800, fluorine: 3800, inorganic: 4800 };
+
+function calc() {
+  const area = Number(document.querySelector(".area").value);
+  const grade = document.querySelector(".grade").value;
+  const scaffold = document.querySelector(".scaffold").checked;
+  const price = area * unitPrices[grade] + (scaffold ? 150000 : 0);
+  document.querySelector(".result").textContent =
+    "概算:" + (price / 10000).toFixed(1) + "万円";
+}
+
+document.querySelector(".calc-btn").addEventListener("click", calc);</div>
+<p><b>まず自力で書く。</b>上のヒントは見てもいいが、コピペではなく打って、1行ずつ何をしてるか説明できる状態にすること。</p>
+<div class="pointbox"><b>動いた瞬間を大事に:</b>初めて自分のツールが動く体験は一生もんや。動いたらスクショを撮って真殿さんに送ること。ここまで来たら、もう「コードが書けへん人」やない。</div>`,
+task:["見積もりツールを完成させる(入力→計算→表示)","数値以外を入力したときにエラーにならないよう対策する(Numberの結果をチェック)","動いた画面のスクショを真殿さんに送る"],
+quiz:[
+{q:"入力欄の値をJSで読むとき、数値計算の前にやるべきことは?",c:["大文字にする","Number()で数値に変換する","翻訳する","保存する"],a:1,exp:"inputのvalueは文字列。Number()で数値化しないと計算がおかしくなる。"},
+{q:"「ボタンを押したら計算して表示」の処理の正しい流れは?",c:["表示→計算→取得","取得→計算→表示","保存→送信→印刷","計算→取得→削除"],a:1,exp:"値を取得→関数で計算→結果をtextContentで表示。"},
+{q:"チェックボックスがチェックされているかを調べるプロパティは?",c:[".value",".checked",".textContent",".length"],a:1,exp:"checkboxは.checkedがtrue/falseで返る。"},
+{q:"グレード別単価をオブジェクトで持つ利点は?",c:["見た目が良い","unitPrices[grade]で参照でき、追加・変更が1箇所で済む","高速化のみ","特にない"],a:1,exp:"データと処理を分けると変更に強くなる。"},
+{q:"「足場ありなら15万加算」を1行で書ける記法は?",c:["scaffold ? 150000 : 0","for文","alert","try"],a:0,exp:"三項演算子。条件 ? 真の値 : 偽の値。"}
+]},
+{id:"c2-11",t:"fetch・LocalStorage:データの出入り",min:"30分",terms:["API","fetch","LocalStorage","非同期処理"],
+body:`<h3>fetch:外からデータを取ってくる</h3>
+<p>APIは「プログラム同士がデータをやり取りする窓口」。JSからはfetchで取りに行く:</p>
+<div class="exbox">async function getAddress() {
+  const res = await fetch(
+    "https://zipcloud.ibsnet.co.jp/api/search?zipcode=5900948"
+  );
+  const data = await res.json();
+  console.log(data.results[0].address2); // "堺区"
+}</div>
+<p>通信は時間がかかるので<b>await(待つ)</b>をつける。これが非同期処理。深い理屈は後回しでよくて、「通信するときはasync/awaitの型で書く」とまず覚える。</p>
+<h3>LocalStorage:ブラウザに保存する</h3>
+<div class="exbox">// 保存(文字しか入らないのでJSONにして入れる)
+localStorage.setItem("estimate", JSON.stringify({ area: 120, grade: "silicon" }));
+
+// 取り出し
+const saved = JSON.parse(localStorage.getItem("estimate") || "{}");</div>
+<p>ページを閉じても残る小さな倉庫。今使ってるこの研修アプリの進捗キャッシュも同じ仕組みで動いてる。</p>
+<div class="pointbox"><b>ポイント:</b>fetchは「取りに行く」、LocalStorageは「手元に置いとく」。この2つで「データが出入りするアプリ」が作れるようになる。静的なページから一段レベルが上がる瞬間や。</div>`,
+task:["郵便番号APIで住所を表示する機能を見積もりツールに追加する","見積もりツールの入力値をLocalStorageに保存し、再読み込みしても復元されるようにする"],
+quiz:[
+{q:"JSから外部APIにデータを取りに行く命令は?",c:["print","fetch","save","import"],a:1,exp:"fetchで取得し、res.json()でデータ化する。"},
+{q:"fetchにawaitをつける理由は?",c:["丁寧だから","通信は時間がかかるので結果を待ってから次に進むため","エラーが消えるから","高速になるから"],a:1,exp:"非同期処理。待たずに進むとデータが無いまま処理してしまう。"},
+{q:"LocalStorageにオブジェクトを保存するときに必要なのは?",c:["JSON.stringifyで文字にする","暗号化する","画像にする","何もしなくていい"],a:0,exp:"LocalStorageは文字しか入らない。JSON.stringify/parseとセットで使う。"},
+{q:"res.json() がやることは?",c:["印刷する","通信結果をJSで扱えるデータに変換する","削除する","暗号化する"],a:1,exp:"fetchとセットで使う変換処理。"},
+{q:"LocalStorageから取り出した値にJSON.parseを使う理由は?",c:["使わなくてよい","文字として保存されているので元のオブジェクトに戻すため","高速化","翻訳のため"],a:1,exp:"stringify(保存)とparse(復元)はセット。"}
+]},
+{id:"c2-12",t:"デバッグ:エラーと向き合う技術",min:"30分",terms:["デバッグ","DevTools","エラーログ"],
+body:`<h3>エラーは敵やなくて道しるべ</h3>
+<p>エラー文は「どこで・何が起きたか」を教えてくれる案内板や。読み方の基本:</p>
+<div class="exbox">Uncaught TypeError: Cannot read properties of null
+    (reading 'textContent')
+    at calc (index.html:42)</div>
+<ul>
+<li><b>at index.html:42</b> → 42行目で起きた</li>
+<li><b>Cannot read properties of null</b> → nullのプロパティを読もうとした=<b>querySelectorで部品が取れてない</b>(classのスペルミスが定番)</li>
+</ul>
+<h3>頻出エラー3種と定番原因</h3>
+<ul>
+<li><b>〜 of null / undefined</b>:部品が取得できてない。セレクタのスペル・読み込み順を疑う</li>
+<li><b>〜 is not a function</b>:メソッド名のスペルミス、または対象の型が違う</li>
+<li><b>Unexpected token</b>:カッコや引用符の閉じ忘れ(構文エラー)</li>
+</ul>
+<h3>AIへのエラー相談テンプレ(4点セット)</h3>
+<div class="exbox">## やりたいこと
+## 書いたコード(全文)
+## エラー全文(コピペ)
+## 試したこと</div>
+<p>この4点を渡せば、AIはほぼ確実に原因を特定してくれる。<b>エラー文を自分で要約せず全文コピペ</b>するのがコツや(要約すると手がかりが消える)。</p>
+<div class="pointbox"><b>15分ルール:</b>詰まったら15分は自力+AIで格闘する。それでもアカンかったら質疑提出シートで真殿さんへ。「エラーで半日溶かす」のだけは避けること。</div>`,
+task:["自分の見積もりツールにわざとバグを3つ仕込み(スペルミス等)、エラー文を読んで全部直す","直せないフリをして、エラー相談テンプレ4点セットでAIに相談する練習を1回やる"],
+quiz:[
+{q:"エラー文「at index.html:42」から分かることは?",c:["42個エラーがある","42行目で起きた","42秒かかった","42点だった"],a:1,exp:"ファイル名:行番号。まずその行を見に行く。"},
+{q:"「Cannot read properties of null」の定番の原因は?",c:["ネット切断","querySelectorで部品が取得できていない(スペルミス等)","PCの故障","AIの不調"],a:1,exp:"nullは「取れてない」のサイン。セレクタを疑う。"},
+{q:"AIにエラー相談するとき、エラー文はどう渡す?",c:["自分の言葉で要約する","全文そのままコピペする","スクショを口頭で説明する","渡さない"],a:1,exp:"要約すると手がかりが消える。全文コピペが鉄則。"},
+{q:"「Unexpected token」エラーの定番原因は?",c:["ネット切断","カッコや引用符の閉じ忘れ(構文エラー)","PCの故障","メモリ不足"],a:1,exp:"構文の対応関係を確認する。"},
+{q:"15分ルールの狙いは?",c:["サボり防止のみ","自力で粘る力と、時間を溶かさないことの両立","罰則","休憩の確保"],a:1,exp:"15分格闘→質疑シートの流れ。"}
+]},
+{id:"c2-13",t:"AIと作る単一HTMLプロトタイプ(KYOEI流)",min:"45分",terms:["プロトタイプ","要件 / 要件定義"],
+body:`<h3>KYOEIの開発文化:単一HTML→フィードバック→本実装</h3>
+<p>KYOEIでは新機能を作るとき、いきなり本体を触らず<b>単一HTMLファイルでプロトタイプ(試作品)</b>を作り、見て触って方向性を固めてから本実装する。CraftFileの多くの機能が実際にこの流れで生まれてる。君もこの文化の担い手になる。</p>
+<h3>AIにプロトタイプを作らせる要件プロンプトの型</h3>
+<div class="exbox"># 依頼
+単一HTMLファイルでプロトタイプを作ってください。
+HTML/CSS/JSをすべて1ファイルに含めてください。
+
+# 何を作るか
+(例:施工現場の簡易日報入力画面)
+
+# 要件
+- 入力項目:現場名 / 天気 / 作業内容 / 写真枚数
+- 保存ボタンでLocalStorageに保存、一覧に追加表示
+- スマホ最優先のレイアウト(タップターゲット44px以上)
+
+# デザイン
+- ネイビー #1E2A47 / オレンジ #F08519 / 背景 #F7F8F6
+- 高さ指定はdvhを使う(vh禁止)
+
+# 完成条件
+- スマホで崩れないこと</div>
+<h3>生成されたコードとの向き合い方(最重要)</h3>
+<ul>
+<li>生成されたら<b>まず全部読む</b>。分からん行はAIに「この行何?」と聞く</li>
+<li>そのまま使わず、<b>最低3箇所は自分の意図で改造</b>する(色・文言・機能)</li>
+<li>「AIに任せた部分/自分で書いた部分/修正した部分」を説明できる状態で提出</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>AIはコードを書く速さでは人間に勝つ。君の価値は<b>「要件を言語化する力」と「出力を検品する力」</b>。このレッスンはその両方の訓練や。</div>`,
+task:["上の型を使って、AIに「簡易日報入力画面」の単一HTMLプロトタイプを作らせる","全行に目を通し、分からない行をAIに解説させる","3箇所以上を自分の意図で改造し、実機確認して真殿さんに提出"],
+quiz:[
+{q:"KYOEIで新機能をいきなり本体に実装せず、まず単一HTMLで作る理由は?",c:["本体が壊れているから","見て触って方向性を固めてから本実装する方が手戻りが少ないから","HTMLしか書けないから","流行だから"],a:1,exp:"プロトタイプ→フィードバック→本実装がKYOEIの開発文化。"},
+{q:"AIが生成したコードとの正しい向き合い方は?",c:["読まずにそのまま提出","全行読み、分からない行は解説させ、自分の意図で改造する","印刷して保管","削除する"],a:1,exp:"理解せず写すのが最大のNG。読む・聞く・改造するの3点セット。"},
+{q:"AI時代の開発補佐の価値の源泉は?",c:["タイピング速度","要件を言語化する力と出力を検品する力","徹夜できる体力","AIより速く書くこと"],a:1,exp:"書くのはAIが速い。言語化と検品が人間の仕事。"},
+{q:"要件プロンプトに「触ってはいけない領域」を書く理由は?",c:["文字数のため","AIが想定外の場所を変更するのを防ぐため","かっこいいから","省略してよい"],a:1,exp:"範囲の明示は事故防止の基本。"},
+{q:"生成コードを最低3箇所改造する目的は?",c:["時間潰し","理解の確認と、自分の意図を通す訓練","AIへの対抗","義務だから"],a:1,exp:"読んで・聞いて・改造して自分のものにする。"}
+]},
+{id:"c2-14",t:"Web制作 修了テスト",min:"90分",terms:[],
+body:`<h3>このコースの総仕上げ</h3>
+<p>制作課題を完成させて真殿さんに提出し、確認テストに合格したらコース6(社内システム開発)が解放される。</p>
+<h3>制作課題:光熱費・塗装メンテ費シミュレータ(単一HTML)</h3>
+<ul>
+<li><b>入力:</b>建物の階数 / 外壁面積 / 塗料グレード(3種) / 前回塗装からの年数</li>
+<li><b>処理:</b>グレード別単価で概算費用を計算。年数に応じて「推奨時期」の判定を表示</li>
+<li><b>保存:</b>入力値をLocalStorageに保存し、再訪問時に復元</li>
+<li><b>UI:</b>スマホ最優先・dvh使用・タップ44px以上・KYOEIカラー</li>
+</ul>
+<h3>提出条件</h3>
+<ul>
+<li>AIとの協業はOK。ただし「AIに任せた/自分で書いた/修正した」部分の申告を添付</li>
+<li>スマホ実機のスクショ(縦向き)を添付</li>
+<li>コード内の任意の10行について、口頭で「これは何をしてる?」に答えられること(真殿さんが質問する)</li>
+</ul>
+<div class="pointbox"><b>合格基準:</b>確認テスト全問正解+制作課題レビュー合格(動作・実機・コード理解)。<b>特にコード理解の口頭試問が通らなければ、他が完璧でも不合格</b>。写しただけでは先に進ませへんのがKYOEIの方針や。</div>`,
+task:["シミュレータを完成させる","申告書(AI協業の内訳)とスマホ実機スクショを添付して提出","口頭試問(10行説明)を受ける"],
+quiz:[
+{q:"HTMLの部品はすべて4層の箱でできている。内側から正しい順は?",c:["margin→border→padding→中身","中身→padding→border→margin","中身→margin→padding→border","border→中身→margin→padding"],a:1,exp:"中身→padding(内側余白)→border(枠)→margin(外側余白)。"},
+{q:"projects配列から堺市の案件だけ取り出すコードは?",c:["projects.map(p => p.city)","projects.filter(p => p.city === \"堺市\")","projects.push(\"堺市\")","projects.length"],a:1,exp:"絞り込みはfilter。mapは変換。"},
+{q:"スマホで「画面の高さいっぱい」を指定するKYOEIの正解は?",c:["height: 100vh","height: 100dvh","height: 100%","height: auto"],a:1,exp:"vhは禁止。dvhがアドレスバーの変動に追従する。"},
+{q:"「Cannot read properties of null」が出た。最初に疑うべきは?",c:["PCの寿命","querySelectorのセレクタ(スペルミス等)","ネット回線","AIの機嫌"],a:1,exp:"nullは部品が取れてないサイン。"},
+{q:"入力値をページ再訪問時にも復元したい。使う仕組みは?",c:["fetch","LocalStorage","console.log","alert"],a:1,exp:"ブラウザ内の保存はLocalStorage。JSON.stringify/parseとセットで。"},
+{q:"addEventListenerの役割は?",c:["保存する","イベント(クリック等)と処理を結びつける","印刷する","翻訳する"],a:1,exp:"取得→登録→書き換えの「登録」担当。"},
+{q:"「画面幅768px以上で3列」を実現する仕組みは?",c:["コメント","@media (min-width:768px) のメディアクエリ","タグの順番","運"],a:1,exp:"レスポンシブの基本道具。"},
+{q:"fetchの前にawaitを付ける理由は?",c:["丁寧さの表現","通信の結果を待ってから次の処理に進むため","高速化のため","省略できる"],a:1,exp:"待たないとデータがないまま処理が進む。"}
+]},
+]};
+
+/* ================= コース6:社内システム開発 ================= */
+const COURSE3 = {
+id:"c3", no:6, name:"社内システム開発",
+desc:"CraftFileの改修・新機能・社内システムの新規構築を、安全に担えるようになる",
+lessons:[
+{id:"c3-01",t:"開発の全体像とKYOEI三大禁止事項",min:"25分",terms:["本番環境","Coolify","デプロイ"],
+body:`<h3>このコースで目指す姿</h3>
+<p>このコースのゴールは「CraftFileや社内システムの改修・新規構築を、<b>安全に</b>担える」こと。技術より先に、まず<b>安全</b>の話からや。</p>
+<h3>KYOEIのデプロイの仕組み(超重要)</h3>
+<p>CraftFileはCoolifyという仕組みで自社サーバに載っていて、<b>git pushした瞬間に自動で本番環境(お客様が使っている画面)へ反映される</b>。つまりpushは「保存」やなくて「全お客様への公開ボタン」や。</p>
+<h3>三大禁止事項(暗唱レベルで)</h3>
+<ul>
+<li><b>①指示なしでgit pushしない。</b>例外なし。pushの前に必ず真殿さんの明示的な指示を確認</li>
+<li><b>②mainブランチで直接作業しない。</b>必ず自分のブランチを切る</li>
+<li><b>③--force系・履歴改変コマンドを使わない。</b>push --force / reset --hard(共有ブランチ)は真殿さん同席時のみ</li>
+</ul>
+<h3>開発の全体の流れ</h3>
+<ul>
+<li>①要件を決める → ②ブランチを切る → ③実装(AIと協業)→ ④next buildがグリーンか確認 → ⑤PRを出してレビュー → ⑥指示があればpush/マージ→本番反映</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>研修中の作業はすべてsandbox(壊してもいい練習環境)でやる。本番に触るのはコース修了後、真殿さんの管理下でのOJTからや。禁止事項に触れる操作を求められた気がしたら、実行せず即・真殿さんに直接確認(これは質疑シート不要の例外)。</div>`,
+task:["三大禁止事項を見ずに書き出す","「なぜKYOEIではpushが即・本番反映になるのか」を自分の言葉で説明する"],
+quiz:[
+{q:"KYOEIでgit pushすると何が起きる?",c:["ファイルが保存されるだけ","Coolify経由で本番環境に自動反映される","メールが送信される","何も起きない"],a:1,exp:"push=本番公開。だから指示なしのpushは絶対禁止。"},
+{q:"三大禁止事項に含まれないのは?",c:["指示なしのgit push","mainブランチでの直接作業","--force系コマンド","console.logを使うこと"],a:3,exp:"console.logはむしろ推奨。禁止はpush・main直接・force系。"},
+{q:"本番に影響しそうな操作の判断に迷ったときの正しい行動は?",c:["とりあえず実行してみる","実行せず即・真殿さんに直接確認する","質疑シートを書いてから翌日聞く","AIに決めてもらう"],a:1,exp:"本番影響の判断は質疑シート不要・即直接確認の例外事項。"},
+{q:"sandboxとは?",c:["本番環境","壊してもいい練習環境","砂場遊び","禁止区域"],a:1,exp:"研修中の作業は基本ここでやる。"},
+{q:"開発の流れの最初のステップは?",c:["実装","要件を決める","push","レビュー"],a:1,exp:"要件→ブランチ→実装→build→PR→指示があれば反映。"}
+]},
+{id:"c3-02",t:"VSCodeとターミナル",min:"30分",terms:["VSCode","ターミナル","コマンド","パス"],
+body:`<h3>VSCode:これからの主戦場</h3>
+<p>VSCodeは開発用の高機能エディタ。最初に覚える操作:</p>
+<ul>
+<li><b>フォルダを開く</b>(ファイル単体やなくプロジェクトのフォルダごと開く)</li>
+<li><b>Cmd/Ctrl+P</b>:ファイル名検索で瞬間移動</li>
+<li><b>Cmd/Ctrl+Shift+F</b>:プロジェクト全体からテキスト検索</li>
+<li><b>Cmd/Ctrl+/</b>:選択行をコメント化</li>
+<li><b>拡張機能</b>:日本語化・Prettier(自動整形)あたりから</li>
+</ul>
+<h3>ターミナル:文字でPCに指示する</h3>
+<p>VSCode内蔵ターミナル(Ctrl+\`)で開ける。まず6つのコマンド:</p>
+<div class="exbox">pwd        # いまどこにいるか(現在地のパス)
+ls         # このフォルダに何があるか一覧
+cd 名前     # フォルダに移動(cd .. で1つ上へ)
+mkdir 名前  # フォルダを作る
+touch 名前  # 空ファイルを作る
+cat 名前    # ファイルの中身を表示</div>
+<p><b>パス=ファイルの住所。</b>「今どこにいて、どこのファイルを触っているか」を常に意識するのがターミナルの第一歩や。</p>
+<div class="pointbox"><b>ポイント:</b>ターミナルは「壊しそうで怖い」と感じるもんやけど、上の6コマンドは全部安全。逆に、<b>rm(削除)系と、見覚えのないコマンドをAIに言われるがまま打つのは危険</b>。実行前に「このコマンド何するん?」とAIに確認する癖をつける。</div>`,
+task:["VSCodeをインストールし、練習用フォルダを開いて拡張機能(日本語化・Prettier)を入れる","ターミナルだけで「フォルダ作成→中にHTMLファイル作成→lsで確認→catで中身表示」をやる"],
+quiz:[
+{q:"ターミナルで「いま自分がどこにいるか」を確認するコマンドは?",c:["ls","pwd","cd","mkdir"],a:1,exp:"pwd=print working directory。現在地のパスが出る。"},
+{q:"1つ上のフォルダに移動するコマンドは?",c:["cd ..","ls ..","up","back"],a:0,exp:"cd .. で1階層上へ。..は「1つ上」の意味。"},
+{q:"AIに見覚えのないコマンドを提示されたときの正しい行動は?",c:["すぐ実行する","実行前に「このコマンドは何をするか」を確認する","無視する","再起動する"],a:1,exp:"特に削除系・force系は要注意。理解してから実行が鉄則。"},
+{q:"VSCodeのCmd/Ctrl+Pの機能は?",c:["印刷","ファイル名検索で瞬間移動","貼り付け","電源オフ"],a:1,exp:"巨大プロジェクトでの移動の基本。"},
+{q:"AIに提示された削除系(rm等)コマンドの扱いは?",c:["即実行","実行前に何をするコマンドか確認する","無視する","再起動する"],a:1,exp:"理解してから実行が鉄則。"}
+]},
+{id:"c3-03",t:"Git基礎:コミットとブランチ",min:"40分",terms:["Git","コミット","ブランチ","マージ"],
+body:`<h3>Git:変更履歴のタイムマシン</h3>
+<p>Gitは「いつ・誰が・何を変えたか」を記録する道具。セーブポイント(コミット)を作りながら進めば、いつでも過去に戻れる。</p>
+<h3>基本サイクル(1日に何度も回す)</h3>
+<div class="exbox">git status                  # いま何が変わってるか確認
+git add .                   # 変更をステージに載せる
+git commit -m "見積画面の単価計算を修正"  # セーブ
+
+git log --oneline           # セーブ履歴を見る</div>
+<h3>コミットメッセージの書き方</h3>
+<ul>
+<li><b>「何をなぜ」</b>が分かるように:「修正」だけはNG。「見積画面:足場代の計算漏れを修正」ならOK</li>
+<li>1コミット=1つの意味のまとまり(全部まとめて1コミットにしない)</li>
+</ul>
+<h3>ブランチ:作業用の並行世界</h3>
+<div class="exbox">git switch -c feature/estimate-fix   # 新しいブランチを切って移動
+git switch main                      # mainに戻る
+git branch                           # ブランチ一覧(*が現在地)</div>
+<p>本体(main)を直接触らず、コピーした世界(ブランチ)で作業して、完成したら合流(マージ)する。<b>KYOEIでは作業前のブランチ作成が必須</b>(禁止事項②)。</p>
+<div class="pointbox"><b>作業前の指差し確認:</b>「git branch で現在地を確認。mainにいたらブランチを切る」。これを毎回の最初の動作にする。飛行機のパイロットの離陸前チェックと同じや。</div>`,
+task:["練習用フォルダをgit initでリポジトリ化し、コミットを5回作って git log で履歴を見る","feature/testブランチを切ってファイルを変更→コミット→mainに戻って差を確認する"],
+quiz:[
+{q:"変更のセーブポイントを作るコマンドは?",c:["git save","git commit","git push","git copy"],a:1,exp:"commit=セーブ。pushは送信(KYOEIでは指示があるまで禁止)。"},
+{q:"良いコミットメッセージは?",c:["「修正」","「いろいろ変更」","「見積画面:足場代の計算漏れを修正」","「aaa」"],a:2,exp:"何をなぜ、が分かるように書く。未来の自分と仲間のため。"},
+{q:"KYOEIで作業を始める前に必ずやることは?",c:["git push","mainで直接編集を始める","git branchで現在地確認し、mainならブランチを切る","PCの再起動"],a:2,exp:"main直接作業は禁止事項②。ブランチ確認が毎回の最初の動作。"},
+{q:"git status の役割は?",c:["セーブする","いま何が変わっているかの確認","送信する","削除する"],a:1,exp:"作業サイクルの最初の確認コマンド。"},
+{q:"「1コミット=1つの意味のまとまり」にする理由は?",c:["見た目のため","履歴が追いやすく、問題時に戻しやすいから","義務だから","速度のため"],a:1,exp:"全部まとめて1コミットは履歴の価値を壊す。"}
+]},
+{id:"c3-04",t:"GitHubとプルリクエスト",min:"40分",terms:["GitHub","clone","PR(プルリクエスト)","コードレビュー","コンフリクト"],
+body:`<h3>GitHub:チーム開発の拠点</h3>
+<p>Gitの履歴をネット上で共有するのがGitHub。CraftFileのコードもここにある。</p>
+<div class="exbox">git clone URL     # リポジトリを自分のPCに丸ごとコピー
+git pull          # 最新の変更を取り込む(作業開始前の習慣)</div>
+<h3>PR(プルリクエスト):変更の申請書</h3>
+<p>「この変更を本体に入れてください」という申請がPR。チーム開発はこの流れで回る:</p>
+<ul>
+<li>①ブランチで作業してコミット → ②GitHubにブランチを上げる → ③PRを作成 → ④レビューを受ける → ⑤指摘を直す → ⑥承認されたらマージ</li>
+</ul>
+<h3>PRの書き方(KYOEIテンプレ)</h3>
+<div class="exbox">## 何を変えたか
+## なぜ変えたか
+## 確認したこと(next build結果 / 実機確認)
+## レビューで特に見てほしい点</div>
+<h3>レビューとの向き合い方</h3>
+<p>レビューの指摘は<b>人格やなくコードへの指摘</b>。むしろ「タダで先輩の知見をもらえる場」や。指摘には「直しました」だけやなく「なぜそうするのか理解したか」を添えると成長が速い。</p>
+<div class="pointbox"><b>コンフリクトは怖くない:</b>2人が同じ場所を変えるとぶつかる(コンフリクト)。エラーやなくて「どっちを採用するか人間が選んでや」という確認や。落ち着いてどちらの変更を残すか選べばいい。初回は真殿さんと一緒にやること。</div>`,
+task:["GitHubアカウントで練習リポジトリを作り、clone→ブランチ→変更→PR作成までを一通りやる(pushは練習リポジトリなのでOK。本番系リポジトリとの違いを意識)","わざとコンフリクトを起こして解決を体験する(真殿さんと一緒に)"],
+quiz:[
+{q:"PR(プルリクエスト)とは?",c:["給料の申請","「この変更を本体に入れてください」という申請","バグの報告書","AIへの依頼文"],a:1,exp:"変更の申請→レビュー→マージがチーム開発の作法。"},
+{q:"コードレビューで指摘を受けたときの正しい捉え方は?",c:["人格否定と受け止める","コードへの指摘であり、知見をもらえる機会と捉える","無視する","反論だけする"],a:1,exp:"レビューは品質の仕組み。理解して直すと一番成長する。"},
+{q:"コンフリクトが起きた。これは?",c:["重大な故障","どちらの変更を採用するか人間が選ぶ確認作業","ウイルス感染","AIのエラー"],a:1,exp:"ぶつかっただけ。落ち着いて採用する方を選べば解決する。"},
+{q:"git pull を実行するタイミングは?",c:["作業の最後","作業開始前に最新を取り込む","push直後","月1回"],a:1,exp:"最新から始めるのがコンフリクト予防にもなる。"},
+{q:"PRテンプレの「確認したこと」に書くべき内容は?",c:["感想","next buildの結果と実機確認","天気","予定"],a:1,exp:"確認の証跡がレビューの信頼を作る。"}
+]},
+{id:"c3-05",t:"TypeScript:型で守る",min:"40分",terms:["TypeScript","型"],
+body:`<h3>CraftFileは全部TypeScript</h3>
+<p>TypeScript(TS)はJavaScriptに「型」を足した言語。型=データの種類の宣言で、間違いを<b>実行する前に</b>見つけてくれる。</p>
+<div class="exbox">// JSなら実行するまで気づけないミスが…
+function calcPrice(area: number, unitPrice: number): number {
+  return area * unitPrice;
+}
+calcPrice("百二十", 2800);
+// ← TSは書いた瞬間に赤線で教えてくれる:
+//   「文字列はnumber型の引数に渡せません」</div>
+<h3>最初に覚える型</h3>
+<div class="exbox">const name: string = "堺市A邸";     // 文字列
+const area: number = 120;           // 数値
+const isDone: boolean = false;      // 真偽値
+const cities: string[] = ["堺市"];  // 文字列の配列
+
+// オブジェクトの型は type で定義する
+type Project = {
+  name: string;
+  area: number;
+  status: "見積もり中" | "施工中" | "完了";  // この3つしか入らない
+};
+const p: Project = { name: "A邸", area: 120, status: "施工中" };</div>
+<h3>型エラーは味方や</h3>
+<p>赤線が出ると「怒られてる」気分になるけど、逆や。<b>本番でお客様がエラーを踏む前に、机の上で教えてくれてる</b>。型エラーを面倒がる人は開発者になられへん。エラー文を読む→分からなければAIに全文貼って解説させる、の流れはJSのデバッグと同じ。</p>
+<div class="pointbox"><b>ポイント:</b>CraftFileのコードを読むとき、typeの定義(データの設計図)から読むと全体が掴みやすい。「このシステムはどんなデータを扱ってるか」が型に全部書いてあるからや。</div>`,
+task:["見積もりツール(Web制作コース)の計算ロジックをTypeScriptの型付きで書き直す(オンラインのTS Playgroundを使用)","Project型を自分で定義し、わざと間違った値を入れて赤線のエラー文を読む"],
+quiz:[
+{q:"TypeScriptの「型」の一番の利点は?",c:["ファイルが軽くなる","間違いを実行前に発見できる","デザインが良くなる","通信が速くなる"],a:1,exp:"本番でエラーを踏む前に、書いた瞬間に気づける。"},
+{q:"「見積もり中・施工中・完了」の3つしか入らない型の書き方は?",c:["string","\"見積もり中\" | \"施工中\" | \"完了\"","number[]","boolean"],a:1,exp:"リテラル型のユニオン。想定外の値の混入を防ぐ。"},
+{q:"型エラーの赤線が出たときの正しい姿勢は?",c:["無視して実行する","エラー文を読み、分からなければAIに全文貼って解説させる","TSをやめてJSに戻す","PCを変える"],a:1,exp:"型エラーは味方からの事前警告。読む→理解する→直す。"},
+{q:"string[] という型の意味は?",c:["文字1個","文字列の配列","数値","真偽値"],a:1,exp:"[]は配列を表す。"},
+{q:"コードをtypeの定義から読み始める利点は?",c:["短いから","システムが扱うデータ全体を先に掴めるから","義務だから","流行だから"],a:1,exp:"型はデータの設計図。全体把握の入口。"}
+]},
+{id:"c3-06",t:"React:部品で画面を作る",min:"45分",terms:["React","コンポーネント","props","state(useState)"],
+body:`<h3>Reactの発想:画面=部品の組み合わせ</h3>
+<p>Reactでは画面を「コンポーネント(部品)」に分けて作る。CraftFileの画面も「案件カード」「ヘッダー」「モーダル」といった部品の組み合わせでできてる。</p>
+<div class="exbox">// 案件カードという部品(コンポーネント)
+function ProjectCard({ name, status }: { name: string; status: string }) {
+  return (
+    &lt;div className="card"&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;span&gt;{status}&lt;/span&gt;
+    &lt;/div&gt;
+  );
+}
+
+// 使う側:propsでデータを渡す
+&lt;ProjectCard name="堺市A邸" status="施工中" /&gt;</div>
+<ul>
+<li><b>props</b>:親から子へデータを渡す仕組み(部品への材料渡し)</li>
+<li>HTMLに似てるけどこれはJSX。classやなく<b>className</b>と書くのが違い</li>
+</ul>
+<h3>state:部品が持つ「今の状態」</h3>
+<div class="exbox">import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;button onClick={() => setCount(count + 1)}&gt;
+      {count} 回押した
+    &lt;/button&gt;
+  );
+}</div>
+<p><b>「stateが変わると画面が自動で描き直される」</b>——これがReactの中心思想や。Web制作コースではDOMを自分で書き換えたけど、Reactでは「状態を変えるだけ。描画はReactがやる」に発想が変わる。</p>
+<div class="pointbox"><b>ポイント:</b>配列データの一覧表示は projects.map(p => &lt;ProjectCard ... /&gt;) と書く。Web制作コースで鍛えたmapがここで直結する。filterで絞り込み→mapで表示、はCraftFileの画面のあちこちで使われてる基本パターンや。</div>`,
+task:["オンラインエディタ(CodeSandboxなど)でProjectCardコンポーネントを作り、propsで3件のデータを渡して表示する","useStateで「ステータス絞り込みボタン(全部/施工中/完了)」を作り、filter+mapで一覧を切り替える"],
+quiz:[
+{q:"親コンポーネントから子コンポーネントへデータを渡す仕組みは?",c:["state","props","fetch","import"],a:1,exp:"propsが材料渡し。stateは部品自身が持つ状態。"},
+{q:"Reactの中心思想として正しいのは?",c:["DOMを自分で細かく書き換える","stateが変わると画面が自動で描き直される","画面は1つの巨大ファイルで作る","CSSは使わない"],a:1,exp:"状態を変えるだけで描画はReactが担当。ここが従来との発想の違い。"},
+{q:"配列データを一覧表示するときに使うメソッドは?",c:["map","push","sort","join"],a:0,exp:"projects.map(p => <Card .../>) が基本パターン。"},
+{q:"JSXでclassではなくclassNameと書く理由は?",c:["好みの問題","JSではclassが予約語(別の意味を持つ)だから","短いから","古い書き方だから"],a:1,exp:"JSXはJSの中に書くため名前が変えてある。"},
+{q:"「絞り込んで一覧表示」のReact定番パターンは?",c:["push+pop","filterで絞ってmapで表示","alert連打","forEachのみ"],a:1,exp:"CraftFileの画面のあちこちで使われている。"}
+]},
+{id:"c3-07",t:"Next.jsとApp Router",min:"40分",terms:["Next.js","App Router","フレームワーク","開発サーバ"],
+body:`<h3>Next.js:CraftFileの土台</h3>
+<p>Next.jsはReactでWebアプリを作るためのフレームワーク(土台キット)。CraftFileはNext.jsのApp Routerという方式で動いてる。</p>
+<h3>フォルダがそのままURLになる</h3>
+<div class="exbox">app/
+├── page.tsx            → /(トップページ)
+├── projects/
+│   ├── page.tsx        → /projects(案件一覧)
+│   └── [id]/
+│       └── page.tsx    → /projects/123(案件詳細)
+└── layout.tsx          → 全ページ共通の枠(ヘッダー等)</div>
+<ul>
+<li><b>page.tsx</b>:そのURLで表示されるページ本体</li>
+<li><b>layout.tsx</b>:共通の枠。ヘッダーやナビはここ</li>
+<li><b>[id]</b>:動的ルート。/projects/123 の「123」を受け取れる</li>
+</ul>
+<h3>開発サーバとビルド</h3>
+<div class="exbox">npm run dev    # 開発サーバ起動(localhost:3000で確認)
+npm run build  # 本番用ビルド(next build)</div>
+<p><b>next buildがグリーン(エラーなし)で通ることが、KYOEIの全チェックポイントの合格条件</b>(開発ルール2)。「動いてるように見える」やなくbuildが通るかで判断する。</p>
+<div class="pointbox"><b>ポイント:</b>CraftFileのコードで迷子になったら、まずURLを見る→appフォルダの対応する場所を探す。「URLとフォルダが対応してる」と分かってれば、巨大なコードベースでも現在地が掴める。</div>`,
+task:["sandbox環境でnpx create-next-appを実行し、開発サーバを起動して初期画面を確認する(真殿さんの指定環境で)","/about と /projects の2ページを追加し、フォルダ→URLの対応を確認する","npm run build を実行してグリーンで通ることを確認する"],
+quiz:[
+{q:"App Routerで /projects というURLのページを作るには?",c:["projects.htmlを作る","app/projects/page.tsx を作る","URLを設定ファイルに書く","作れない"],a:1,exp:"フォルダ構成がそのままURL。page.tsxがページ本体。"},
+{q:"全ページ共通のヘッダーを置くファイルは?",c:["page.tsx","layout.tsx","style.css","index.html"],a:1,exp:"layout.tsxが共通の枠。個別ページはpage.tsx。"},
+{q:"KYOEIで作業の合格条件とされているのは?",c:["見た目が動いていること","next buildがグリーンで通ること","ファイル数が多いこと","徹夜したこと"],a:1,exp:"開発ルール2。buildが通らない状態で「できました」は無し。"},
+{q:"app/projects/[id]/page.tsx の [id] の意味は?",c:["エラー","動的ルート。/projects/123の「123」を受け取る","コメント","禁止記法"],a:1,exp:"案件詳細など個別ページの仕組み。"},
+{q:"npm run dev の役割は?",c:["本番反映","開発サーバを起動してlocalhostで確認する","削除","課金"],a:1,exp:"開発中の確認はこれ。buildは本番用チェック。"}
+]},
+{id:"c3-08",t:"Tailwind CSS:KYOEIの書き方",min:"30分",terms:["Tailwind CSS"],
+body:`<h3>CSSをクラス名で書く</h3>
+<p>CraftFileのスタイルはTailwind CSS。CSSファイルに書く代わりに、<b>用意された短いクラスを組み合わせる</b>:</p>
+<div class="exbox">&lt;div className="flex items-center gap-3 p-4
+     bg-white rounded-xl border"&gt;
+  &lt;h2 className="text-lg font-bold text-[#1E2A47]"&gt;
+    堺市A邸
+  &lt;/h2&gt;
+&lt;/div&gt;</div>
+<h3>対応表(Web制作コースの知識がそのまま使える)</h3>
+<ul>
+<li>display:flex → <b>flex</b> / align-items:center → <b>items-center</b></li>
+<li>gap:12px → <b>gap-3</b>(数字×4px)</li>
+<li>padding:16px → <b>p-4</b> / margin → <b>m-4</b></li>
+<li>border-radius → <b>rounded-xl</b> / 影 → <b>shadow</b></li>
+<li>スマホ以上で切替 → <b>md:grid-cols-3</b>(メディアクエリ相当)</li>
+</ul>
+<h3>KYOEIでの注意点</h3>
+<ul>
+<li>高さ指定は <b>h-dvh</b> 系(dvh)。vh系クラスは使わない(ルール5)</li>
+<li>タップ部品は <b>min-h-11</b>(44px)以上(ルール7)</li>
+<li>モーダルは自作せず共通の<b>ModalShell</b>を使う(ルール6)</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>Tailwindは暗記やなく「CSSで何をしたいか」を先に言えることが本体や。やりたいCSSが言えれば、対応するクラス名はAIに聞けば一瞬で出てくる。Web制作コースでCSSを先にやったのはこのためやで。</div>`,
+task:["Web制作コースで作った見積もりツールのカードUIを、Tailwindのクラスで再現する(Tailwind Play使用)","「スマホ1列→md以上で3列」のレスポンシブGridをTailwindで書く"],
+quiz:[
+{q:"Tailwindで padding:16px に相当するクラスは?",c:["padding-16","p-4","pad-16","inner-4"],a:1,exp:"数字×4pxの体系。p-4=16px。"},
+{q:"KYOEIでモーダルを作るときの正しい方法は?",c:["毎回ゼロから自作する","共通のModalShellを使う","alertで代用する","モーダル禁止"],a:1,exp:"開発ルール6。独自モーダルを生やさない。"},
+{q:"Tailwind習得の本質は?",c:["全クラス名の暗記","「CSSで何をしたいか」を言語化できること","タイピング速度","色のセンス"],a:1,exp:"やりたいことが言えればクラス名はAIに聞ける。CSS理解が土台。"},
+{q:"Tailwindの md:grid-cols-3 の意味は?",c:["常に3列","中画面以上で3列にする","3秒後に3列","3pxにする"],a:1,exp:"接頭辞md:がメディアクエリ相当。"},
+{q:"KYOEIで高さ指定に使うTailwindクラス系は?",c:["h-vh系","h-dvh系","h-0固定","指定禁止"],a:1,exp:"ルール5。vh系は使わない。"}
+]},
+{id:"c3-09",t:"DBとPrisma・tenantIdの掟",min:"45分",terms:["データベース(DB)","PostgreSQL","Prisma","スキーマ","tenantId(マルチテナント)"],
+body:`<h3>データベース:CraftFileの心臓部</h3>
+<p>案件・顧客・見積もり・写真——CraftFileのデータは全部PostgreSQLというデータベースに入ってる。プログラムからDBを操作する翻訳係が<b>Prisma</b>や。</p>
+<h3>スキーマ:データの設計図</h3>
+<div class="exbox">// schema.prisma(設計図)
+model Project {
+  id        String   @id @default(cuid())
+  tenantId  String                 // ← 全モデル必須!
+  name      String
+  status    String
+  createdAt DateTime @default(now())
+}</div>
+<div class="exbox">// プログラムからの操作(SQLを書かずに済む)
+const projects = await prisma.project.findMany({
+  where: { tenantId, status: "施工中" }
+});</div>
+<h3>tenantId:KYOEIで一番重い掟(ルール4)</h3>
+<p>CraftFileはSaaS=<b>1つのシステムを複数の会社が共用</b>してる(マルチテナント)。データがどの会社のものかを区別する印がtenantIdや。</p>
+<p><b>もしtenantIdを付け忘れたら:</b>A社の画面にB社の案件・顧客情報が表示される。これは情報漏洩事故で、CraftFileというサービスの信用が一発で終わる。だから:</p>
+<ul>
+<li>新規モデルには<b>必ずtenantId</b>を付ける</li>
+<li>データ取得の<b>whereには必ずtenantId</b>を含める</li>
+<li>AIが生成したコードでも、tenantId漏れがないか<b>人間が必ず検品</b>する</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>コードレビューでtenantId漏れを見つけたら、それだけで指摘する価値がある。逆に自分のPRでtenantId漏れがあると、他が完璧でも差し戻しや。それくらい重い。</div>`,
+task:["schema.prismaの例を見ながら、「見積もり(Estimate)」モデルの設計図を自分で書いてみる(tenantId込み)","AIに「tenantIdなしのモデル」をわざと生成させ、どこが危険かを指摘する練習をする"],
+quiz:[
+{q:"Prismaの役割は?",c:["画像の生成","プログラムからDBを操作する翻訳係","メール送信","デザイン作成"],a:1,exp:"SQLを直接書かずにDBを扱える。設計図はschema.prisma。"},
+{q:"tenantIdを付け忘れると起きる最悪の事態は?",c:["表示が少し遅くなる","他社のデータが見えてしまう情報漏洩事故","色が変わる","ファイルが重くなる"],a:1,exp:"マルチテナントの根幹。付け忘れ=サービスの信用が終わる事故。"},
+{q:"データ取得時のルールとして正しいのは?",c:["whereは省略してよい","whereに必ずtenantIdを含める","tenantIdは管理者だけ付ける","AIが生成したコードなら検品不要"],a:1,exp:"取得側でもtenantId必須。AI生成コードこそ検品する。"},
+{q:"findManyのwhereの役割は?",c:["並び替え","条件でデータを絞り込む(tenantId必須)","削除","結合"],a:1,exp:"取得条件。tenantIdを必ず含める。"},
+{q:"マルチテナントとは?",c:["高層ビルのこと","1つのシステムを複数の会社で共用する方式","複数サーバのこと","複数言語のこと"],a:1,exp:"だからデータの区別(tenantId)が生命線。"}
+]},
+{id:"c3-10",t:"マイグレーションと冪等",min:"35分",terms:["マイグレーション","冪等(べきとう)",".env(環境変数)"],
+body:`<h3>DBの変更は「手順書」で行う</h3>
+<p>「案件テーブルに列を1本足したい」——このときDBを直接いじるんやなく、<b>変更内容をSQLファイル(マイグレーション)として書いて実行する</b>のがKYOEIルール3や。</p>
+<h3>なぜファイルにするのか</h3>
+<ul>
+<li>何をいつ変えたかが<b>履歴として残る</b>(Gitで管理できる)</li>
+<li>開発環境と本番環境に<b>同じ変更を確実に適用</b>できる</li>
+<li>レビューできる(DBの変更こそレビューが必要)</li>
+</ul>
+<h3>冪等(べきとう):何回流しても安全</h3>
+<p>冪等=「何回実行しても結果が同じ」性質。KYOEIのマイグレーションは冪等に書くのが掟:</p>
+<div class="exbox">-- NG:2回流すと「既にあります」エラーで事故る
+ALTER TABLE "Project" ADD COLUMN "memo" TEXT;
+
+-- OK:冪等(無ければ足す。あれば何もしない)
+ALTER TABLE "Project" ADD COLUMN IF NOT EXISTS "memo" TEXT;</div>
+<p>この研修アプリのSupabaseセットアップSQLも全部冪等で書いてある(create table if not exists)。実物のお手本や。</p>
+<h3>.env:秘密はコードに書かない</h3>
+<p>DBの接続情報やAPIキーは.envファイルに書き、<b>絶対にGitにコミットしない</b>(.gitignore対象)。「秘密がGitHubに上がる」はpush事故と並ぶ二大事故や。</p>
+<div class="pointbox"><b>ポイント:</b>研修中、スキーマ変更の実行は真殿さんの領域。君の仕事は「冪等なマイグレーションファイルを書いて提案する」まで。実行判断は本番影響の例外事項として、必ず直接確認や。</div>`,
+task:["「Projectテーブルにmemo列を追加する」冪等なマイグレーションSQLを書く","AIに「冪等でないSQL」と「冪等なSQL」を並べて生成させ、違いを説明する"],
+quiz:[
+{q:"「冪等」の意味は?",c:["高速なこと","何回実行しても結果が同じこと","自動なこと","無料なこと"],a:1,exp:"間違えて2回流しても壊れない。KYOEIのマイグレーションの掟。"},
+{q:"DBスキーマの変更の正しいやり方は?",c:["DBを直接いじる","冪等なSQLマイグレーションファイルを書いて適用する","口頭で伝える","変更しない"],a:1,exp:"履歴が残る・環境間で再現できる・レビューできる。ルール3。"},
+{q:".env(環境変数)ファイルの扱いで正しいのは?",c:["Gitにコミットして共有する","絶対にGitにコミットしない(.gitignore対象)","SNSにアップする","印刷して配る"],a:1,exp:"秘密情報の流出は二大事故のひとつ。.envはコミット禁止。"},
+{q:"「ADD COLUMN IF NOT EXISTS」の効果は?",c:["高速化","既にあれば何もしない=冪等になる","削除される","暗号化される"],a:1,exp:"2回流しても壊れない書き方。"},
+{q:".gitignoreに載せるべきものの組み合わせは?",c:["全ファイル","node_modulesと.env","READMEのみ","何も載せない"],a:1,exp:"巨大フォルダと秘密情報はGitに入れない。"}
+]},
+{id:"c3-11",t:"Claude Code協業:要件プロンプト",min:"45分",terms:["Claude Code","要件 / 要件定義"],
+body:`<h3>Claude Code:爆速の同僚</h3>
+<p>Claude Codeはコードベース全体を読んで実装までやってくれるAI開発ツール。KYOEIではCraftFileの機能開発に日常的に使ってる。ただし<b>同僚であって上司やない</b>。指示の質と検品は人間の仕事や。</p>
+<h3>KYOEI式・要件プロンプトの型</h3>
+<p>コース1で学んだRCGCOの開発版。CraftFileの実開発で使われてる型や:</p>
+<div class="exbox"># 目的(なぜ作るか・誰のどんな課題を解決するか)
+
+# 対象範囲(触ってよいファイル/触ってはいけない領域)
+
+# 要件
+- 機能の箇条書き(画面・操作・データの流れ)
+
+# KYOEI制約(毎回明記する)
+- git pushは絶対にしない
+- next buildがグリーンで通ること
+- 新規モデルにはtenantId必須
+- 100dvh使用(100vh禁止)/ ModalShell使用 / タップ44px以上
+- スキーマ変更は冪等なマイグレーションファイルで提案まで
+
+# 完成条件(何ができたら完成か・確認方法)</div>
+<h3>協業の進め方</h3>
+<ul>
+<li>大きい機能は<b>タスク分解</b>して段階的に依頼(コース1の応用)</li>
+<li>実装後は<b>差分(何が変わったか)を必ず読む</b>。分からん変更は説明させる</li>
+<li>「動きました」やなく「<b>buildが通り、実機確認し、差分を理解しました</b>」が報告の型</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>AIは制約を書き忘れると平気で禁止事項をやる(pushも提案してくる)。<b>KYOEI制約ブロックを毎回コピペで入れる</b>こと。テンプレタブに型を置いてあるから使うんやで。</div>`,
+task:["「簡易日報機能をCraftFileに追加する」想定で、上の型に沿った要件プロンプトを書き切る(実行はしない)","書いた要件プロンプトを真殿さんにレビューしてもらう"],
+quiz:[
+{q:"Claude Codeとの正しい関係は?",c:["全部任せて寝る","同僚として使い、指示の質と検品は人間が担う","使用禁止","上司として従う"],a:1,exp:"爆速の同僚。要件の言語化と検品が人間の価値。"},
+{q:"要件プロンプトに「KYOEI制約」を毎回明記する理由は?",c:["文字数稼ぎ","書き忘れるとAIは平気で禁止事項(pushなど)をやるから","法律だから","かっこいいから"],a:1,exp:"AIは書かれてない制約を知らない。毎回コピペで入れる。"},
+{q:"実装完了の正しい報告は?",c:["「動きました」","「buildが通り、実機確認し、差分を理解しました」","「たぶん大丈夫です」","「AIがやりました」"],a:1,exp:"build・実機・差分理解の3点セットが報告の型。"},
+{q:"要件プロンプトの「対象範囲」を書く理由は?",c:["文字数のため","触ってよい/いけない領域の境界を明示するため","かっこよさ","省略推奨だから"],a:1,exp:"範囲外の変更=事故の入口。"},
+{q:"大きい機能をタスク分解して依頼する利点は?",c:["特にない","段階ごとに検品・軌道修正できる","遅くなるだけ","AIが楽になる"],a:1,exp:"コース1のタスク分解が開発でも生きる。"}
+]},
+{id:"c3-12",t:"AI出力の検品:開発版チェックリスト",min:"35分",terms:["コードレビュー","ビルド(next build)"],
+body:`<h3>検品こそが君の仕事や</h3>
+<p>コース1で「AIの文章を検品する」を学んだ。開発ではそれがもっと重くなる。<b>AI生成コードの検品チェックリスト(KYOEI版)</b>:</p>
+<h3>安全の検品(最優先)</h3>
+<ul>
+<li>git push・force系のコマンドが含まれてないか(実行提案も含めて)</li>
+<li>秘密情報(.envの中身・APIキー)がコードに直書きされてないか</li>
+<li>削除系の処理(データ削除・ファイル削除)が意図通りの範囲か</li>
+</ul>
+<h3>KYOEIルールの検品</h3>
+<ul>
+<li>新規モデルにtenantIdがあるか/whereにtenantIdが入ってるか</li>
+<li>100vhが混ざってないか(dvhになってるか)</li>
+<li>独自モーダルを生やしてないか(ModalShell使用か)</li>
+<li>タップターゲット44px以上か</li>
+</ul>
+<h3>品質の検品</h3>
+<ul>
+<li>next buildがグリーンで通るか</li>
+<li>スマホ実機で確認したか</li>
+<li>変更した差分を全部読んで説明できるか</li>
+<li>触ってはいけない領域(認証まわり等)に変更が及んでないか</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>このチェックリストはPRを出す前の自己検品にそのまま使う。「AIが書いたので分かりません」は開発補佐として一番言うたらあかんセリフ。<b>提出した瞬間から、それは君のコード</b>や。</div>`,
+task:["前レッスンで書いた要件プロンプトをAIに実装させ(sandbox)、このチェックリストで自己検品して結果を記録する","わざとtenantId漏れ・100vh混入のあるコードをAIに作らせ、検品で見つける練習をする"],
+quiz:[
+{q:"AI生成コードの検品で最優先すべき観点は?",c:["インデントの美しさ","push・秘密情報直書き・削除範囲などの安全","変数名のセンス","行数の少なさ"],a:1,exp:"安全→KYOEIルール→品質の順。事故を防ぐのが最優先。"},
+{q:"「AIが書いたので分かりません」がNGな理由は?",c:["失礼だから","提出した時点でそれは自分のコードであり、説明責任があるから","長いから","AIが傷つくから"],a:1,exp:"検品と理解までがセットで開発補佐の仕事。"},
+{q:"PR提出前の自己検品に含まれないのは?",c:["next buildがグリーンか","スマホ実機確認","tenantId漏れチェック","コードを書いた時刻の記録"],a:3,exp:"時刻は不要。build・実機・KYOEIルールの検品が必須。"},
+{q:"AI生成コードの検品の正しい順序は?",c:["品質→ルール→安全","安全→KYOEIルール→品質","順序はない","ルールのみ"],a:1,exp:"事故を防ぐ安全確認が最優先。"},
+{q:"差分を全部読む理由は?",c:["暇だから","想定外の変更の検出と、説明責任を果たすため","義務ではない","速度のため"],a:1,exp:"提出した瞬間からそれは自分のコード。"}
+]},
+{id:"c3-13",t:"OJT:実案件への入り方",min:"30分",terms:["OJT","sandbox","ナレッジベース"],
+body:`<h3>ここからは実戦や</h3>
+<p>このコースの知識が揃ったら、真殿さんの管理下で実際のCraftFile開発に入っていく。OJTの進み方は段階制:</p>
+<ul>
+<li><b>段階1:読む</b>——既存コードの探検。URL→appフォルダ対応で機能を1つ選び、データの流れ(画面→処理→DB)を図にして説明する</li>
+<li><b>段階2:直す</b>——文言修正・スタイル調整などの小さいタスクをブランチ+PRの正規フローで</li>
+<li><b>段階3:作る</b>——小さい新機能を要件プロンプト→Claude Code協業→検品→PRの一連で</li>
+</ul>
+<h3>OJTでの約束事</h3>
+<ul>
+<li>作業は指示された<b>ブランチ・環境(sandbox)のみ</b>。範囲外に興味があっても触らず質問</li>
+<li>1タスクごとに<b>日報</b>(やったこと/学んだこと/詰まったこと)を書く</li>
+<li>詰まったら15分ルール→質疑提出シート。<b>本番影響の判断だけは即・直接確認</b></li>
+<li>解決した問題は必ず<b>ナレッジベース</b>に書く。「同じことを二度調べない」が成長の複利や</li>
+</ul>
+<h3>最初の1ヶ月の目標</h3>
+<p>「小さくてもいいから、<b>自分のPRがCraftFileにマージされる</b>」。それはお客様が実際に使う画面に君のコードが載るということや。ここまで来たら、もう立派な開発補佐やで。</p>
+<div class="pointbox"><b>ポイント:</b>焦らんでいい。段階1の「読んで図にして説明する」を丁寧にやった人ほど、段階3で速くなる。読める人が書ける人になる。</div>`,
+task:["CraftFileの機能を1つ選び、画面→処理→DBのデータの流れを図にして真殿さんに説明する(段階1)","真殿さんから最初の小タスクをもらい、ブランチ+PRの正規フローで完了させる(段階2)"],
+quiz:[
+{q:"OJTの正しい進み方の順序は?",c:["作る→直す→読む","読む→直す→作る","いきなり本番改修","AIに全部任せる"],a:1,exp:"読む(理解)→直す(小タスク)→作る(新機能)の段階制。"},
+{q:"OJT中、指示された範囲外のコードが気になったら?",c:["こっそり変更する","触らずに質問する","削除する","SNSで聞く"],a:1,exp:"範囲外は触らず質問。興味は質問で解消する。"},
+{q:"解決した問題をナレッジベースに書く理由は?",c:["提出物を増やすため","同じことを二度調べないため(成長の複利)","義務だから","AIのため"],a:1,exp:"蓄積が効率を生む。ナレッジベースは自分の資産。"},
+{q:"OJT段階1で作る図の内容は?",c:["組織図","画面→処理→DBのデータの流れ","家系図","路線図"],a:1,exp:"読める人が書ける人になる。"},
+{q:"日報に書く3点セットは?",c:["食事・天気・気分","やったこと・学んだこと・詰まったこと","予算・売上・利益","特になし"],a:1,exp:"1タスクごとの振り返りが成長の複利。"}
+]},
+{id:"c3-15",t:"Webアプリの裏側:サーバ・API・データの流れ",min:"35分",terms:["API","fetch","データベース(DB)"],
+body:`<h3>「画面の向こう側」を理解する</h3>
+<p>Web制作コースで作ったのはブラウザの中(フロントエンド)。CraftFileのような業務システムは、その向こうに<b>サーバ(バックエンド)とDB</b>がいる。この3層の往復を理解すると、システム全体が見えるようになる。</p>
+<h3>案件一覧を開いたとき、何が起きてるか</h3>
+<ul>
+<li><b>①リクエスト</b>:ブラウザが /projects のURLをサーバに要求</li>
+<li><b>②サーバ処理</b>:Next.jsが対応する page.tsx を実行。中でPrismaがDBに「この会社(tenantId)の案件をちょうだい」と問い合わせ</li>
+<li><b>③DB応答</b>:PostgreSQLが該当データを返す</li>
+<li><b>④レスポンス</b>:サーバが画面(HTML)やデータ(JSON)を組み立ててブラウザに返す</li>
+<li><b>⑤描画</b>:ブラウザが受け取って表示。Reactが部品を組み立てる</li>
+</ul>
+<h3>APIエンドポイントという考え方</h3>
+<p>「データだけをやり取りする窓口」がAPIエンドポイント(例:/api/projects)。Web制作コースのfetchは、まさにこの窓口を叩く行為やった。<b>フロントは見せる係、APIはデータの窓口、DBは倉庫</b>——この役割分担が全ての基本や。</p>
+<div class="pointbox"><b>ポイント:</b>DevToolsのNetworkタブを開くと、この往復が全部見える。「どのリクエストが飛んで、何が返ってきたか」を見る癖がつくと、不具合の切り分け(フロントの問題か、サーバの問題か)が一気に速くなる。</div>`,
+task:["CraftFile(または任意のWebアプリ)でNetworkタブを開き、ページ表示時に飛ぶリクエストを観察して3つメモする","「案件一覧が表示されるまでの5ステップ」を何も見ずに図に描いて真殿さんに説明する"],
+quiz:[
+{q:"Webシステムの3層とそれぞれの役割は?",c:["全部ブラウザ","フロント=見せる係/サーバ=処理とデータの窓口/DB=倉庫","DBだけで完結","サーバは飾り"],a:1,exp:"3層の役割分担が全ての基本。"},
+{q:"「/projects を開くと一覧が出る」の裏で最初に起きることは?",c:["DBが勝手に送ってくる","ブラウザがサーバにリクエストを送る","印刷される","AIが起動する"],a:1,exp:"リクエスト→サーバ処理→DB→レスポンス→描画の順。"},
+{q:"APIエンドポイントとは?",c:["ケーブルの端","データだけをやり取りする窓口(例:/api/projects)","終了ボタン","エラー画面"],a:1,exp:"fetchで叩いていたのはこの窓口。"},
+{q:"不具合の切り分けにNetworkタブが役立つ理由は?",c:["色がきれい","どのリクエストに何が返ったかが見え、フロント/サーバどちらの問題か判断できる","音が鳴る","自動修復される"],a:1,exp:"往復の可視化=切り分けの高速化。"},
+{q:"サーバ側でDBに問い合わせる際、KYOEIで必ず条件に入れるものは?",c:["天気","tenantId","絵文字","時刻"],a:1,exp:"ルール4。データの流れの中でも掟は生きている。"}
+]},
+{id:"c3-16",t:"認証・認可とセキュリティ基礎",min:"35分",terms:["認証(Auth.js)","tenantId(マルチテナント)","バリデーション"],
+body:`<h3>認証と認可は別モンや</h3>
+<ul>
+<li><b>認証(Authentication)</b>:「あなたは誰?」——ログインで本人確認すること</li>
+<li><b>認可(Authorization)</b>:「あなたは何をしてええの?」——権限の確認。一般ユーザーは自社データのみ、管理者は設定変更もOK、など</li>
+</ul>
+<p>CraftFileの認証はAuth.js v5。<b>研修中は触らない領域</b>(壊すとお客様全員がログインできんくなる)。tenantIdによるデータ分離は、認可の仕組みの一部やと理解しとこう。</p>
+<h3>セキュリティ基礎4箇条</h3>
+<ul>
+<li><b>①秘密は.envに、コードに直書きしない</b>(APIキー・DB接続情報)</li>
+<li><b>②ユーザー入力を信用しない</b>:入力は必ずバリデーション。想定外の値・悪意ある文字列が来る前提で書く</li>
+<li><b>③権限チェックはサーバ側で</b>:画面でボタンを隠しても、APIを直接叩かれたら意味がない。<b>守りは必ずサーバ側</b></li>
+<li><b>④個人情報の扱い</b>:顧客データを外部AIに安易に貼らない、ログに個人情報を吐かない</li>
+</ul>
+<h3>「画面で隠す」と「サーバで守る」の違い(超重要)</h3>
+<p>管理者ボタンを一般ユーザーに非表示にするのは<b>UX(親切)</b>であって<b>セキュリティやない</b>。APIは誰でも直接叩けるから、<b>サーバ側で「この人は管理者か?」を確認してから処理する</b>のが守りや。この区別ができてない実装は世の中に山ほどあって、事故の温床になってる。</p>
+<div class="pointbox"><b>ポイント:</b>この研修アプリのPINログインは「社内ツール向けの簡易な仕組み」で、本格的なセキュリティやない(だから顧客情報は載せてない)。守るべきデータの重さに応じて守りの強さを設計する——これがセキュリティの考え方や。</div>`,
+task:["「認証と認可の違い」を身近な例(社員証と役職権限など)で説明できるようにする","AIに「画面でボタンを隠すだけの実装が危険な理由」を質問し、自分の言葉で3行にまとめる"],
+quiz:[
+{q:"認証と認可の違いは?",c:["同じもの","認証=誰か(本人確認)、認可=何をしてよいか(権限)","認可が先","どちらも不要"],a:1,exp:"ログイン=認証、権限チェック=認可。"},
+{q:"権限チェックを必ず行うべき場所は?",c:["画面(ボタンを隠す)だけ","サーバ側","ユーザーの善意","チラシ"],a:1,exp:"画面で隠すのはUX。守りはサーバ側が鉄則。"},
+{q:"ユーザー入力の正しい扱いは?",c:["信用する","信用せず必ずバリデーションする","無視する","そのままDBへ"],a:1,exp:"想定外・悪意ある入力が来る前提で書く。"},
+{q:"APIキーやDB接続情報の置き場所は?",c:["コードに直書き",".envファイル(コミット禁止)","SNS","付箋"],a:1,exp:"秘密の直書き・流出は二大事故のひとつ。"},
+{q:"CraftFileの認証まわりを研修中に触らない理由は?",c:["面白くないから","壊すと全お客様がログイン不能になる重大領域だから","誰も知らないから","古いから"],a:1,exp:"影響範囲が最大級の領域。触るのはずっと先。"}
+]},
+{id:"c3-17",t:"テストと品質保証の考え方",min:"35分",terms:["ビルド(next build)","デバッグ"],
+body:`<h3>「動いた」と「壊れてない」は別物や</h3>
+<p>新機能が動くことと、<b>既存の機能を壊してないこと</b>は全く別の確認や。変更のたびに両方を確かめる——後者を<b>回帰確認</b>と呼ぶ。「見積もり画面を直したら、なぜか写真アップロードが壊れた」は開発あるあるやからな。</p>
+<h3>確認の設計:3つの系</h3>
+<ul>
+<li><b>正常系</b>:普通の使い方で動くか(正しい値を入れて保存できる)</li>
+<li><b>異常系</b>:変な使い方で壊れないか(空欄で保存・文字を数値欄に・巨大な文字列)</li>
+<li><b>境界</b>:端っこで動くか(0件のとき・1件のとき・大量データのとき)</li>
+</ul>
+<p>プロと素人の差は<b>異常系と境界をどれだけ想像できるか</b>や。「お客様は開発者が想定せん使い方をする」が大前提。</p>
+<h3>KYOEIの品質チェーン</h3>
+<ul>
+<li><b>next buildグリーン</b>=最低ライン(型エラー・構文エラーの検出)</li>
+<li><b>実機確認</b>=スマホでの実際の動作</li>
+<li><b>回帰確認</b>=変更箇所の周辺機能が無事か</li>
+<li><b>チェックリスト</b>=開発版検品リスト(c3-12)の運用</li>
+</ul>
+<h3>バグ報告の書き方(受ける側にもなる)</h3>
+<div class="exbox">## 再現手順(番号つきで誰でも再現できるように)
+1. 案件一覧を開く
+2. 「新規作成」を押す
+3. 名前を空欄のまま保存を押す
+
+## 期待する動き:エラーメッセージが出る
+## 実際の動き:画面が真っ白になる
+## 環境:iPhone / Safari / 本番orテスト</div>
+<div class="pointbox"><b>ポイント:</b>「なんか動きません」は報告やない。<b>再現手順・期待・実際</b>の3点セットで書けば、直す側は10倍速く動ける。これは自分がバグを見つけたときも、AIに直させるときも同じ型や。</div>`,
+task:["自分の見積もりツール(Web制作コース)に対して、正常系・異常系・境界の確認項目を10個書き出して実際に試す","見つけた不具合を「再現手順・期待・実際」の型でバグ報告として書く"],
+quiz:[
+{q:"回帰確認とは?",c:["昔のコードに戻すこと","変更が既存機能を壊していないかの確認","家に帰ること","再起動"],a:1,exp:"「動いた」と「壊れてない」は別。両方確認する。"},
+{q:"異常系の確認の例は?",c:["正しい値で保存","空欄で保存・数値欄に文字などの変な使い方で壊れないか","色の確認","速度計測"],a:1,exp:"お客様は想定外の使い方をする前提で設計する。"},
+{q:"境界の確認の例は?",c:["普通の10件で確認","0件・1件・大量データのときの表示","好きな数字で1回","確認しない"],a:1,exp:"端っこ(0・1・大量)はバグの巣。"},
+{q:"良いバグ報告の3点セットは?",c:["感想・怒り・希望","再現手順・期待する動き・実際の動き","日付・天気・気分","スクショのみ"],a:1,exp:"誰でも再現できる手順が最重要。直す側が10倍速くなる。"},
+{q:"next buildグリーンの位置づけは?",c:["品質保証の全て","最低ライン。実機・回帰・チェックリストと合わせて品質になる","不要","飾り"],a:1,exp:"buildは入口。品質はチェーンで作る。"}
+]},
+{id:"c3-18",t:"読解演習:コードを読む技術",min:"45分",terms:["スキーマ","コンポーネント","App Router"],
+body:`<h3>書く前に、読める人になる</h3>
+<p>実務の開発は「ゼロから書く」より「<b>既存コードを読んで、少し変える</b>」が圧倒的に多い。読解力こそ開発補佐の即戦力や。巨大なコードベースでも迷子にならん読み方の型:</p>
+<h3>KYOEI式・読解の順番</h3>
+<ul>
+<li><b>①schema.prisma(データ)から</b>:このシステムが何のデータを扱うかを掴む。モデル名と関係(案件は顧客に属する、等)を眺める</li>
+<li><b>②app/のフォルダ(画面)を見る</b>:URLと画面の対応マップを頭に入れる</li>
+<li><b>③対象のpage.tsxを読む</b>:「データをどう取って(Prisma)→どう表示してるか(コンポーネント)」の流れを追う</li>
+<li><b>④共通部品(components/)へ</b>:使われてるコンポーネントの中身を必要なぶんだけ</li>
+</ul>
+<h3>読解を加速する道具</h3>
+<ul>
+<li><b>Cmd/Ctrl+Shift+F(全体検索)</b>:画面の文言(「見積もりを作成」等)で検索すると、その画面のコードに一発で辿り着ける——<b>文言からの逆引き</b>は最強の入口や</li>
+<li><b>定義ジャンプ</b>:関数名をCmd/Ctrl+クリックで定義元へ飛ぶ</li>
+<li><b>AIに解説させる</b>:分からんファイルを貼って「このファイルの役割と処理の流れを説明して」→解説を<b>自分の言葉でメモ</b>(メモにできんうちは理解してない)</li>
+</ul>
+<h3>読解合格の基準</h3>
+<p>1つの機能について「<b>画面→処理→DBのデータの流れを、何も見ずに図解して説明できる</b>」こと。これができた機能から、直せる機能になっていく。</p>
+<div class="pointbox"><b>ポイント:</b>読んでて分からん行に出会うのは普通のことや。大事なのは「分からん行を分からんままにせん」こと。AIに聞く→メモる→次に同じパターンが出たら読める。この積み重ねが読解力の正体やで。</div>`,
+task:["CraftFile(またはsandboxのNext.jsプロジェクト)で機能を1つ選び、読解の順番①〜④で読む","その機能の「画面→処理→DB」を何も見ずに図解し、真殿さんに5分で説明する","分からなかった行3つをAIに解説させ、自分の言葉でナレッジベースにメモする"],
+quiz:[
+{q:"KYOEI式・コード読解で最初に読むものは?",c:["README","schema.prisma(データの設計図)","CSS","ログ"],a:1,exp:"何のデータを扱うシステムかを先に掴む。"},
+{q:"「文言からの逆引き」とは?",c:["翻訳すること","画面に表示される文言で全体検索し、該当コードに辿り着く技","逆から読む","音読"],a:1,exp:"Ctrl+Shift+F。巨大コードベースへの最強の入口。"},
+{q:"AIにコードを解説させた後に必須なのは?",c:["お礼","自分の言葉でメモする(メモにできない=理解していない)","印刷","即実装"],a:1,exp:"解説の消費でなく、言語化して自分の血肉にする。"},
+{q:"読解「合格」の基準は?",c:["全行暗記","画面→処理→DBの流れを何も見ずに図解して説明できる","速く読める","AIが褒める"],a:1,exp:"説明できる=理解している。読める機能が直せる機能になる。"},
+{q:"実務の開発で最も多い作業は?",c:["ゼロから全部書く","既存コードを読んで少し変える","削除","会議"],a:1,exp:"だから読解力が開発補佐の即戦力になる。"}
+]},
+{id:"c3-19",t:"最終試験(総合)",min:"120分",terms:[],
+body:`<h3>育成プログラム最終試験</h3>
+<p>ここまでの全コースの集大成や。確認テスト+実技課題+口頭試問の3本立てで、すべて合格したらプログラム修了。CraftFile開発補佐として正式にOJT本格配属となる。</p>
+<h3>実技課題(sandbox環境で実施)</h3>
+<ul>
+<li><b>①要件定義:</b>真殿さんから渡されるお題(小さい新機能)の要件プロンプトを書く</li>
+<li><b>②実装:</b>ブランチを切り、Claude Codeと協業して実装する</li>
+<li><b>③検品:</b>開発版チェックリストで自己検品し、記録を残す</li>
+<li><b>④提出:</b>next buildグリーン+実機スクショ+PRテンプレでPRを作成する</li>
+</ul>
+<h3>口頭試問</h3>
+<ul>
+<li>三大禁止事項と、それぞれの理由</li>
+<li>tenantIdとは何か、漏れると何が起きるか</li>
+<li>自分のPRの差分から任意の箇所について「これは何をしてる?」</li>
+</ul>
+<h3>合格後の姿</h3>
+<p>AIで資料が作れて、Webの仕組みが分かって、安全に開発フローを回せる——入社時の自分と比べてみ。ここからは育成プログラムやなく、<b>実務の中で成長し続けるフェーズ</b>や。ナレッジベースと日報の習慣だけは一生モンとして持っていくこと。</p>
+<div class="pointbox"><b>合格基準:</b>確認テスト全問正解+実技課題(安全・ルール・品質の全観点クリア)+口頭試問。<b>禁止事項に関わる誤答・違反は一発不合格</b>(再挑戦は1週間後)。</div>`,
+task:["実技課題①〜④を完了する","口頭試問を受ける","修了後の1ヶ月目標を真殿さんと設定する"],
+quiz:[
+{q:"KYOEIでgit pushが厳禁である根本理由は?",c:["通信料がかかる","Coolify経由で即・本番反映され、お客様に直接影響するから","時間がかかる","流行っていないから"],a:1,exp:"push=全お客様への公開ボタン。三大禁止事項の筆頭。"},
+{q:"新規Prismaモデルに必ず付けるものは?",c:["絵文字","tenantId","自分の名前","日付"],a:1,exp:"マルチテナントの根幹。漏れ=他社データ混在の情報漏洩事故。"},
+{q:"マイグレーションSQLを「冪等」に書く理由は?",c:["速くなるから","誤って複数回実行しても壊れないから","短くなるから","無料だから"],a:1,exp:"IF NOT EXISTSなどで何回流しても安全にする。ルール3。"},
+{q:"作業前に毎回やる「指差し確認」は?",c:["git pushする","git branchで現在地を確認し、mainならブランチを切る","PCを再起動する","コーヒーを淹れる"],a:1,exp:"main直接作業の防止。毎回の最初の動作。"},
+{q:"実装完了の報告として合格なのは?",c:["「AIができたと言ってます」","「next buildグリーン・実機確認済み・差分は全て説明できます」","「たぶん動きます」","「push しておきました」"],a:1,exp:"build・実機・差分理解の3点。4は一発不合格の回答や。"},
+{q:"認証と認可の違いは?",c:["同じもの","認証=誰か(本人確認)、認可=何をしてよいか(権限)","認可が先","どちらも不要"],a:1,exp:"守り(権限チェック)は必ずサーバ側で。"},
+{q:"回帰確認とは?",c:["元に戻す作業","変更が既存機能を壊していないかの確認","再起動","古いコードの復元"],a:1,exp:"「動いた」と「壊れてない」は別物。"},
+{q:"バグ報告の3点セットは?",c:["感想・怒り・要望","再現手順・期待する動き・実際の動き","日時・場所・人数","スクショのみ"],a:1,exp:"誰でも再現できる手順が最重要。"}
+]},
+]};
+
+
+/* ================= コース2:ChatGPT徹底活用 ================= */
+const GPTC = {
+id:"g1", no:2, name:"ChatGPT徹底活用",
+desc:"機能・モデルの違いを理解し、ChatGPTを業務の主力ツールとして使いこなす",
+lessons:[
+{id:"g1-01",t:"ChatGPTの全体像と画面",min:"20分",terms:["生成AI","LLM(大規模言語モデル)"],
+body:`<h3>まず全体像をつかむ</h3>
+<p>ChatGPTの画面は大きく3つ:①サイドバー(チャット履歴・プロジェクト)②メインのチャット欄 ③モデル選択(画面上部)。機能は増え続けてるけど、<b>「1テーマ=1チャット」で使う</b>のが基本や。</p>
+<h3>チャット運用のルール</h3>
+<ul>
+<li><b>テーマが変わったら新しいチャット。</b>1つのチャットに何でも詰め込むと、前の話が混ざって精度が落ちる(コンテキストの汚染)</li>
+<li><b>チャット名はリネームする。</b>「チラシ文面_堺A邸」のように。あとで検索で見つけられるかが資産価値を決める</li>
+<li><b>履歴検索</b>を使う。過去の良いやり取りは宝物や</li>
+</ul>
+<h3>無料と有料の違い(構造で理解)</h3>
+<p>細かい条件は変わり続けるから、構造で覚える:有料プランは<b>①賢いモデルを使える回数が多い ②画像生成などの機能上限が大きい ③新機能が先に使える</b>。業務で毎日使うなら有料が前提や。</p>
+<div class="pointbox"><b>ポイント:</b>KYOEIでのChatGPTの立ち位置は「<b>画像生成とアイデア出しの主力</b>」。文章の仕上げはClaude、長文読解はGemini、と役割分担していく(詳細はコース4で)。</div>`,
+task:["ChatGPTの画面を開き、サイドバー・モデル選択の場所を確認する","過去のチャットを3つリネームして整理する","「1テーマ1チャット」を意識して、新しいチャットでKYOEIの業務相談を1つやってみる"],
+quiz:[
+{q:"1つのチャットに複数のテーマを詰め込むと起きる問題は?",c:["料金が上がる","前の話が混ざって回答の精度が落ちる","文字が小さくなる","保存されなくなる"],a:1,exp:"コンテキストの汚染。テーマが変わったら新チャットが鉄則。"},
+{q:"チャット名をリネームする目的は?",c:["AIが喜ぶ","あとで検索して再利用できる資産にするため","処理が速くなる","必須だから"],a:1,exp:"良いやり取りは資産。見つけられなければ無いのと同じ。"},
+{q:"KYOEIでのChatGPTの主な役割は?",c:["長文PDFの読解","画像生成とアイデア出し","DB管理","経理"],a:1,exp:"画像生成とアイデア出しの主力。3AIの役割分担の一角。"},
+{q:"有料プランの本質的な価値を構造で言うと?",c:["広告が消える","賢いモデルと機能の利用上限が大きい","文字が増える","色が変わる"],a:1,exp:"条件は変わるが「賢いモデル×上限」の構造は不変。"},
+{q:"新しい業務テーマの相談を始めるときの正しい行動は?",c:["一番古いチャットに書く","新しいチャットを作る","履歴を全部消す","メールで送る"],a:1,exp:"1テーマ1チャット。精度と再利用性の両方に効く。"}
+]},
+{id:"g1-02",t:"モデルの違い:賢さと速さのトレードオフ",min:"25分",terms:["LLM(大規模言語モデル)","トークン"],
+body:`<h3>モデル=AIの頭脳のバージョン</h3>
+<p>ChatGPTの中には複数の「モデル」が入っていて、画面上部で切り替えられる。名前や番号は更新され続けるから、<b>構造で覚える</b>のが正解や:</p>
+<ul>
+<li><b>標準モデル(速い系)</b>:即答する。日常の文章・要約・アイデア出しに十分</li>
+<li><b>思考モデル(賢い系)</b>:答える前にじっくり推論する。複雑な計画・計算・矛盾チェック・難しい判断に強い。そのぶん遅くて、利用上限を多く消費する</li>
+</ul>
+<h3>使い分けの判断基準</h3>
+<ul>
+<li>メール下書き・要約・言い換え → <b>標準</b>で十分</li>
+<li>込み入った見積もりロジックの検討、複数条件の比較表、長い文書の矛盾チェック → <b>思考モデル</b></li>
+<li>自動選択に任せてもいいが、<b>「これは難問や」と分かってるときは自分で賢い方を選ぶ</b></li>
+</ul>
+<h3>もったいない使い方</h3>
+<p>一番あかんのは「軽い作業に賢いモデルを使って上限を溶かす」こと。逆に「難問に速いモデルを使って浅い答えで満足する」のも損や。<b>タスクの重さとモデルの賢さを揃える</b>——これがモデル使い分けの本質で、コース4(Claude)でさらに深掘りする。</p>
+<div class="pointbox"><b>ポイント:</b>迷ったら「この判断を間違えたら損害が出るか?」で決める。お客様向け・お金が絡む・複雑 → 賢い系。社内の下書き・たたき台 → 速い系。</div>`,
+task:["同じ難しい質問(例:3つの塗料プランの10年総コスト比較)を標準モデルと思考モデルの両方に投げて、回答の深さを比較する","自分の日常業務を5つ書き出し、それぞれ標準/思考のどちらでやるべきか仕分けする"],
+quiz:[
+{q:"「思考モデル(賢い系)」の特徴として正しいのは?",c:["即答で浅い","じっくり推論するが遅く、上限消費が大きい","画像専用","無料専用"],a:1,exp:"賢さと引き換えに速度と上限を消費する。トレードオフの理解が核心。"},
+{q:"メールの下書きに適したモデルは?",c:["思考モデル一択","標準モデルで十分","モデルは関係ない","使ってはいけない"],a:1,exp:"軽作業に賢いモデルを使うのは上限の無駄遣い。"},
+{q:"モデルを「構造で覚える」のが正解な理由は?",c:["名前がかっこいいから","モデル名や番号は更新され続けるが、速い系/賢い系の構造は変わらないから","覚えることが減るから","試験に出るから"],a:1,exp:"番号の暗記は陳腐化する。構造の理解は一生使える。"},
+{q:"自分で賢いモデルを選ぶべき場面は?",c:["挨拶をするとき","複雑な比較・計算・重要な判断のとき","誤字を直すとき","チャット名を変えるとき"],a:1,exp:"難問と分かっているなら最初から賢い系に投げるのが効率的。"},
+{q:"「タスクの重さとモデルの賢さを揃える」判断基準として挙げられたのは?",c:["文字数が多いか","間違えたら損害が出るか","朝か夜か","日本語か英語か"],a:1,exp:"お客様向け・お金・複雑=賢い系、社内下書き=速い系。"}
+]},
+{id:"g1-03",t:"カスタム指示とメモリ",min:"20分",terms:["コンテキスト","プロンプト"],
+body:`<h3>前提プロンプトを「常設」する</h3>
+<p>コース1で作った前提プロンプト、毎回貼るのは面倒やろ。<b>カスタム指示</b>に登録すれば、全チャットに自動で適用される。設定に書く内容:</p>
+<ul>
+<li><b>自分について</b>:株式会社KYOEI(堺市・外壁塗装とIT)の社員、業務内容</li>
+<li><b>回答の好み</b>:結論から書く/専門用語に一言説明/お客様向けは煽らない誠実トーン/ブランドカラー</li>
+</ul>
+<h3>メモリ:会話から自動で覚える</h3>
+<p>ChatGPTは会話の中から「この人は堺市の塗装会社の人やな」みたいな情報を自動で記憶していく。便利やけど管理が大事:</p>
+<ul>
+<li>設定から<b>何を覚えているか確認・削除できる</b>。定期的に見る</li>
+<li>間違った記憶(古い情報)が残ってると回答が歪む → 消す</li>
+<li><b>顧客の個人情報・パスワード・機密は覚えさせない</b>(そもそも貼らない)</li>
+</ul>
+<div class="pointbox"><b>使い分け:</b>カスタム指示=自分で設計する固定の前提。メモリ=自動で溜まる記憶。プロ仕様は「カスタム指示をしっかり設計して、メモリは定期掃除」や。</div>`,
+task:["カスタム指示にKYOEI前提(会社・トーン・出力の好み)を設定する","メモリの内容を確認し、古い・不要な記憶があれば削除する","設定後に新チャットで文章を1本作らせ、前提が効いているか確認する"],
+quiz:[
+{q:"カスタム指示とは?",c:["1つのチャット専用の設定","全チャットに自動適用される固定の前提","画像の設定","料金プラン"],a:1,exp:"前提プロンプトの常設化。毎回貼る手間が消える。"},
+{q:"メモリの正しい管理方法は?",c:["見ない","定期的に確認し、古い・間違った記憶は削除する","全部信じる","毎日全削除する"],a:1,exp:"間違った記憶は回答を歪める。定期掃除が必要。"},
+{q:"メモリやチャットに絶対入れてはいけないものは?",c:["会社の事業内容","顧客の個人情報やパスワード","ブランドカラー","文章のトーン指定"],a:1,exp:"機密・個人情報は貼らない。AI活用の大前提。"},
+{q:"カスタム指示とメモリの違いは?",c:["同じもの","カスタム指示=自分で設計する固定前提、メモリ=会話から自動で溜まる記憶","メモリの方が賢い","カスタム指示は有料のみ"],a:1,exp:"設計するものと自動で溜まるもの。両方の管理がプロ仕様。"},
+{q:"カスタム指示に設定すると効果的な内容は?",c:["今日の天気","会社情報・トーン・出力の好み","好きな食べ物だけ","何も書かない"],a:1,exp:"毎回のプロンプトで繰り返している前提を常設する。"}
+]},
+{id:"g1-04",t:"プロジェクトとファイル添付",min:"20分",terms:["コンテキスト","ナレッジベース"],
+body:`<h3>プロジェクト=案件ごとの作業部屋</h3>
+<p>プロジェクト機能は、関連するチャット・ファイル・専用指示をひとつの箱にまとめる仕組みや。KYOEIの使い方の例:</p>
+<ul>
+<li>「LINEスタンプ制作」プロジェクト:基準画像+仕様を入れて、制作チャットを全部ここに</li>
+<li>「チラシ制作」プロジェクト:ブランド規定+過去の良いチラシを常設</li>
+<li>プロジェクト専用の指示も書ける(カスタム指示のプロジェクト版)</li>
+</ul>
+<h3>ファイル添付:資料を読ませる</h3>
+<p>PDF・画像・Excelを添付して質問できる。コツは<b>「読んどいて」やなく「何を知りたいか」を先に指定する</b>こと:</p>
+<span class="exlabel bad">悪い例</span>
+<div class="exbox">(PDFを添付)これ読んどいて</div>
+<span class="exlabel good">良い例</span>
+<div class="exbox">(見積書PDFを添付)
+この見積書から以下を抜き出して表にしてください:
+- 工事項目と単価
+- 諸経費の内訳
+- 他社と比較する際に注目すべき点があれば指摘も</div>
+<div class="pointbox"><b>ポイント:</b>添付した資料の数値をAIが読み間違えることがある(特に表・手書き)。<b>金額や数量は必ず原本と突き合わせ</b>。ファクトチェックの習慣はここでも生きる。</div>`,
+task:["業務テーマでプロジェクトを1つ作り、関連資料を2つ以上入れて専用指示を書く","PDFを1つ添付し、「目的つき」の指示で情報を抜き出させ、原本と突き合わせて検品する"],
+quiz:[
+{q:"プロジェクト機能の役割は?",c:["料金の管理","関連チャット・ファイル・指示を案件ごとにまとめる","画像の保存のみ","チャットの削除"],a:1,exp:"案件ごとの作業部屋。前提資料を常設できる。"},
+{q:"ファイル添付時の正しい指示の仕方は?",c:["「読んどいて」とだけ言う","何を知りたいか・どんな形で出すかを先に指定する","無言で添付する","ファイル名だけ伝える"],a:1,exp:"目的つきで渡すほど的確に抽出してくれる。"},
+{q:"添付資料から抜き出した金額の扱いは?",c:["そのまま使う","必ず原本と突き合わせて検品する","四捨五入する","気にしない"],a:1,exp:"AIは表や手書きの数値を読み間違えることがある。"},
+{q:"プロジェクト専用指示が便利な理由は?",c:["料金が下がる","その案件の前提を毎回書かずに済む","文字が大きくなる","自動送信される"],a:1,exp:"カスタム指示のプロジェクト版。案件固有の前提を常設。"},
+{q:"KYOEIのプロジェクト活用例として適切なのは?",c:["個人の日記","LINEスタンプ制作(基準画像+仕様を常設)","パスワードの保管","ゲーム攻略"],a:1,exp:"制作物の基準資料を常設し、チャットを案件単位で束ねる。"}
+]},
+{id:"g1-05",t:"画像生成 徹底:参照画像と連作",min:"30分",terms:["透過(アルファチャンネル)","イテレーション"],
+body:`<h3>ChatGPT画像生成の最大の強み</h3>
+<p>それは<b>会話で修正を重ねられる</b>こと。1回で完成を狙わず、コース1で学んだ差分指示で育てていく:「構図はそのまま、空をもう少し明るく」「この案の色味で、別ポーズを」。</p>
+<h3>参照画像方式(KYOEI実戦テクニック)</h3>
+<p>連作(シリーズもの)でトーンを統一する最強の方法が<b>「基準画像を1枚決めて、毎回それを渡す」</b>方式や:</p>
+<div class="exbox">(基準画像を添付)
+この画像のキャラクター・画風・線の太さ・配色を完全に維持して、
+「OKサインをしているポーズ」のバージョンを生成してください。
+- 背景:透過(アルファチャンネル)
+- 白いフチ取りを付ける</div>
+<p>実際にKYOEIのLINEスタンプ制作(16個)では、「りょーかい!」の1枚を基準画像にして全スタンプのトーンを統一してる。<b>言葉でトーンを説明するより、基準画像1枚の方が何倍も正確</b>や。</p>
+<h3>実務の型まとめ</h3>
+<ul>
+<li>用途とサイズを先に決める(コース1の復習)</li>
+<li>連作は<b>同じチャット内で続ける</b>(文脈が保たれる)</li>
+<li>透過が必要なら明示指定(スタンプ・ロゴ用途)</li>
+<li>文字は入れない(Canvaで後入れ)/実在人物・他社IPは禁止</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>良い基準画像ができたら、それはもう「資産」や。プロジェクトに保存して、次の制作でも同じ基準から始める。</div>`,
+task:["何か1つキャラクターやモチーフを生成し、それを基準画像にして「別ポーズ・別表情」を3枚、トーンを維持して連作する","1枚を透過背景で生成し、本当に透過になっているか確認する"],
+quiz:[
+{q:"連作でトーンを統一する最も確実な方法は?",c:["長文で画風を説明する","基準画像を1枚決めて毎回渡す","毎回新しいチャットで作る","運に任せる"],a:1,exp:"参照画像方式。言葉より画像1枚の方が正確に伝わる。"},
+{q:"ChatGPT画像生成の最大の強みは?",c:["無料であること","会話で差分指示を重ねて修正できること","印刷できること","自動投稿"],a:1,exp:"対話型だから育てられる。1発勝負ではない。"},
+{q:"連作を同じチャット内で続ける理由は?",c:["料金が安い","文脈(これまでの基準・修正内容)が保たれるから","ルールだから","速いから"],a:1,exp:"チャットを分けると文脈が切れてトーンがブレる。"},
+{q:"スタンプ用画像で指定すべき背景は?",c:["白背景","透過(アルファチャンネル)","黒背景","グラデーション"],a:1,exp:"スタンプ・ロゴは透過必須。明示的に指定する。"},
+{q:"KYOEIのLINEスタンプ制作で実際に使われた手法は?",c:["全部手描き","「りょーかい!」の1枚を基準画像にして全16個のトーンを統一","外注","写真加工"],a:1,exp:"参照画像方式の実例。基準画像は資産になる。"}
+]},
+{id:"g1-06",t:"Web検索とDeep Research",min:"25分",terms:["ファクトチェック","ハルシネーション"],
+body:`<h3>AIに「調べさせる」2つのモード</h3>
+<ul>
+<li><b>Web検索つき回答</b>:最新情報をその場で検索して答える。ニュース・価格・営業時間など「今」の情報に</li>
+<li><b>Deep Research(深い調査)</b>:時間をかけて多数の情報源を読み込み、レポートにまとめる。競合調査・制度調査・技術調査など「重い調べもの」に</li>
+</ul>
+<h3>調査依頼プロンプトの型</h3>
+<div class="exbox"># 調査目的
+堺市周辺の外壁塗装の集客手法のトレンドを知り、
+KYOEIのSNS戦略の参考にする
+
+# 調べてほしい観点
+- 同業他社がSNSで何を発信しているか
+- 反響を得ている投稿の型
+- 使われているハッシュタグの傾向
+
+# 出力
+- 観点ごとに整理、必ず出典リンクつき
+- 最後に「KYOEIがすぐ真似できること」を3つ</div>
+<h3>鉄則:出典を必ず開く</h3>
+<p>検索つきでもハルシネーションは起きる(出典の内容を誤読することがある)。<b>重要な情報は出典リンクを実際に開いて原文を確認</b>。これはコース1のファクトチェックの実戦版や。</p>
+<div class="pointbox"><b>ポイント:</b>Deep Researchは上限消費が大きい機能。「軽い調べものはWeb検索つき回答、腰を据えた調査だけDeep Research」と使い分ける。ここでも上限とタスクの重さを揃える発想や。</div>`,
+task:["Web検索つきで「今週の堺市の天気と外壁塗装作業への影響」を聞いてみる","調査依頼プロンプトの型を使ってDeep Researchを1本実行し、出典を最低3つ実際に開いて確認する"],
+quiz:[
+{q:"Deep Researchが適している場面は?",c:["挨拶文の作成","競合調査など時間をかけた重い調べもの","誤字チェック","画像生成"],a:1,exp:"多数の情報源を読み込むレポート型調査に向く。"},
+{q:"検索つき回答でも必ずやるべきことは?",c:["お礼を言う","重要情報は出典リンクを開いて原文確認","全部コピペ","印刷"],a:1,exp:"出典の誤読は起きる。ファクトチェックの実戦版。"},
+{q:"調査依頼プロンプトに含めるべき要素は?",c:["調査目的・観点・出典必須の出力指定","文字数だけ","絵文字","締切だけ"],a:0,exp:"目的と観点を渡すほど、使える調査結果になる。"},
+{q:"「今日の営業時間」のような軽い最新情報に適したモードは?",c:["Deep Research","Web検索つき回答","画像生成","オフライン回答"],a:1,exp:"軽い調べものに重い機能を使うのは上限の無駄。"},
+{q:"Deep Researchの使用で意識すべきことは?",c:["毎回使う","上限消費が大きいので腰を据えた調査だけに使う","深夜に使う","使わない"],a:1,exp:"タスクの重さと機能の重さを揃える。"}
+]},
+{id:"g1-07",t:"音声・画像入力:目と耳を使う",min:"20分",terms:["OCR","壁打ち"],
+body:`<h3>ChatGPTは「見る」「聞く」ができる</h3>
+<p>テキスト以外の入力を使えると、業務の幅が一気に広がる。</p>
+<h3>画像入力の実務パターン</h3>
+<ul>
+<li><b>現場写真 → 説明文</b>:劣化箇所の写真を見せて「お客様向けに、この状態の説明文を優しいトーンで」</li>
+<li><b>手書きメモ → テキスト化</b>:打ち合わせの手書きメモを撮って文字起こし+整理</li>
+<li><b>スクショ → エラー相談</b>:PC画面のエラーをスクショで見せて相談(コース6の開発でも多用する)</li>
+<li><b>資料の写真 → 表データ化</b>:紙の料金表を撮って表にする</li>
+</ul>
+<div class="exbox">(現場写真を添付)
+この外壁の状態を、お客様向けに説明する文章を作ってください。
+- 専門用語には一言説明
+- 不安を煽らず、事実ベースで
+- 最後に「無料診断で詳しく確認できる」ことを一言</div>
+<h3>音声会話の使い所</h3>
+<p>移動中の<b>壁打ち</b>に最強や。「今日の商談のポイントを整理したい、質問して」と話しかければ、運転中でも思考の整理ができる(※安全運転最優先、操作は停車中に)。</p>
+<div class="pointbox"><b>ポイント:</b>画像から読み取った数値・文字は必ず目視検品。特に手書きの「7と1」「0と6」は読み間違いの定番や。ここでも検品はセットやで。</div>`,
+task:["現場や身の回りの写真1枚から、お客様向け説明文を作らせる","手書きメモを撮影してテキスト化させ、読み間違いがないか検品する","音声会話で1つのテーマを壁打ちしてみる"],
+quiz:[
+{q:"画像入力の業務活用として適切なのは?",c:["娯楽のみ","現場写真から説明文・手書きメモのテキスト化・エラースクショ相談","保存だけ","使えない"],a:1,exp:"見せて相談できると業務の幅が一気に広がる。"},
+{q:"手書きメモを読み取らせた後に必ずやることは?",c:["即共有","読み間違い(7と1など)の目視検品","削除","印刷"],a:1,exp:"OCR系は数値・文字の誤読が起きる。検品とセット。"},
+{q:"音声会話が特に活きる場面は?",c:["静かな図書館","移動中の壁打ち・思考整理","水中","試験中"],a:1,exp:"手が塞がっていても思考を進められる。"},
+{q:"エラー画面をスクショで見せて相談する利点は?",c:["かっこいい","状況を正確に伝えられ、原因特定が速くなる","料金が下がる","エラーが消える"],a:1,exp:"言葉で説明するより画面そのものが正確。開発でも多用。"},
+{q:"現場写真からお客様向け文章を作るとき維持すべきKYOEIルールは?",c:["専門用語をそのまま使う","不安を煽らず事実ベース+用語に一言説明","絵文字を大量に","金額を盛る"],a:1,exp:"コース1のお客様向け鉄則は入力が画像でも変わらない。"}
+]},
+{id:"g1-08",t:"Canvasで文章・コードを練る",min:"20分",terms:["イテレーション"],
+body:`<h3>Canvas:横に開く共同編集モード</h3>
+<p>Canvasは、チャットの横に<b>文書やコードの編集画面</b>が開いて、AIと一緒に直接練っていける機能や。長い文章をチャットの往復で直すと全文が何度も流れて読みにくいけど、Canvasなら<b>1つの文書をその場で育てられる</b>。</p>
+<h3>使い方の型</h3>
+<ul>
+<li>「提案文をCanvasで作って」のように依頼して開く</li>
+<li><b>直したい部分だけ選択して指示</b>:「この段落だけ、もっと具体的な数字を入れて」——差分指示のUI版や</li>
+<li>全体操作も一発:「全体を2割短く」「トーンをもっと丁寧に」</li>
+<li>自分で直接タイプして編集もできる(人間とAIの共同作業)</li>
+</ul>
+<h3>向いている作業</h3>
+<ul>
+<li>提案文・ブログ記事・お知らせ文など<b>長めの文章の推敲</b></li>
+<li>コードを書きながら部分修正(コース5以降で活躍)</li>
+<li>完成したらコピーしてCanvaや資料へ</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>「チャット=会話で方向性を決める場所、Canvas=決まったものを磨く場所」と使い分けるとええ。構成の議論はチャット、本文の仕上げはCanvasや。</div>`,
+task:["Canvasで「外壁無料診断のお知らせ文」を作り、部分選択→修正指示を3回以上使って仕上げる","「全体を2割短く」のような全体指示も試す"],
+quiz:[
+{q:"Canvasの特徴は?",c:["画像専用機能","チャット横で文書やコードを直接編集しながらAIと練れる","音声専用","印刷機能"],a:1,exp:"1つの成果物をその場で育てる共同編集モード。"},
+{q:"Canvasでの「部分選択→修正指示」は何のUI版?",c:["Few-shot","差分指示","ハルシネーション","ファクトチェック"],a:1,exp:"保持と変更を選択操作で表現できる。"},
+{q:"チャットとCanvasの使い分けは?",c:["同じ","チャット=方向性の議論、Canvas=決まったものを磨く","Canvasだけ使う","チャットだけ使う"],a:1,exp:"構成の議論と本文の推敲で場所を分ける。"},
+{q:"Canvasが特に向いている作業は?",c:["1行の挨拶","長めの文章の推敲やコードの部分修正","ファイル削除","ログイン"],a:1,exp:"往復で全文が流れる非効率を解消できる。"},
+{q:"Canvasで人間ができることは?",c:["見るだけ","自分で直接編集もできる(AIとの共同作業)","何もできない","削除のみ"],a:1,exp:"AI任せでなく共同作業。最後の仕上げは人間の手で。"}
+]},
+{id:"g1-09",t:"ChatGPT修了テスト(実技+知識)",min:"90分",terms:[],
+body:`<h3>ChatGPTコースの総仕上げ</h3>
+<p>実技課題を全て完了し、確認テスト(8問)に全問正解で合格。合格するとコース3(Gemini徹底活用)が解放される。</p>
+<h3>実技課題:ChatGPT業務セットアップ一式</h3>
+<ul>
+<li><b>①環境構築</b>:カスタム指示をKYOEI仕様に設計・設定(設定内容のスクショ提出)</li>
+<li><b>②プロジェクト構築</b>:業務テーマのプロジェクトを1つ作り、資料2点+専用指示を設定</li>
+<li><b>③連作画像</b>:基準画像方式でトーン統一した画像3枚(スタンプ想定・透過)</li>
+<li><b>④調査レポート</b>:Deep Researchで同業他社1社を調査→出典3つを開いて確認→A4半分に要約</li>
+<li><b>⑤モデル使い分け表</b>:自分の業務10個を「標準/思考」に仕分けした表</li>
+</ul>
+<h3>口頭試問(真殿さん)</h3>
+<ul>
+<li>標準モデルと思考モデルの違いと使い分け基準</li>
+<li>参照画像方式がトーン統一に効く理由</li>
+<li>Deep Researchの結果をそのまま使ってはいけない理由</li>
+</ul>
+<div class="pointbox"><b>合格基準:</b>確認テスト全問正解+実技5点すべて提出+口頭試問。提出物は検品(誤字・出典確認・透過確認)まで済ませた状態で出すこと。</div>`,
+task:["実技課題①〜⑤を完成させ、真殿さんに提出する","口頭試問を受ける"],
+quiz:[
+{q:"「1テーマ1チャット」の目的は?",c:["見た目","文脈の混在を防ぎ精度を保つ","料金節約","義務"],a:1,exp:"テーマ混在=コンテキスト汚染。基本の運用ルール。"},
+{q:"思考モデルを使うべきタスクは?",c:["挨拶文","複雑な比較・計算・重要判断","リネーム","絵文字選び"],a:1,exp:"タスクの重さとモデルの賢さを揃える。"},
+{q:"カスタム指示の役割は?",c:["1回だけの指示","全チャット共通の前提の常設","画像の保存","課金"],a:1,exp:"前提プロンプトの常設化。"},
+{q:"連作のトーン統一に最も効くのは?",c:["長文の説明","基準画像を毎回渡す参照画像方式","運","高速生成"],a:1,exp:"KYOEIのスタンプ制作でも実証済みの手法。"},
+{q:"Deep Researchの出力の扱いで正しいのは?",c:["そのまま公開","出典を開いて確認してから使う","全部疑って捨てる","翻訳だけする"],a:1,exp:"検索つきでも誤読は起きる。出典確認が鉄則。"},
+{q:"メモリ機能の注意点は?",c:["確認できない","古い・誤った記憶は回答を歪めるので定期的に確認・削除","自動で完璧","有料のみ"],a:1,exp:"メモリは定期掃除。機密は覚えさせない。"},
+{q:"画像から読み取った数値の扱いは?",c:["信じる","必ず目視検品する","四捨五入","無視"],a:1,exp:"7と1、0と6の誤読は定番。検品とセット。"},
+{q:"Canvasが解決する非効率は?",c:["料金の高さ","長文をチャット往復で直すと全文が何度も流れる問題","通信速度","保存容量"],a:1,exp:"1つの文書をその場で磨ける共同編集モード。"}
+]},
+]};
+
+/* ================= コース3:Gemini徹底活用 ================= */
+const GEMC = {
+id:"g2", no:3, name:"Gemini徹底活用",
+desc:"長文読解・OCR・Google連携。Geminiを「読む仕事」の主力にする",
+lessons:[
+{id:"g2-01",t:"Geminiの全体像とモデル(Flash/Pro)",min:"20分",terms:["LLM(大規模言語モデル)","コンテキストウィンドウ"],
+body:`<h3>Geminiの立ち位置</h3>
+<p>GeminiはGoogleのAI。KYOEIでの役割は<b>「読む仕事」の主力</b>や:長文PDFの読解、画像・手書きの読み取り(OCR)、そしてGmail・ドキュメントとの連携。CraftFileの黒板文字読み取りにGeminiが採用されてるのは、この「読む力」の証明や。</p>
+<h3>モデル:FlashとPro</h3>
+<p>ChatGPTで学んだ構造がそのまま当てはまる:</p>
+<ul>
+<li><b>Flash(速い系)</b>:即答・軽量。要約・下調べ・日常の質問に</li>
+<li><b>Pro(賢い系)</b>:精密な読解・難しい分析に。遅めで上限消費が大きい</li>
+</ul>
+<p>使い分けの基準も同じ:<b>タスクの重さとモデルの賢さを揃える</b>。契約書の条項チェックはPro、ニュースの要約はFlashや。</p>
+<h3>Geminiの強み:大きいコンテキスト</h3>
+<p>Geminiは<b>一度に読める量(コンテキストウィンドウ)が大きい</b>のが伝統的な強み。分厚い資料・長い議事録を丸ごと渡して質問できる。「長いものを読ませるならまずGemini」と覚えとくとええ。</p>
+<div class="pointbox"><b>ポイント:</b>3つのAIで「速い系/賢い系」の構造は共通や。1回この構造を掴んだら、新しいAIが出てきても同じ物差しで使いこなせる。</div>`,
+task:["Geminiを開いてモデル切り替えの場所を確認する","同じ長文(ニュース記事など)の要約をFlashとProの両方でやらせて、深さの違いを比較する"],
+quiz:[
+{q:"KYOEIでのGeminiの主な役割は?",c:["画像生成の主力","長文読解・OCR・Google連携など「読む仕事」の主力","経理","電話対応"],a:1,exp:"読む力が強み。CraftFileの黒板OCR採用が実例。"},
+{q:"Flashモデルの特徴は?",c:["最も賢く遅い","速くて軽い。要約・下調べ向き","画像専用","有料専用"],a:1,exp:"速い系。日常タスクはこれで十分。"},
+{q:"契約書の条項チェックに適したモデルは?",c:["Flash","Pro","どちらでも同じ","AIを使わない"],a:1,exp:"精密読解・重要判断は賢い系(Pro)。"},
+{q:"Geminiの伝統的な強みは?",c:["音楽生成","一度に読める量(コンテキスト)が大きい","印刷機能","低価格のみ"],a:1,exp:"分厚い資料を丸ごと渡せる。「長いものはGemini」。"},
+{q:"「速い系/賢い系」の構造を理解する価値は?",c:["試験対策","新しいAIやモデルが出ても同じ物差しで使い分けられる","自慢できる","特にない"],a:1,exp:"構造の理解は個別の暗記より長持ちする。"}
+]},
+{id:"g2-02",t:"長文・ファイル読解の技術",min:"25分",terms:["コンテキスト","ファクトチェック"],
+body:`<h3>「読ませ方」で結果が変わる</h3>
+<p>長文PDF(契約書・仕様書・行政資料)を渡すときは、ChatGPTのレッスンでやった<b>目的つき指示</b>をさらに強化する:</p>
+<div class="exbox">(リース契約書PDFを添付)
+この契約書を確認したい。以下の観点で抜き出して:
+
+1. 中途解約の条件と違約金(該当条文の番号つき)
+2. 支払いサイトと遅延時の扱い
+3. KYOEI側に不利になりうる条項があれば指摘
+
+出力:観点ごとに「条文番号/内容の要約/原文の該当箇所」の表</div>
+<h3>実務で効くテクニック</h3>
+<ul>
+<li><b>条文番号・ページ番号つきで出させる</b> → 原本との突き合わせ(検品)が一瞬でできる</li>
+<li><b>複数ファイル比較</b>:「A社とB社の見積もりPDFを比較して、項目の抜け漏れと単価差を表に」</li>
+<li><b>分からない前提を補う</b>:「私は法律の専門家やないので、専門用語は一言説明つきで」</li>
+</ul>
+<h3>読解結果の検品</h3>
+<p>要約は便利やけど、<b>重要な判断(契約・金額)は必ず該当箇所の原文を自分の目で読む</b>。AIの要約は「どこを読むべきかを教えてくれる地図」であって、原文の代わりやない。</p>
+<div class="pointbox"><b>ポイント:</b>「条文番号つきで出させる」は検品コストを激減させるプロの型や。出典の位置を必ず言わせる——調査でも読解でも共通の鉄則やで。</div>`,
+task:["実際の長文資料(契約書・行政のPDFなど)を1つ読ませ、観点3つ+条文/ページ番号つきで抜き出させる","抜き出された2箇所について原本の該当ページを開いて突き合わせ検品する"],
+quiz:[
+{q:"長文読解で「条文番号・ページ番号つき」で出させる理由は?",c:["かっこいい","原本との突き合わせ検品が一瞬でできるから","文字数稼ぎ","義務"],a:1,exp:"出典位置を言わせる=検品コスト激減のプロの型。"},
+{q:"AIの要約の正しい位置づけは?",c:["原文の完全な代わり","どこを読むべきかを教える地図","法的効力がある","無価値"],a:1,exp:"重要判断は必ず該当箇所の原文を自分で読む。"},
+{q:"複数の見積もりPDFの比較で有効な指示は?",c:["「どっちがいい?」だけ","項目の抜け漏れと単価差を表にさせる","1つずつ別チャットで","比較しない"],a:1,exp:"観点と出力形式を指定した比較が実務で効く。"},
+{q:"「専門用語は一言説明つきで」と頼む目的は?",c:["文字数を増やす","自分の前提(専門家でない)を補い理解できる出力にする","AIのテスト","翻訳"],a:1,exp:"読み手の前提を伝えるのもコンテキストのうち。"},
+{q:"契約・金額に関わる読解結果の扱いは?",c:["要約を信じて即決","該当箇所の原文を自分の目で確認してから判断","印刷して保管のみ","上司に丸投げ"],a:1,exp:"重要判断の最終確認は人間の目。"}
+]},
+{id:"g2-03",t:"画像・OCR活用:現場の紙をデータに",min:"25分",terms:["OCR","ファクトチェック"],
+body:`<h3>現場は紙と手書きだらけや</h3>
+<p>黒板・手書き見積もり・名刺・FAX——建設業界は紙が多い。Geminiの読み取り(OCR)力で、これをデータ化するのが実務の大きな価値になる。<b>CraftFileの工事黒板の文字読み取りも、まさにGeminiでやってる</b>。</p>
+<h3>実務パターン</h3>
+<ul>
+<li><b>黒板写真 → 工事情報</b>:現場名・日付・工程を抽出して表に</li>
+<li><b>手書き見積もり → 表データ</b>:「項目/数量/単価/金額の表にして。読み取りに自信がない箇所は?マークをつけて」</li>
+<li><b>名刺の束 → 連絡先リスト</b>:会社名・氏名・電話・メールをCSV形式で</li>
+<li><b>紙の料金表 → スプレッドシート用データ</b></li>
+</ul>
+<h3>精度を上げる撮り方</h3>
+<ul>
+<li>正面から・影を入れず・ピントを合わせる(斜め撮りは誤読の元)</li>
+<li>大きい表は分割して撮る</li>
+</ul>
+<h3>検品の型</h3>
+<p>「<b>自信がない箇所に?をつけて</b>」と指示するのがプロの型。AIに不確実さを申告させて、その箇所を重点検品する。数字は特に:7と1、0と6、3と8が定番の誤読や。</p>
+<div class="pointbox"><b>ポイント:</b>OCR結果を客先に出す資料や金額計算に使うなら、<b>全数値の目視検品が必須</b>。1桁の誤読が見積もり事故になる世界やからな。</div>`,
+task:["手書きメモか領収書を撮影し、「?マーク付き」指示で表データ化→重点検品する","名刺2〜3枚をCSV形式でデータ化してみる"],
+quiz:[
+{q:"OCRの読み取り精度を上げる撮影方法は?",c:["斜めから雰囲気良く","正面から・影なし・ピントを合わせる","暗い場所で","遠くから"],a:1,exp:"斜め・影・ピンボケは誤読の元。"},
+{q:"「自信がない箇所に?をつけて」と指示する目的は?",c:["AIを疑うのは失礼","不確実箇所を申告させて重点検品するため","文字数を増やす","速くするため"],a:1,exp:"不確実さの申告=検品の効率化。プロの型。"},
+{q:"数字の誤読で定番の組み合わせは?",c:["1と7、0と6","2と9のみ","5と5","誤読は起きない"],a:0,exp:"手書き数字の誤読パターンは体で覚えておく。"},
+{q:"OCR結果を金額計算に使う場合の条件は?",c:["そのまま使ってよい","全数値の目視検品が必須","半分だけ確認","確認は月1回"],a:1,exp:"1桁の誤読=見積もり事故。全数検品。"},
+{q:"CraftFileでGeminiのOCRが使われている機能は?",c:["請求書発行","工事黒板の文字読み取り","地図表示","チャット"],a:1,exp:"自社プロダクトでの実採用例。読む力の証明。"}
+]},
+{id:"g2-04",t:"Googleサービス連携",min:"25分",terms:["API","バリデーション"],
+body:`<h3>Geminiの独壇場:Googleの中で働く</h3>
+<p>KYOEIの業務はGmail・スプレッドシート・ドライブの上で回ってる部分が多い。Geminiは<b>Googleサービスの中に組み込まれて働ける</b>のが最大の差別化や。</p>
+<h3>実務パターン</h3>
+<ul>
+<li><b>Gmail</b>:長いやり取りの要約(「このスレッドの経緯と、こちらが返すべき論点をまとめて」)、返信の下書き</li>
+<li><b>ドキュメント</b>:文中でそのまま下書き生成・リライト</li>
+<li><b>スプレッドシート</b>:データの整理案・関数の相談(「この表から市区町村別の集計をしたい、どうする?」)</li>
+<li><b>ドライブ</b>:保存済みファイルを参照して質問</li>
+</ul>
+<h3>メール業務の鉄則</h3>
+<ul>
+<li>AIの下書きは<b>必ず人間が検品してから送信</b>。自動送信は絶対にしない</li>
+<li>宛先・固有名詞・金額・日付は重点検品(間違いメールは信用問題)</li>
+<li>謝罪・クレーム対応など感情が絡むメールは、下書き止まりで<b>最終文面は人間が仕上げる</b></li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>顧客とのメールには個人情報が含まれる。会社のアカウント設定・データの扱いルールに従うこと(勝手に個人アカウントで顧客情報を扱わない)。迷ったら真殿さんに確認や。</div>`,
+task:["Gmailで長めのスレッドを1つ要約させ、返信の下書きを作らせる→検品して修正点を3つ挙げる","スプレッドシートで、実データ(架空でOK)の集計方法をGeminiに相談してみる"],
+quiz:[
+{q:"Geminiの最大の差別化ポイントは?",c:["最安値","Googleサービスの中に組み込まれて働ける","日本製","広告がない"],a:1,exp:"Gmail・ドキュメント・スプレッドシートの中で使える。"},
+{q:"AIが作ったメール下書きの扱いは?",c:["自動送信","必ず人間が検品してから送信","下書きのまま放置","即削除"],a:1,exp:"自動送信は絶対NG。宛先・固有名詞・金額は重点検品。"},
+{q:"感情が絡む謝罪メールの正しい作り方は?",c:["AIに全部任せて送信","AIは下書きまで、最終文面は人間が仕上げる","送らない","定型文のみ"],a:1,exp:"感情のニュアンスの最終責任は人間が持つ。"},
+{q:"メールで重点検品すべき項目は?",c:["フォント","宛先・固有名詞・金額・日付","改行の数","送信時刻"],a:1,exp:"間違えると信用問題になる項目を優先。"},
+{q:"顧客情報を含むメールをAIで扱うときの前提は?",c:["個人アカウントで自由に","会社のアカウント設定・データ扱いルールに従う","SNSで共有","制限なし"],a:1,exp:"個人情報の扱いは会社ルール優先。迷ったら確認。"}
+]},
+{id:"g2-05",t:"NotebookLM:資料専用AI",min:"25分",terms:["ナレッジベース","ハルシネーション"],
+body:`<h3>「アップした資料だけ」から答えるAI</h3>
+<p>NotebookLMはGeminiの兄弟ツールで、決定的な特徴がある:<b>自分がアップロードした資料だけを根拠に答える</b>。一般知識で勝手に補完せえへんから、ハルシネーションに強く、<b>回答には必ず出典(資料のどこか)が表示される</b>。</p>
+<h3>KYOEIでの活用パターン</h3>
+<ul>
+<li><b>社内マニュアルのQA化</b>:施工手順書・安全マニュアルを入れて「高所作業の手順は?」と聞ける社内辞書に</li>
+<li><b>研修資料の相棒</b>:この研修の資料(00〜08の.md)を全部入れたら、「質疑シートの書き方は?」を出典つきで即答してくれる<b>研修専用AI</b>になる</li>
+<li><b>議事録アーカイブ</b>:過去の会議メモを入れて「A社案件で決まったことは?」</li>
+<li><b>音声概要</b>:資料をラジオ番組風の解説音声にしてくれる。移動中の復習に使える</li>
+</ul>
+<h3>通常のGeminiとの使い分け</h3>
+<ul>
+<li>世の中の情報・一般知識 → 通常のGemini</li>
+<li><b>「この資料の中では何と書いてあるか」</b> → NotebookLM</li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>NotebookLMは「ナレッジベースをAI化する装置」や。コース1で始めたNotionの蓄積とあわせて、「調べたことが資産になる仕組み」を自分の周りに作っていくんやで。</div>`,
+task:["NotebookLMにこの研修の資料(.md)か社内資料を入れて、質問を5つ投げ、出典表示を確認する","音声概要を1本生成して聞いてみる"],
+quiz:[
+{q:"NotebookLMの決定的な特徴は?",c:["最速","アップした資料だけを根拠に、出典つきで答える","画像生成が得意","無制限"],a:1,exp:"資料限定+出典表示=ハルシネーションに強い。"},
+{q:"NotebookLMが向いている質問は?",c:["今日のニュース","「この資料の中では何と書いてあるか」","天気予報","雑談"],a:1,exp:"世の中の情報は通常のGemini、資料内はNotebookLM。"},
+{q:"社内での活用例として適切なのは?",c:["ゲーム攻略","施工マニュアルを入れて手順を即答する社内辞書","動画編集","経費精算"],a:1,exp:"マニュアル・議事録・研修資料のQA化が鉄板。"},
+{q:"音声概要の使い所は?",c:["音楽鑑賞","資料の内容を移動中に復習する","着信音","会議の代わり"],a:1,exp:"資料をラジオ風解説にして耳で復習できる。"},
+{q:"NotebookLMを一言で表すと?",c:["検索エンジン","ナレッジベースをAI化する装置","SNS","ゲーム機"],a:1,exp:"蓄積した資料が「答えてくれる資産」に変わる。"}
+]},
+{id:"g2-06",t:"Gemini修了テスト(実技+知識)",min:"90分",terms:[],
+body:`<h3>Geminiコースの総仕上げ</h3>
+<p>実技課題を全て完了し、確認テスト(8問)に全問正解で合格。合格するとコース4(Claude徹底活用)が解放される。</p>
+<h3>実技課題:「読む仕事」一式</h3>
+<ul>
+<li><b>①長文読解</b>:長文PDF(契約書・行政資料など)から観点3つを条文/ページ番号つきで抽出→2箇所を原本突き合わせ検品した記録</li>
+<li><b>②OCR</b>:手書き資料の写真を「?マーク付き」でデータ化→全数値の検品記録</li>
+<li><b>③Gmail実務</b>:長スレッドの要約+返信下書き3本(検品・修正の記録つき)</li>
+<li><b>④NotebookLM構築</b>:研修資料または社内資料でノートを作り、想定QA5問と出典を確認</li>
+<li><b>⑤Flash/Pro使い分け表</b>:自分の「読む業務」8個をFlash/Proに仕分けした表</li>
+</ul>
+<h3>口頭試問(真殿さん)</h3>
+<ul>
+<li>NotebookLMと通常Geminiの使い分け</li>
+<li>OCR結果を金額計算に使う場合の条件</li>
+<li>「条文番号つきで出させる」のが検品に効く理由</li>
+</ul>
+<div class="pointbox"><b>合格基準:</b>確認テスト全問正解+実技5点すべて提出(検品記録つき)+口頭試問。検品記録のない提出物は差し戻しやで。</div>`,
+task:["実技課題①〜⑤を完成させ、検品記録つきで真殿さんに提出する","口頭試問を受ける"],
+quiz:[
+{q:"Geminiの伝統的な強みは?",c:["音楽生成","一度に読める量が大きく長文読解に強い","画像生成のみ","電話"],a:1,exp:"「長いものを読ませるならGemini」。"},
+{q:"精密な契約書チェックに使うモデルは?",c:["Flash","Pro","どちらも同じ","モデル不問"],a:1,exp:"重要判断は賢い系。タスクとモデルの重さを揃える。"},
+{q:"OCRで「?マークをつけて」と指示する狙いは?",c:["装飾","不確実箇所を申告させ重点検品する","高速化","省略"],a:1,exp:"AIに不確実さを言わせるのが検品効率化の鍵。"},
+{q:"AIのメール下書きを送信する前に必須なのは?",c:["自動送信設定","人間の検品(宛先・固有名詞・金額・日付)","BCC追加","即送信"],a:1,exp:"自動送信はNG。信用に関わる項目を重点検品。"},
+{q:"NotebookLMがハルシネーションに強い理由は?",c:["新しいから","アップした資料だけを根拠にし出典を表示するから","高額だから","日本語専用だから"],a:1,exp:"一般知識で勝手に補完しない設計。"},
+{q:"AIの長文要約の正しい位置づけは?",c:["原文の代わり","どこを読むべきかの地図。重要箇所は原文確認","法的文書","不要"],a:1,exp:"重要判断の最終確認は人間の目で原文を読む。"},
+{q:"名刺の束をデータ化するとき便利な出力形式は?",c:["詩","CSV形式","絵","音声"],a:1,exp:"後工程(リスト化・取り込み)を考えた形式指定。"},
+{q:"「読む仕事」でのGemini活用の共通鉄則は?",c:["速さがすべて","出典・位置を言わせて、重要箇所は必ず検品","全部信じる","1回で終わらせる"],a:1,exp:"読解・OCR・調査すべてに共通する検品の型。"}
+]},
+]};
+
+/* ================= コース4:Claude徹底活用 ================= */
+const CLDC = {
+id:"g3", no:4, name:"Claude徹底活用",
+desc:"モデルの使い分けと上限管理を武器に、文章とコードの主力AIを使いこなす",
+lessons:[
+{id:"g3-01",t:"Claudeの全体像と得意分野",min:"20分",terms:["生成AI","プロトタイプ"],
+body:`<h3>Claudeの立ち位置</h3>
+<p>ClaudeはAnthropicのAI。KYOEIでの役割は<b>「書く仕事と作る仕事」の主力</b>や:</p>
+<ul>
+<li><b>長文の文章作成</b>:提案書・仕様書・ブログ。自然で論理的な日本語が強み</li>
+<li><b>コード</b>:プログラミング能力が高い。CraftFile開発の相棒(Claude Code)もClaude</li>
+<li><b>複雑な指示への忠実さ</b>:長い制約リストを守り切る力が強く、KYOEI制約つきの依頼と相性がいい</li>
+</ul>
+<h3>画面の3要素</h3>
+<ul>
+<li><b>チャット</b>:基本の対話</li>
+<li><b>Projects</b>:案件別の作業部屋(このコースで習得)</li>
+<li><b>Artifacts</b>:生成物を横のパネルで表示・実行する機能(単一HTMLプロトタイプの製造装置)</li>
+</ul>
+<h3>3AI体制の中でのClaude</h3>
+<p>画像=ChatGPT、読む=Gemini、<b>書く・作る=Claude</b>。この研修アプリ自体も、実はClaudeとの対話で作られてる。君がこれから作るものの多くも、Claudeが相棒になるはずや。</p>
+<div class="pointbox"><b>ポイント:</b>Claudeには利用上限がある(次々レッスンで徹底的にやる)。だからこそ「Claudeにしかできん仕事」に上限を使い、軽い仕事は他のAIに逃がす戦略眼が要る。</div>`,
+task:["Claudeを開き、チャット・Projects・Artifactsの場所を確認する","同じ文章作成の依頼(お客様向け案内文)をChatGPTとClaudeの両方に投げて、文体の違いを比較メモする"],
+quiz:[
+{q:"KYOEIでのClaudeの主な役割は?",c:["画像生成の主力","長文の文章とコード=「書く・作る」の主力","OCRの主力","経理"],a:1,exp:"画像=ChatGPT、読む=Gemini、書く・作る=Claude。"},
+{q:"Claudeの強みとして挙げられたのは?",c:["最安値","長い制約リストを守り切る忠実さ","広告表示","印刷機能"],a:1,exp:"KYOEI制約つきの依頼と相性がいい理由。"},
+{q:"Artifactsとは?",c:["料金プラン","生成物を横のパネルで表示・実行する機能","削除機能","音声機能"],a:1,exp:"単一HTMLプロトタイプの製造装置になる。"},
+{q:"CraftFile開発の相棒であるツールは?",c:["Claude Code","ペイントソフト","表計算","動画編集"],a:0,exp:"コース6で本格的に使う。Claudeの開発ツール。"},
+{q:"Claude活用の戦略として正しいのは?",c:["何でもClaudeでやる","Claudeにしかできない仕事に上限を使い、軽い仕事は他AIへ","使わない","深夜のみ使う"],a:1,exp:"上限があるからこそ配分の戦略眼が要る。"}
+]},
+{id:"g3-02",t:"モデルの3階級:Haiku/Sonnet/Opus",min:"25分",terms:["LLM(大規模言語モデル)","トークン"],
+body:`<h3>Claudeのモデルは3階級</h3>
+<p>Claudeのモデルには俳句・詩にちなんだ名前がついてる。世代(バージョン番号)は更新されていくけど、<b>3階級の構造は変わらん</b>:</p>
+<ul>
+<li><b>Haiku(俳句)</b>:最速・最軽量。単純作業・分類・短い応答に</li>
+<li><b>Sonnet(ソネット)</b>:バランス型。<b>日常業務の主力はこれ</b>。文章・コード・分析を高水準でこなす</li>
+<li><b>Opus(オーパス)</b>:最高性能。難問・重要文書・複雑な設計に。そのぶん遅く、上限消費が最大</li>
+</ul>
+<h3>使い分けの目安(KYOEI版)</h3>
+<ul>
+<li>メモの整形・箇条書き化・簡単な言い換え → <b>Haiku級で十分</b></li>
+<li>お客様向け文章・コード・資料の下書き〜仕上げ → <b>Sonnet(基本これ)</b></li>
+<li>重要な提案書の最終版・複雑な仕様設計・難しいバグの原因分析 → <b>Opus</b></li>
+</ul>
+<h3>ChatGPT/Geminiとの共通構造</h3>
+<p>もう気づいてるやろけど、3社とも「速い系⇔賢い系」の同じ構造や。Claudeは3段階に分かれてるぶん、<b>より細かくタスクとモデルの重さを揃えられる</b>。</p>
+<div class="pointbox"><b>ポイント:</b>迷ったらSonnet。「Sonnetで物足りなかった時だけOpusに上げる」が上限にも品質にも一番効率的な運用や。最初からOpusに頼る癖は上限を溶かす。</div>`,
+task:["同じ難しい依頼(複雑な文章の構成設計など)をSonnetとOpusの両方に投げて、深さの違いを体感・メモする","自分の業務10個をHaiku級/Sonnet/Opusに仕分けした表を作る"],
+quiz:[
+{q:"Claudeのモデル3階級を軽い順に並べると?",c:["Opus→Sonnet→Haiku","Haiku→Sonnet→Opus","Sonnet→Haiku→Opus","全部同じ"],a:1,exp:"俳句(最軽量)→ソネット(バランス)→オーパス(最高性能)。"},
+{q:"日常業務の主力とすべきモデルは?",c:["Haiku","Sonnet","Opus","毎回ランダム"],a:1,exp:"迷ったらSonnet。物足りない時だけOpusへ。"},
+{q:"Opusを使うべき場面は?",c:["メモの整形","挨拶","重要提案書の最終版・複雑な設計・難しいバグ分析","リネーム"],a:2,exp:"最高性能は重い仕事に。上限消費も最大。"},
+{q:"「最初からOpusに頼る癖」の問題点は?",c:["特にない","上限を溶かし、いざという時に使えなくなる","速すぎる","文字が増える"],a:1,exp:"賢さの節約=上限の戦略的配分。"},
+{q:"モデル名の番号より「3階級の構造」で覚える理由は?",c:["番号は秘密だから","世代が更新されても構造は変わらないから","語呂がいいから","規則だから"],a:1,exp:"ChatGPT・Geminiと同じく、構造の理解が長持ちする。"}
+]},
+{id:"g3-03",t:"使用上限とモデルの賢い使い分け(最重要)",min:"30分",terms:["コンテキストウィンドウ","トークン"],
+body:`<h3>上限の仕組みを理解する</h3>
+<p>Claudeには<b>一定時間ごとに回復する使用上限</b>がある。ここで大事なのは、消費量が一定やないこと:</p>
+<ul>
+<li><b>上位モデルほど消費が大きい</b>(Opus &gt;&gt; Sonnet &gt; Haiku)</li>
+<li><b>会話が長いほど1回の消費が大きい</b>。AIは毎回、そのチャットのそれまでの全文を読み直してから答えてる。つまり長いチャットの終盤は、1つの質問で序盤の何倍も消費する</li>
+<li><b>大きいファイルの添付</b>も同じ理屈で重い</li>
+</ul>
+<h3>上限節約術 5箇条(KYOEI標準)</h3>
+<ul>
+<li><b>①軽作業に上位モデルを使わない</b>:整形・言い換えにOpusは禁物</li>
+<li><b>②長い会話は要約→新チャット</b>:「ここまでの決定事項をまとめて」→新チャットに貼って再開(コース1の技がここで金になる)</li>
+<li><b>③ファイルの貼りすぎ注意</b>:必要なページ・箇所だけ渡す</li>
+<li><b>④下書きはSonnet、勝負どころだけOpus</b></li>
+<li><b>⑤重要タスクを先にやる</b>:上限が近い日は、Opusが要る仕事から片付ける</li>
+</ul>
+<h3>上限に当たったら</h3>
+<p>慌てんでいい。選択肢は3つ:①回復を待つ(その間に検品や資料整理)②軽いタスクならHaiku/Sonnetで続行 ③<b>他のAIに切り替える</b>——ChatGPTとGeminiを鍛えてきたのは、まさにこのためや。3AI体制は上限リスクの保険でもある。</p>
+<div class="pointbox"><b>ポイント:</b>上限管理は「ケチる」話やなく<b>「賢さを配分する」</b>話や。限られたOpusの弾を、会社にとって一番価値の高い仕事に撃つ。これができる人が、AIを使いこなしてる人やで。</div>`,
+task:["長くなっているチャットを1つ選び、「決定事項の要約→新チャット引き継ぎ」を実際にやる","1週間の自分の業務を想定して、「どの作業を・どのAIの・どのモデルでやるか」の配分計画表を作る"],
+quiz:[
+{q:"長いチャットの終盤で1つの質問の消費が大きくなる理由は?",c:["AIが疲れるから","毎回それまでの会話全文を読み直してから答えるから","夜だから","気のせい"],a:1,exp:"会話が長い=毎回の読み直し量が大きい=消費が重い。"},
+{q:"上限節約術として正しいのは?",c:["全部Opusで統一","長い会話は要約して新チャットに引き継ぐ","ファイルは全ページ貼る","上限は無視"],a:1,exp:"コース1の「まとめ→新チャット」が上限対策として効く。"},
+{q:"上限に当たったときの選択肢に含まれないのは?",c:["回復を待つ","軽いモデルで続行","他のAIに切り替える","諦めて今日は帰る"],a:3,exp:"3AI体制は上限リスクの保険。仕事は止めない。"},
+{q:"「上限が近い日」の正しい作業順は?",c:["軽い作業から","Opusが必要な重要タスクから片付ける","ランダム","何もしない"],a:1,exp:"賢さの弾を価値の高い仕事に先に撃つ。"},
+{q:"上限管理の本質は?",c:["ケチること","賢さを価値の高い仕事に配分すること","使わないこと","課金額の自慢"],a:1,exp:"配分の戦略眼こそがAIを使いこなす力。"}
+]},
+{id:"g3-04",t:"Projects:前提知識の常設",min:"20分",terms:["コンテキスト","ナレッジベース"],
+body:`<h3>ClaudeのProjects</h3>
+<p>ChatGPTのプロジェクトと同じ発想で、<b>関連チャット+資料+専用指示をまとめる作業部屋</b>や。Claudeでは「プロジェクト知識」として資料を常設でき、そのプロジェクト内の全チャットが参照する。</p>
+<h3>KYOEIでの構成例</h3>
+<ul>
+<li><b>「CraftFile開発」</b>:開発ルール7ヶ条・要件プロンプトの型・触ってはいけない領域リストを常設</li>
+<li><b>「資料作成」</b>:ブランド規定・トーン規定・過去の良い成果物(お手本ライブラリ)</li>
+<li><b>「研修学習」</b>:研修資料を入れて、学習の壁打ち相手に</li>
+</ul>
+<h3>プロジェクト知識に入れるべきもの</h3>
+<ul>
+<li>毎回説明している前提(会社情報・規定・制約)→ <b>入れる</b></li>
+<li>その案件で常に参照する資料 → <b>入れる</b></li>
+<li>顧客の個人情報・パスワード・APIキー → <b>絶対入れない</b></li>
+</ul>
+<div class="pointbox"><b>ポイント:</b>プロジェクト知識も上限の観点で見ると「毎回読み込まれる文脈」や。<b>デカすぎる資料を常設すると全チャットが重くなる</b>。要点をまとめた軽い前提+必要な時だけ個別添付、が上級者の設計やで。</div>`,
+task:["「資料作成」プロジェクトを作り、ブランド規定とお手本1つをプロジェクト知識に設定する","同じ依頼をプロジェクト内/外で投げて、前提の効き方の違いを確認する"],
+quiz:[
+{q:"Projectsのプロジェクト知識とは?",c:["料金情報","プロジェクト内の全チャットが参照する常設資料","チャット履歴の削除","画像集"],a:1,exp:"前提・規定・お手本を常設して毎回の説明を省く。"},
+{q:"プロジェクト知識に絶対入れてはいけないものは?",c:["ブランド規定","顧客の個人情報・パスワード・APIキー","トーン規定","過去の良い成果物"],a:1,exp:"機密・個人情報は常設どころか貼ること自体NG。"},
+{q:"「CraftFile開発」プロジェクトに常設すべきものは?",c:["昼ご飯の記録","開発ルール7ヶ条・要件プロンプトの型","ゲームの攻略法","音楽"],a:1,exp:"毎回のKYOEI制約の説明を常設で省ける。"},
+{q:"デカすぎる資料を常設すると起きる問題は?",c:["色が変わる","毎回読み込まれて全チャットの上限消費が重くなる","保存できない","速くなる"],a:1,exp:"プロジェクト知識も文脈=消費。軽い前提+個別添付が上級。"},
+{q:"プロジェクトを分ける単位として適切なのは?",c:["曜日ごと","用途・案件ごと(開発/資料作成/学習など)","五十音順","分けない"],a:1,exp:"前提が異なる仕事は部屋を分けるのが基本。"}
+]},
+{id:"g3-05",t:"Artifacts:動くものを作らせる",min:"30分",terms:["プロトタイプ","イテレーション"],
+body:`<h3>Artifacts=プロトタイプ製造装置</h3>
+<p>Claudeにコードや文書を作らせると、チャットの横の<b>Artifactsパネル</b>に成果物が表示される。HTMLなら<b>その場で実際に動かせる</b>。作って→触って→直す、が1画面で回る。</p>
+<h3>KYOEI開発文化との直結</h3>
+<p>KYOEIの「単一HTMLプロトタイプ→フィードバック→本実装」文化(Web制作コースで学ぶ)の、最初の工程を担うのがまさにこれや。この研修アプリも、Artifactsでの試作から始まってる。</p>
+<h3>Artifacts運用の型</h3>
+<ul>
+<li><b>要件を先に固めて依頼</b>:「単一HTMLで」「スマホ最優先」「KYOEIカラー」——要件プロンプトの型で</li>
+<li><b>修正は差分指示</b>:「ヘッダーはそのまま、カードの並びを1列に」</li>
+<li><b>動作確認はその場で</b>:ボタンを押す・入力する・スマホ幅に狭めてみる</li>
+<li><b>完成したらダウンロード</b>して検品→GitHubへ、が本流</li>
+</ul>
+<h3>上限との付き合い</h3>
+<p>Artifactsの修正を重ねるほどチャットは長く重くなる。<b>大改造は「現状の仕様を箇条書きにまとめて」→新チャットで作り直し</b>の方が、上限にも品質にも良いことが多い。</p>
+<div class="pointbox"><b>ポイント:</b>Artifactsで作ったものは「試作品」。お客様や本番に出す前には必ず検品(動作・実機・誤字・ブランド)を通す。試作の速さと本番の品質基準は別もんやで。</div>`,
+task:["Artifactsで「塗料グレード別の簡易比較表ツール」(単一HTML)を要件プロンプトから作らせる","差分指示で3回以上修正し、その場で動作確認する","完成品をダウンロードしてブラウザで開き、スマホ幅でも確認する"],
+quiz:[
+{q:"Artifactsの特徴は?",c:["音声通話","成果物が横のパネルに表示され、HTMLはその場で動かせる","印刷専用","メール送信"],a:1,exp:"作る→触る→直すが1画面で回る。"},
+{q:"KYOEI開発文化の中でArtifactsが担う工程は?",c:["本番デプロイ","単一HTMLプロトタイプの試作","経理処理","顧客対応"],a:1,exp:"プロトタイプ文化の最初の工程を高速化する。"},
+{q:"Artifactsの修正指示の正しい型は?",c:["「全部やり直し」を繰り返す","保持と変更を明示する差分指示","無言で待つ","絵文字で伝える"],a:1,exp:"コース1の差分指示がそのまま効く。"},
+{q:"大改造したくなったときの上限に優しい進め方は?",c:["同じチャットで無限に修正","現状仕様をまとめさせて新チャットで作り直す","諦める","手書きに戻る"],a:1,exp:"長いチャットは重い。要約→新チャットの技の応用。"},
+{q:"Artifactsで作ったものを本番に出す前に必要なのは?",c:["何もしない","検品(動作・実機・誤字・ブランド)","SNS投稿","即納品"],a:1,exp:"試作の速さと本番の品質基準は別。検品は常にセット。"}
+]},
+{id:"g3-06",t:"3AI使い分け総合戦略",min:"25分",terms:["ファクトチェック"],
+body:`<h3>いよいよ統合や</h3>
+<p>ChatGPT・Gemini・Claudeを個別に学んできた。ここで<b>「どの仕事を・どのAIの・どのモデルでやるか」</b>を1つの判断体系にまとめる。</p>
+<h3>判断の4軸</h3>
+<ul>
+<li><b>①得意分野</b>:画像=ChatGPT/読む・Google連携=Gemini/書く・作る=Claude</li>
+<li><b>②タスクの重さ</b>:軽い→速い系モデル/重い・重要→賢い系モデル</li>
+<li><b>③上限の残り</b>:主力AIの上限が厳しければ他AIに逃がす</li>
+<li><b>④データの場所と機密度</b>:Gmail内の仕事はGemini/機密はどのAIにも貼らない</li>
+</ul>
+<h3>ケーススタディ</h3>
+<ul>
+<li><b>チラシのアイキャッチ制作</b> → ChatGPT(画像)。基準画像方式で連作</li>
+<li><b>リース契約書の条項チェック</b> → Gemini Pro。条文番号つき抽出→原本検品</li>
+<li><b>CraftFile新機能の仕様書</b> → Claude。ProjectsにKYOEI制約常設+仕上げだけOpus</li>
+<li><b>問い合わせメールの返信下書き</b> → Gemini(Gmail内)。人間検品して送信</li>
+</ul>
+<h3>品質を上げる合わせ技</h3>
+<p><b>重要な成果物は2つのAIに同じ依頼を投げて比較する</b>。片方の見落としをもう片方が拾う。「AI同士のクロスチェック」は検品の最終兵器や。テンプレタブに「3大AI使い分けチートシート」を追加してあるから、迷ったら見ること。</p>
+<div class="pointbox"><b>ポイント:</b>使い分けの目的は「かっこよさ」やなく<b>品質×速度×上限の最適化</b>や。毎回4軸で3秒考える癖がつけば、それはもう立派なAIディレクション能力やで。</div>`,
+task:["ケーススタディにならい、今週の実業務3つについて「AI・モデル・理由」を決めて実行する","重要な成果物1つを2つのAIに投げてクロスチェックし、違いをメモする"],
+quiz:[
+{q:"AI選択の4軸に含まれないのは?",c:["得意分野","タスクの重さ","上限の残り","AIの見た目の好み"],a:3,exp:"得意分野・重さ・上限・データの場所と機密度で判断。"},
+{q:"リース契約書の条項チェックに最適な組み合わせは?",c:["ChatGPT標準","Gemini Pro","Claude Haiku","どれでも同じ"],a:1,exp:"読む仕事×重要判断=Geminiの賢い系。"},
+{q:"チラシのアイキャッチ制作に最適なのは?",c:["ChatGPT(画像生成)","NotebookLM","Haiku","表計算"],a:0,exp:"画像はChatGPTが主力。基準画像方式で連作。"},
+{q:"「AI同士のクロスチェック」とは?",c:["AIを喧嘩させる","重要な成果物を2つのAIに投げて比較し見落としを拾う","同じAIに2回聞く","チェックしない"],a:1,exp:"検品の最終兵器。重要物ほど効く。"},
+{q:"使い分けの本当の目的は?",c:["かっこよさ","品質×速度×上限の最適化","話題作り","課金額を増やす"],a:1,exp:"4軸で3秒考える癖=AIディレクション能力。"}
+]},
+{id:"g3-07",t:"Claude Codeへの入口",min:"20分",terms:["Claude Code","ターミナル"],
+body:`<h3>チャットのClaudeとClaude Codeの違い</h3>
+<p>ここまで使ってきたのは「チャットのClaude」。<b>Claude Code</b>はその開発特化版で、決定的に違うのは:</p>
+<ul>
+<li><b>コードベース全体を直接読める</b>:ファイルを1つずつ貼らんでも、プロジェクトのフォルダごと理解する</li>
+<li><b>ファイルを直接書き換える</b>:提案やなく、実際に編集する</li>
+<li><b>コマンドを実行できる</b>:ビルド・テスト・Git操作まで自分でやる</li>
+</ul>
+<h3>強力=危険でもある</h3>
+<p>「コマンドを実行できる」は、<b>三大禁止事項と隣り合わせ</b>ということでもある。Claude Codeは指示すればpushもできてしまう。だからKYOEIでは:</p>
+<ul>
+<li>要件プロンプトに<b>KYOEI制約(pushしない等)を毎回明記</b>する</li>
+<li>実行される<b>コマンドと差分を人間が確認</b>する</li>
+<li>基礎(Git・環境の理解)ができるまで実案件では使わない</li>
+</ul>
+<h3>今は「地図」だけ持っとけばいい</h3>
+<p>Claude Codeの本格習得はコース6でやる。今の段階では「そういう強力な道具があって、Web制作と開発の基礎を固めるのはそれを安全に扱うためや」と分かってたら十分。<b>免許を取ってから乗る車</b>やと思っとき。</p>
+<div class="pointbox"><b>ポイント:</b>チャットのClaudeでコードの相談・設計・レビューは今からでもできる。「設計と検品はチャットで、実装はいずれClaude Codeで」——この分担イメージを持っておくとコース6がスッと入る。</div>`,
+task:["チャットのClaudeに「Claude Codeとは何か、チャット版との違い」を質問し、自分の言葉で3行にまとめる","Web制作コースで作る予定のツールについて、チャットのClaudeと設計の壁打ちをしてみる"],
+quiz:[
+{q:"Claude Codeがチャット版と決定的に違う点は?",c:["色が違う","コードベースを直接読み、ファイル編集やコマンド実行までできる","日本語非対応","無料"],a:1,exp:"読む・書く・実行する。だから強力で、だから危険。"},
+{q:"Claude Codeが「危険と隣り合わせ」な理由は?",c:["高額だから","コマンド実行=pushなど禁止事項も実行できてしまうから","遅いから","うるさいから"],a:1,exp:"三大禁止事項の観点で、制約明記と人間の確認が必須。"},
+{q:"KYOEIでClaude Codeを使う際の必須事項は?",c:["自由に任せる","KYOEI制約を毎回明記し、コマンドと差分を人間が確認","深夜に使う","1人で判断"],a:1,exp:"制約の明記+検品。コース6で本格的にやる。"},
+{q:"今の段階でのClaude Codeとの正しい距離感は?",c:["今すぐ実案件で使う","仕組みを知り、基礎を固めてから使う(免許を取ってから乗る車)","一生使わない","名前だけ覚える"],a:1,exp:"基礎=安全に扱うための免許。急がば回れ。"},
+{q:"今からでもチャットのClaudeでできる開発関連の仕事は?",c:["本番デプロイ","設計の壁打ち・コードの相談・レビュー","DB削除","なし"],a:1,exp:"設計と検品はチャットで、実装はいずれClaude Codeで。"}
+]},
+{id:"g3-08",t:"Claude修了テスト(実技+知識)",min:"90分",terms:[],
+body:`<h3>Claudeコースの総仕上げ</h3>
+<p>実技課題を全て完了し、確認テスト(8問)に全問正解で合格。合格するとコース5(プロンプトでWeb制作)が解放される。ここから先は「作る」の世界や。</p>
+<h3>実技課題:Claude運用体制の構築</h3>
+<ul>
+<li><b>①Projects構築</b>:「資料作成」プロジェクトを作り、前提知識(軽量にまとめたもの)を設定</li>
+<li><b>②Artifacts制作</b>:要件プロンプトから単一HTMLツールを1本作り、差分指示3回以上で仕上げ、ダウンロードして実機確認</li>
+<li><b>③モデル配分計画</b>:1週間の業務を想定した「AI×モデル配分表」(Haiku級/Sonnet/Opus+他AIへの逃がし先)</li>
+<li><b>④上限対応シミュレーション</b>:「Claudeの上限に当たった」想定で、その日の残タスクの代替プラン(どれを待つ/どれを他AIへ)を書く</li>
+<li><b>⑤クロスチェック実践</b>:重要文書1本を2AIに投げて比較し、採用判断と理由を記録</li>
+</ul>
+<h3>口頭試問(真殿さん)</h3>
+<ul>
+<li>長い会話が上限を多く消費する仕組みの説明</li>
+<li>Haiku/Sonnet/Opusの使い分け基準</li>
+<li>Claude Codeが強力かつ危険である理由</li>
+</ul>
+<div class="pointbox"><b>合格基準:</b>確認テスト全問正解+実技5点提出+口頭試問。ここに合格した時点で、君は「3大AIを戦略的に使い分けられる人材」や。社内でもかなり希少やで。</div>`,
+task:["実技課題①〜⑤を完成させ、真殿さんに提出する","口頭試問を受ける"],
+quiz:[
+{q:"Claudeの3階級を性能の高い順に並べると?",c:["Haiku→Sonnet→Opus","Opus→Sonnet→Haiku","Sonnet→Opus→Haiku","順序はない"],a:1,exp:"Opusが最高性能・最大消費。日常はSonnet。"},
+{q:"長いチャットの何が上限を消費させる?",c:["文字の色","毎回それまでの全文を読み直すこと","絵文字","時間帯"],a:1,exp:"会話が長い=読み直し量が大きい=消費が重い。"},
+{q:"上限節約の王道テクニックは?",c:["全部Opus","要約→新チャット引き継ぎ+軽作業は軽いモデル","ファイル全部貼り","使わない"],a:1,exp:"節約術5箇条の核心。"},
+{q:"プロジェクト知識に入れるべきでないものは?",c:["ブランド規定","開発ルール","顧客の個人情報やAPIキー","お手本"],a:2,exp:"機密は常設どころか貼ること自体NG。"},
+{q:"Artifactsの成果物の位置づけは?",c:["そのまま本番納品","試作品。本番前に検品必須","法的文書","保存不可"],a:1,exp:"試作の速さと本番の品質基準は別。"},
+{q:"3AI使い分けの判断4軸は?",c:["価格・色・速度・人気","得意分野・タスクの重さ・上限の残り・データの場所と機密度","年齢・性別・地域・天気","運"],a:1,exp:"4軸で3秒考える=AIディレクション能力。"},
+{q:"重要文書の品質を上げる「クロスチェック」とは?",c:["2回読む","2つのAIに同じ依頼を投げて比較する","家族に見せる","時間を置く"],a:1,exp:"片方の見落としをもう片方が拾う検品の最終兵器。"},
+{q:"Claude Codeを実案件で使う前提条件は?",c:["特になし","Git・環境の基礎を固め、制約明記と人間の確認体制があること","課金のみ","深夜であること"],a:1,exp:"免許を取ってから乗る車。コース6で本格習得。"}
+]},
+]};
+
+const COURSES = [COURSE1, GPTC, GEMC, CLDC, COURSE2, COURSE3];
+
+/* ================= テンプレート ================= */
 const TPLS = [
-{t:"質疑提出シート",d:"質問はこれにまとめて提出(AI資料化方式)",c:
-`## 質疑提出シート YYYY/MM/DD No.○○(片岡)
+{t:"質疑提出シート",d:"詰まったら15分格闘→これで真殿さんへ",c:`【質疑提出シート】
+提出日:
+氏名:
 
-### 1. 質問・課題(何に詰まっているか)
-
-
-### 2. AIでの調査過程(使ったプロンプトを貼る)
+1. 質問(1行で)
 
 
-### 3. AIの回答要約(自分の言葉で3行以内)
+2. 状況・背景
+(何をしていて、何が起きたか。エラーは全文コピペ)
 
 
-### 4. 自分の理解と結論(仮説でOK)
+3. 自分で調べたこと
+(AIへの質問内容と回答の要約を含む)
 
 
-### 5. 残る不明点
+4. 現時点の自分の仮説
 
 
-### 6. 真殿さんに判断してほしいこと(1行で)
+5. 試したことと結果
+
+
+6. 真殿さんに判断してほしいこと
+(はい/いいえ で答えられる形が理想)`},
+{t:"日報",d:"毎日の終業前に提出",c:`【日報】日付:
+
+■ 今日やったこと(箇条書き)
+-
+
+■ 学んだこと・気づき(1つ以上)
+-
+
+■ 詰まったこと・未解決(なければ「なし」)
+-
+
+■ 明日やること
+-
+
+■ 今日の理解度(5段階)と一言
 `},
-{t:"日報",d:"毎日・終業前10分で提出",c:
-`## 日報 YYYY/MM/DD(片岡)
-
-### 今日やったこと
-- 
-
-### できるようになったこと(1つでOK)
-- 
-
-### 詰まったこと+どう対処したか
-- (例:○○のエラー → 15分調査 → AIに△△と質問 → 解決/未解決)
-
-### 明日やること
-- 
-
-### 今日のベストプロンプト or 今日の学びコード(任意)
-- 
-`},
-{t:"RCGCOプロンプトの型",d:"AIへの依頼はこの5要素で設計する",c:
-`# 役割(Role)
-あなたは○○です。
+{t:"RCGCOプロンプトの型",d:"コース1の基本型。コピーして埋める",c:`# 役割(Role)
+あなたは◯◯です。
 
 # 文脈(Context)
-(背景・前提・対象読者)
+- 会社:株式会社KYOEI(大阪府堺市の外壁塗装・IT企業)
+- 対象読者:
+- 背景:
 
 # 目的(Goal)
-(何のための出力か。最重要)
+この出力で達成したいこと:
 
 # 制約(Constraints)
 - 文字数:
 - トーン:
-- 禁止事項:
-- 必須要素:
+- 禁止事項:不安を煽る表現、根拠のない数値
+- 専門用語には一言説明を添える
 
 # 出力形式(Output)
-(形式・構成・パターン数。お手本があれば貼る)
-`},
-{t:"エラー相談テンプレ",d:"コードで詰まったらAIにこの4点セットで渡す",c:
-`## やりたいこと
+- 形式:
+- パターン数:`},
+{t:"エラー相談の型(4点セット)",d:"AIにエラーを相談するとき",c:`## やりたいこと
 
 
 ## 書いたコード(全文)
 
 
-## エラー全文(コピペ)
+## エラー全文(コピペ・要約禁止)
 
 
 ## 試したこと
+1.
+2.`},
+{t:"修正指示(差分指示)の型",d:"AIの出力を修正させるとき",c:`## 保持(変えないで)
+-
 
-`},
-{t:"PRテンプレ",d:"Pull Request作成時にこの形で書く",c:
-`## やったこと
-- 
+## 変更(ここを・こう変えて)
+-
 
-## 確認方法
-- (どの画面をどう操作すれば確認できるか)
+## 理由(なぜ変えるか)
+-
 
-## スクリーンショット
-- (UI変更は必ずBefore/After)
+※トーン・文字数など維持したい条件も明記`},
+{t:"Claude Code要件プロンプトの型",d:"コース6(開発)・依頼の標準型",c:`# 目的
+(なぜ作るか・誰のどんな課題を解決するか)
 
-## 確認済みチェック
-- [ ] スマホ表示確認
+# 対象範囲
+- 触ってよい:
+- 触ってはいけない:認証まわり、(その他指定)
+
+# 要件
+-
+
+# KYOEI制約(毎回コピペ)
+- git pushは絶対にしない
+- next build がグリーンで通ること
+- 新規モデルには tenantId 必須/取得のwhereにも必ず含める
+- 高さ指定は dvh(100vh禁止)
+- モーダルは ModalShell を使用
+- タップターゲット44px以上
+- スキーマ変更は冪等なマイグレーションファイルで「提案」まで
+
+# 完成条件
+(何ができたら完成か・確認方法)`},
+{t:"PRテンプレ",d:"プルリクエストの説明文",c:`## 何を変えたか
+
+
+## なぜ変えたか
+
+
+## 確認したこと
 - [ ] next build グリーン
-- [ ] KYOEIルール(dvh/ModalShell/tenantId/44px)違反なし
-`},
-{t:"AIに先生をさせる型",d:"分からないコードはこれで解説させる",c:
-`あなたはプログラミング講師です。
-以下のコードを1行ずつ、初心者向けに解説してください。
-専門用語には必ず一言説明を添えてください。
+- [ ] スマホ実機確認
+- [ ] tenantId 漏れなし
+- [ ] 100vh 混入なし / ModalShell 使用 / タップ44px以上
 
-(ここにコードを貼る)
+## レビューで特に見てほしい点
 `},
-{t:"修正指示(差分指示)の型",d:"「なんかいい感じに」を卒業する",c:
-`## 保持する部分(変えないで)
-- 
+{t:"AIに先生をさせる型",d:"レッスンの理解を深めたいとき",c:`あなたは優しいプログラミングの先生です。
+私はIT研修中の新人です。
 
-## 変更する部分
-- ○○を△△に変えて。理由:□□
+以下のテーマについて:
+1. まず中学生にも分かる例え話で説明してください
+2. 次に実務(外壁塗装会社のシステム)での使われ方を説明してください
+3. 最後に、私の理解を確認する質問を3つ出してください
 
-## 変えないでほしい条件
-- 文字数・トーンは維持
-`},
+テーマ:「◯◯◯」`},
+{t:"3大AI使い分けチートシート",d:"迷ったらこれ。タスク→AI×モデルの対応表",c:`【KYOEI 3大AI使い分け】
+
+■ ChatGPT(画像とアイデアの主力)
+・画像生成(基準画像方式で連作)/アイデア出し/汎用相談
+・軽い作業=標準モデル、難しい判断=思考モデル
+
+■ Gemini(読む仕事の主力)
+・長文PDF読解(条文番号つきで抽出)/OCR(?マーク検品)
+・Gmail・ドキュメント連携/資料QA=NotebookLM
+・速さ重視=Flash、精度重視=Pro
+
+■ Claude(書く・作るの主力)
+・長文文章/コード/仕様書/Artifactsでプロトタイプ
+・整形など軽作業=Haiku級/日常の主力=Sonnet/勝負どころ=Opus
+・上限節約:長い会話は要約→新チャット/軽作業に上位モデルを使わない
+
+■ 判断の4軸
+①得意分野 ②タスクの重さ ③上限の残り ④データの場所と機密度
+
+■ 共通ルール
+・固有名詞/数値はファクトチェック
+・顧客情報・パスワード・APIキーはどのAIにも貼らない
+・重要成果物は2AIクロスチェック`},
 ];
 
-/* ================= 描画 ================= */
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-const termMap={}; TERMS.forEach(t=>termMap[t[1]]=t);
+/* ================= 描画・ロジック ================= */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const ALL_LESSONS = COURSES.flatMap(c => c.lessons.map(l => ({...l, cid: c.id, cname: c.name})));
 
 /* --- タブ --- */
-$$('.tab').forEach(b=>b.addEventListener('click',()=>{
-  $$('.tab').forEach(x=>x.classList.remove('on')); b.classList.add('on');
-  $$('.page').forEach(p=>p.classList.remove('on'));
-  document.getElementById('pg-'+b.dataset.pg).classList.add('on');
+function goTab(pg){
+  $$('.tab').forEach(t=>t.classList.toggle('on', t.dataset.pg===pg));
+  $$('section.page').forEach(s=>s.classList.toggle('on', s.id==='pg-'+pg));
   window.scrollTo({top:0});
-}));
-function goTab(pg){ $$('.tab').forEach(x=>{ if(x.dataset.pg===pg) x.click(); }); }
+}
+$$('.tab').forEach(t=>t.addEventListener('click',()=>goTab(t.dataset.pg)));
 
-/* --- カリキュラム描画 --- */
-let taskIds=[];
-function buildCurr(){
-  const root=$('#phases'); let html='';
-  PHASES.forEach((p,pi)=>{
-    html+=`<div class="phase" id="phase-${pi}">
-      <button class="phase-h" data-p="${pi}" aria-expanded="false">
-        <div class="phase-no"><span class="k">PHASE</span><span class="n">${p.no}</span></div>
-        <div class="phase-t"><div class="t">${p.name}</div><div class="w">${p.wk} <span id="pcount-${pi}"></span></div></div>
-        <svg class="arw" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="phase-body">
-        <div class="goal"><b>ねらい:</b>${p.goal}</div>`;
-    p.weeks.forEach((w,wi)=>{
-      html+=`<div class="week"><div class="week-h"><span class="wk">${w.w}</span><span class="wt">${w.t}</span></div>`;
-      w.days.forEach((d,di)=>{
-        const dayId=`p${pi}w${wi}d${di}`;
-        html+=`<div class="day" id="day-${dayId}"><div class="day-h"><span class="dd">DAY</span><span class="dt">${d.t}</span></div><div class="day-g">${d.g}</div>`;
-        d.k.forEach((k,ki)=>{
-          const id=`${dayId}t${ki}`; taskIds.push({id,pi});
-          html+=`<label class="task"><input type="checkbox" data-id="${id}"><span>${k}</span></label>`;
-        });
-        if(d.m && d.m.length){
-          html+=`<div class="terms-row"><span class="lb">今日の用語:</span>`;
-          d.m.forEach(t=>{ html+=`<button class="chip" data-term="${t}">${t}</button>`; });
-          html+=`</div>`;
-        }
-        html+=`</div>`;
-      });
-      html+=`</div>`;
-    });
-    if(p.exam){
-      html+=`<div class="exam"><div class="et">🎓 ${p.exam.t}<span class="pt">${p.exam.pt}</span></div><ul>`;
-      p.exam.items.forEach(i=>html+=`<li>${i}</li>`);
-      html+=`</ul><div class="ps">※${p.exam.ps}</div></div>`;
+/* --- アンロック判定 --- */
+function courseUnlocked(ci){
+  if(ci===0) return true;
+  const prev = COURSES[ci-1];
+  return isDone(prev.lessons[prev.lessons.length-1].id);
+}
+function lessonUnlocked(ci, li){
+  if(!courseUnlocked(ci)) return false;
+  if(li===0) return true;
+  return isDone(COURSES[ci].lessons[li-1].id);
+}
+function nextLesson(){
+  for(let ci=0; ci<COURSES.length; ci++){
+    for(let li=0; li<COURSES[ci].lessons.length; li++){
+      if(!isDone(COURSES[ci].lessons[li].id) && lessonUnlocked(ci,li)) return {ci,li};
     }
-    html+=`</div></div>`;
-  });
-  root.innerHTML=html;
+  }
+  return null;
+}
 
-  $$('.phase-h').forEach(h=>h.addEventListener('click',()=>{
-    const ph=h.parentElement; const open=ph.classList.toggle('open');
-    h.setAttribute('aria-expanded',open?'true':'false');
-  }));
-  $$('.task input').forEach(cb=>{
-    cb.checked = isDone(cb.dataset.id);
-    cb.addEventListener('change',()=>{
-      setDone(cb.dataset.id, cb.checked);
-      refreshProgress(); refreshDayDone(cb);
+/* --- コース一覧描画 --- */
+function buildCourses(){
+  const wrap = $('#courses'); wrap.innerHTML='';
+  COURSES.forEach((c,ci)=>{
+    const unlocked = courseUnlocked(ci);
+    const doneN = c.lessons.filter(l=>isDone(l.id)).length;
+    const div = document.createElement('div');
+    div.className = 'course' + (unlocked?'':' locked');
+    const nx = nextLesson();
+    if(unlocked && nx && nx.ci===ci) div.classList.add('open');
+    div.innerHTML = `
+      <button class="course-h" aria-expanded="${div.classList.contains('open')}">
+        <div class="course-no"><span class="k">COURSE</span><span class="n">${c.no}</span></div>
+        <div class="course-t"><div class="t">${c.name}</div><div class="d">${unlocked? c.desc : '前のコースの修了テストに合格すると解放'}</div></div>
+        <div style="text-align:right;flex:none"><div style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--navy)">${doneN}/${c.lessons.length}</div><div class="arw">▾</div></div>
+      </button>
+      <div class="course-body"></div>`;
+    const body = div.querySelector('.course-body');
+    c.lessons.forEach((l,li)=>{
+      const done = isDone(l.id);
+      const un = lessonUnlocked(ci,li);
+      const b = document.createElement('button');
+      b.className = 'lesson' + (done?' done': un?' next':' lock');
+      b.innerHTML = `<span class="st">${done?'✓': un?'▶':'🔒'}</span><span class="li"><span class="lt">${l.t}</span><br><span class="lm">${l.id.toUpperCase()} ・ 目安${l.min} ・ テスト${l.quiz.length}問</span></span>`;
+      if(un) b.addEventListener('click',()=>openLesson(ci,li));
+      else b.addEventListener('click',()=>{ b.style.transform='translateX(4px)'; setTimeout(()=>b.style.transform='',150); });
+      body.appendChild(b);
     });
-    refreshDayDone(cb);
+    div.querySelector('.course-h').addEventListener('click',()=>{
+      if(!unlocked){ return; }
+      div.classList.toggle('open');
+    });
+    wrap.appendChild(div);
   });
-  $$('.chip').forEach(c=>c.addEventListener('click',()=>openTerm(c.dataset.term)));
-}
-function refreshDayDone(cb){
-  const day=cb.closest('.day');
-  const all=[...day.querySelectorAll('input')];
-  day.classList.toggle('done', all.length>0 && all.every(x=>x.checked));
 }
 
-/* --- 進捗 --- */
-function refreshProgress(){
-  let total=0,done=0; const per={};
-  taskIds.forEach(t=>{
-    total++; per[t.pi]=per[t.pi]||{t:0,d:0}; per[t.pi].t++;
-    if(isDone(t.id)){done++;per[t.pi].d++;}
+/* --- レッスン表示 --- */
+let curLesson = null;
+function openLesson(ci, li){
+  curLesson = {ci, li};
+  const c = COURSES[ci], l = c.lessons[li];
+  $('#sheetTitle').textContent = `${l.id.toUpperCase()} ${l.t}`;
+  const done = isDone(l.id);
+  let termChips = '';
+  if(l.terms && l.terms.length){
+    termChips = `<div class="terms-row"><span class="lb">このレッスンの用語:</span>` +
+      l.terms.map(t=>`<button class="chip" data-term="${t}">${t}</button>`).join('') + `</div>`;
+  }
+  let taskHtml = '';
+  if(l.task && l.task.length){
+    taskHtml = `<div class="taskbox"><div class="tt">🔨 実践課題(手を動かす)</div>` +
+      l.task.map((t,i)=>{
+        const k = l.id + ':t' + i;
+        return `<label class="task"><input type="checkbox" data-id="${k}" ${isDone(k)?'checked':''}><span>${t}</span></label>`;
+      }).join('') + `</div>`;
+  }
+  const quizHtml = `
+    <div class="quiz-intro"><div class="t">📝 確認テスト(全${l.quiz.length}問)</div><div class="d">上の実践課題(実技)を全て完了してから挑戦できる。全問正解で合格→次のレッスンが解放。何回でも挑戦OK。</div></div>
+    <div id="quizArea">` +
+    l.quiz.map((q,qi)=>`
+      <div class="qcard" data-qi="${qi}">
+        <div class="qq"><span class="qn">Q${qi+1}</span>${q.q}</div>
+        ${q.c.map((op,oi)=>`<button class="opt" data-qi="${qi}" data-oi="${oi}">${op}</button>`).join('')}
+        <div class="qexp" id="exp-${qi}">💡 ${q.exp}</div>
+      </div>`).join('') +
+    `</div>
+    <button class="btn org" id="gradeBtn" style="width:100%;margin-top:14px">採点する</button>
+    <div class="result" id="quizResult"><div class="rt"></div><div class="rd"></div><button class="btn" id="afterBtn" style="margin-top:10px;display:none"></button></div>`;
+  $('#sheetBody').innerHTML = `
+    <div class="small" style="margin-bottom:2px">${c.name} ・ 目安${l.min}${done?' ・ <b style="color:var(--green)">合格済み ✓</b>':''}</div>
+    <div class="lesson-body">${l.body}</div>
+    ${termChips}${taskHtml}${quizHtml}`;
+  // term chips
+  $$('#sheetBody .chip').forEach(ch=>ch.addEventListener('click',()=>{
+    const term = TERMS.find(t=>t[1]===ch.dataset.term);
+    if(term) showTerm(term);
+  }));
+  // task checkboxes
+  $$('#sheetBody .task input').forEach(cb=>{
+    cb.addEventListener('change',()=>setDone(cb.dataset.id, cb.checked));
   });
-  const pct=total?Math.round(done/total*100):0;
-  $('#paintAll').style.width=pct+'%';
-  $('#pctAll').textContent=pct+'%';
-  let bars='';
-  PHASES.forEach((p,pi)=>{
-    const x=per[pi]||{t:0,d:0};
-    const pp=x.t?Math.round(x.d/x.t*100):0;
-    bars+=`<div class="phasebar"><div class="nm">P${p.no} ${p.name}</div><div class="tr"><div class="fl" style="width:${pp}%"></div></div><div class="pc">${pp}%</div></div>`;
-    const cEl=document.getElementById('pcount-'+pi);
-    if(cEl) cEl.textContent=`・${x.d}/${x.t} 完了`;
+  // quiz options
+  const picked = {};
+  $$('#sheetBody .opt').forEach(op=>op.addEventListener('click',()=>{
+    if(op.disabled) return;
+    const qi = op.dataset.qi;
+    picked[qi] = Number(op.dataset.oi);
+    $$(`#sheetBody .opt[data-qi="${qi}"]`).forEach(o=>o.classList.remove('sel'));
+    op.classList.add('sel');
+  }));
+  $('#gradeBtn').addEventListener('click',()=>{
+    const taskKeys=(l.task||[]).map((_,i)=>l.id+':t'+i);
+    const undone=taskKeys.filter(k=>!isDone(k)).length;
+    if(undone>0){
+      const r0=$('#quizResult'); r0.className='result fail';
+      r0.querySelector('.rt').textContent='実技課題が先や('+undone+'個未完了)';
+      r0.querySelector('.rd').textContent='テストは知識、課題は実技。両方そろって合格や。上の🔨実践課題を全部やってチェックを入れてから採点しよう';
+      $('#afterBtn').style.display='none';
+      r0.scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
+    if(Object.keys(picked).length < l.quiz.length){
+      $('#quizResult').className='result fail';
+      $('#quizResult .rt').textContent='未回答の問題があるで';
+      $('#quizResult .rd').textContent='全問に答えてから採点しよう';
+      return;
+    }
+    let correct = 0;
+    l.quiz.forEach((q,qi)=>{
+      const sel = picked[qi];
+      $$(`#sheetBody .opt[data-qi="${qi}"]`).forEach(o=>{
+        o.disabled = true;
+        const oi = Number(o.dataset.oi);
+        if(oi === q.a) o.classList.add('correct');
+        else if(oi === sel) o.classList.add('wrong');
+      });
+      document.getElementById('exp-'+qi).classList.add('show');
+      if(sel === q.a) correct++;
+    });
+    const pass = correct === l.quiz.length;
+    const r = $('#quizResult');
+    r.className = 'result ' + (pass?'pass':'fail');
+    const after = $('#afterBtn');
+    if(pass){
+      r.querySelector('.rt').textContent = `🎉 合格!(${correct}/${l.quiz.length})`;
+      const wasNew = !isDone(l.id);
+      setDone(l.id, true);
+      const nx = nextLesson();
+      if(nx){
+        r.querySelector('.rd').textContent = wasNew ? '次のレッスンが解放された' : '合格済みレッスンの再確認、ええ習慣や';
+        after.textContent = '次のレッスンへ進む ▶';
+        after.style.display='inline-block';
+        after.onclick = ()=>{ openLesson(nx.ci, nx.li); window.scrollTo({top:0}); refreshHome(); buildCourses(); };
+      } else {
+        r.querySelector('.rd').textContent = '全レッスン修了!🎊 お疲れさん、ここからが本番や';
+        after.textContent = 'コース一覧にもどる';
+        after.style.display='inline-block';
+        after.onclick = closeSheet;
+      }
+      refreshHome(); buildCourses();
+    } else {
+      r.querySelector('.rt').textContent = `あと少し(${correct}/${l.quiz.length})`;
+      r.querySelector('.rd').textContent = '解説を読んで、もう一回挑戦しよう';
+      after.textContent = 'もう一度挑戦する';
+      after.style.display='inline-block';
+      after.onclick = ()=>openLesson(ci, li);
+    }
+    r.scrollIntoView({behavior:'smooth', block:'center'});
   });
-  $('#phaseBars').innerHTML=bars;
+  $('#lessonSheet').classList.add('on');
+  $('#lessonSheet').scrollTop = 0;
 }
+function closeSheet(){ $('#lessonSheet').classList.remove('on'); buildCourses(); refreshHome(); }
+$('#sheetBack').addEventListener('click', closeSheet);
 
-/* --- 続きから --- */
-$('#resumeBtn').addEventListener('click',()=>{
-  goTab('curr');
-  const next=taskIds.find(t=>!isDone(t.id));
-  const pi=next?next.pi:PHASES.length-1;
-  const ph=document.getElementById('phase-'+pi);
-  if(ph && !ph.classList.contains('open')) ph.querySelector('.phase-h').click();
-  setTimeout(()=>ph.scrollIntoView({behavior:'smooth',block:'start'}),50);
-});
+/* --- ホーム --- */
+const TOTAL = ALL_LESSONS.length;
+function refreshHome(){
+  const done = ALL_LESSONS.filter(l=>isDone(l.id)).length;
+  const pct = TOTAL ? Math.round(done/TOTAL*100) : 0;
+  $('#paintAll').style.width = pct + '%';
+  $('#pctAll').textContent = pct + '%';
+  const bars = $('#phaseBars'); bars.innerHTML='';
+  COURSES.forEach(c=>{
+    const d = c.lessons.filter(l=>isDone(l.id)).length;
+    const p = Math.round(d/c.lessons.length*100);
+    bars.insertAdjacentHTML('beforeend',
+      `<div class="phasebar"><div class="nm">C${c.no} ${c.name}</div><div class="tr"><div class="fl" style="width:${p}%"></div></div><div class="pc">${p}%</div></div>`);
+  });
+  const nx = nextLesson();
+  const btn = $('#resumeBtn');
+  if(nx){
+    const l = COURSES[nx.ci].lessons[nx.li];
+    btn.textContent = `▶ ${l.id.toUpperCase()} ${l.t}`;
+    btn.disabled = false;
+    btn.onclick = ()=>{ goTab('curr'); openLesson(nx.ci, nx.li); };
+  } else {
+    btn.textContent = '🎊 全レッスン修了!';
+    btn.disabled = true;
+  }
+}
+function todayTerms(){
+  const day = Math.floor(Date.now() / 86400000);
+  const el = $('#todayTerms'); el.innerHTML='';
+  for(let i=0;i<3;i++){
+    const t = TERMS[(day*3+i) % TERMS.length];
+    el.insertAdjacentHTML('beforeend', `<div class="term"><div class="tt">${t[1]} <span class="tag">${t[0]}</span></div><div class="td">${t[2]}</div></div>`);
+  }
+}
 
 /* --- 用語集 --- */
-let curCat='すべて';
+let activeCat = 'すべて';
 function buildCats(){
-  const el=$('#cats'); let html=`<button class="cat on" data-c="すべて">すべて</button>`;
-  CATS.forEach(c=>html+=`<button class="cat" data-c="${c}">${c}</button>`);
-  el.innerHTML=html;
-  $$('.cat').forEach(b=>b.addEventListener('click',()=>{
-    $$('.cat').forEach(x=>x.classList.remove('on')); b.classList.add('on');
-    curCat=b.dataset.c; renderTerms();
-  }));
+  const wrap = $('#cats'); wrap.innerHTML='';
+  ['すべて',...CATS].forEach(c=>{
+    const b = document.createElement('button');
+    b.className = 'cat' + (c===activeCat?' on':'');
+    b.textContent = c;
+    b.addEventListener('click',()=>{ activeCat=c; buildCats(); renderTerms(); });
+    wrap.appendChild(b);
+  });
 }
 function renderTerms(){
-  const q=($('#q').value||'').trim().toLowerCase();
-  const list=TERMS.filter(t=>
-    (curCat==='すべて'||t[0]===curCat) &&
-    (!q || t[1].toLowerCase().includes(q) || t[2].toLowerCase().includes(q))
-  );
-  $('#termList').innerHTML = list.length
-    ? list.map(t=>`<div class="term"><div class="tt">${t[1]}<span class="tag">${t[0]}</span></div><div class="td">${t[2]}</div></div>`).join('')
-    : `<div class="noresult">見つからへんかった…。AIに「${q||'その用語'}を初心者向けに説明して」と聞いてみよう。</div>`;
+  const q = ($('#q').value||'').trim().toLowerCase();
+  const list = $('#termList'); list.innerHTML='';
+  const hits = TERMS.filter(t=>
+    (activeCat==='すべて'||t[0]===activeCat) &&
+    (!q || t[1].toLowerCase().includes(q) || t[2].toLowerCase().includes(q)));
+  if(!hits.length){ list.innerHTML = '<div class="noresult">見つからへん…別の言葉で試してみて</div>'; return; }
+  hits.forEach(t=>{
+    list.insertAdjacentHTML('beforeend', `<div class="term"><div class="tt">${t[1]} <span class="tag">${t[0]}</span></div><div class="td">${t[2]}</div></div>`);
+  });
 }
-$('#q').addEventListener('input',renderTerms);
-
-/* --- 用語モーダル --- */
-function openTerm(name){
-  const t=termMap[name];
-  $('#mTitle').childNodes[0].textContent=name+' ';
-  $('#mCat').textContent=t?t[0]:'';
-  $('#mDesc').textContent=t?t[2]:'この用語の解説は用語集タブで検索してみてください。';
+$('#q').addEventListener('input', renderTerms);
+function showTerm(t){
+  $('#mTitle').childNodes[0].textContent = t[1] + ' ';
+  $('#mCat').textContent = t[0];
+  $('#mDesc').textContent = t[2];
   $('#modalBg').classList.add('on');
 }
 $('#mClose').addEventListener('click',()=>$('#modalBg').classList.remove('on'));
 $('#modalBg').addEventListener('click',e=>{ if(e.target.id==='modalBg') $('#modalBg').classList.remove('on'); });
 
-/* --- 今日の用語(日替わり3つ) --- */
-function todayTerms(){
-  const day=Math.floor(Date.now()/86400000);
-  const picks=[0,1,2].map(i=>TERMS[(day*3+i)%TERMS.length]);
-  $('#todayTerms').innerHTML=picks.map(t=>`<button class="chip" data-term="${t[1]}" style="font-size:13px;padding:6px 14px">${t[1]}</button>`).join('');
-  $$('#todayTerms .chip').forEach(c=>c.addEventListener('click',()=>openTerm(c.dataset.term)));
-}
-
 /* --- テンプレ --- */
 function buildTpls(){
-  $('#tpls').innerHTML=TPLS.map((t,i)=>`
-    <div class="tpl">
-      <div class="tpl-h"><div><div class="t">${t.t}</div><div class="d">${t.d}</div></div>
-      <button class="copy" data-i="${i}">コピー</button></div>
-      <pre>${t.c.replace(/</g,'&lt;')}</pre>
-    </div>`).join('');
+  const wrap = $('#tpls'); wrap.innerHTML='';
+  TPLS.forEach((tp,i)=>{
+    const div = document.createElement('div');
+    div.className = 'tpl';
+    div.innerHTML = `<div class="tpl-h"><div><div class="t">${tp.t}</div><div class="d">${tp.d}</div></div><button class="copy" data-i="${i}">コピー</button></div><pre>${tp.c.replace(/</g,'&lt;')}</pre>`;
+    wrap.appendChild(div);
+  });
   $$('.copy').forEach(b=>b.addEventListener('click',async ()=>{
-    const txt=TPLS[+b.dataset.i].c;
-    let ok=false;
-    try{ await navigator.clipboard.writeText(txt); ok=true; }
-    catch(e){
-      const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
-      ta.select(); try{ ok=document.execCommand('copy'); }catch(_){} ta.remove();
-    }
-    b.textContent=ok?'コピーした ✓':'長押しでコピーして';
-    b.classList.toggle('ok',ok);
-    setTimeout(()=>{ b.textContent='コピー'; b.classList.remove('ok'); },1800);
+    try{
+      await navigator.clipboard.writeText(TPLS[b.dataset.i].c);
+      b.textContent='コピーした ✓'; b.classList.add('ok');
+      setTimeout(()=>{ b.textContent='コピー'; b.classList.remove('ok'); },1500);
+    }catch(e){ b.textContent='長押しで選択して'; setTimeout(()=>b.textContent='コピー',2000); }
   }));
 }
 
-/* ================= ログイン ================= */
-function applyProgressToUI(){
-  $$('.task input').forEach(cb=>{ cb.checked = isDone(cb.dataset.id); refreshDayDone(cb); });
-  refreshProgress();
-}
-
+/* --- ログイン --- */
+function applyProgressToUI(){ refreshHome(); buildCourses(); }
 let loginUsersCache=[], pendingUser=null;
 async function showLogin(){
   $('#loginBg').style.display='flex';
@@ -1064,7 +2983,7 @@ async function showLogin(){
   const box=$('#loginUsers'); box.innerHTML='<p class="small">読み込み中…</p>';
   const {data,error}=await sb.from('training_users').select('id,name,role').order('created_at');
   if(error||!data||!data.length){
-    box.innerHTML='<p class="small" style="color:var(--red)">ユーザー一覧を取得できません。Supabase設定(URL/anonKey)とセットアップSQLの実行を確認してください。</p>';
+    box.innerHTML='<p class="small" style="color:var(--red)">ユーザー一覧を取得できません。Supabase設定とセットアップSQLの実行を確認してください。</p>';
     return;
   }
   loginUsersCache=data;
@@ -1095,7 +3014,7 @@ async function afterLogin(){
   $('#userName').textContent=currentUser.name;
   const isAdmin=currentUser.role==='admin';
   $('#adminTab').style.display=isAdmin?'flex':'none';
-  document.querySelector('.tabs').classList.toggle('six',isAdmin);
+  $('#tabBar').classList.toggle('six',isAdmin);
   loadLocal();
   try{
     const {data}=await sb.from('training_progress').select('data').eq('user_id',currentUser.id).maybeSingle();
@@ -1111,14 +3030,13 @@ $('#switchUser').addEventListener('click',()=>{
   currentUser=null; progress={};
   applyProgressToUI(); goTab('home');
   $('#adminTab').style.display='none';
-  document.querySelector('.tabs').classList.remove('six');
+  $('#tabBar').classList.remove('six');
   showLogin();
 });
 
-/* ================= 管理ダッシュボード ================= */
+/* --- 管理ダッシュボード --- */
 async function loadAdmin(){
   const wrap=$('#adminList'); wrap.innerHTML='<p class="small">読み込み中…</p>';
-  const phaseTotals={}; taskIds.forEach(t=>{ phaseTotals[t.pi]=(phaseTotals[t.pi]||0)+1; });
   try{
     const [u,p]=await Promise.all([
       sb.from('training_users').select('id,name,role,created_at').order('created_at'),
@@ -1127,13 +3045,13 @@ async function loadAdmin(){
     const pmap={}; (p.data||[]).forEach(r=>pmap[r.user_id]=r);
     wrap.innerHTML=(u.data||[]).map(user=>{
       const rec=pmap[user.id]; const d=rec?(rec.data||{}):{};
-      let done=0; const per={};
-      taskIds.forEach(t=>{ per[t.pi]=per[t.pi]||0; if(d[t.id]===1){done++;per[t.pi]++;} });
-      const pct=taskIds.length?Math.round(done/taskIds.length*100):0;
+      const doneAll = ALL_LESSONS.filter(l=>d[l.id]===1).length;
+      const pct = TOTAL?Math.round(doneAll/TOTAL*100):0;
       const upd=rec?new Date(rec.updated_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
-      const bars=PHASES.map((ph,pi)=>{
-        const pp=phaseTotals[pi]?Math.round((per[pi]||0)/phaseTotals[pi]*100):0;
-        return `<div class="phasebar"><div class="nm" style="width:96px;font-size:11px">P${ph.no} ${ph.name.slice(0,6)}</div><div class="tr"><div class="fl" style="width:${pp}%"></div></div><div class="pc">${pp}%</div></div>`;
+      const bars=COURSES.map(c=>{
+        const dn=c.lessons.filter(l=>d[l.id]===1).length;
+        const pp=Math.round(dn/c.lessons.length*100);
+        return `<div class="phasebar"><div class="nm" style="width:110px;font-size:11px">C${c.no} ${c.name.slice(0,7)}</div><div class="tr"><div class="fl" style="width:${pp}%"></div></div><div class="pc">${dn}/${c.lessons.length}</div></div>`;
       }).join('');
       return `<div class="admin-user"><div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><b style="color:var(--navy)">${user.name}</b>${user.role==='admin'?'<span class="tag">管理者</span>':''}<span class="small" style="margin-left:auto">全体 <b style="font-family:var(--mono)">${pct}%</b>・最終更新 ${upd}</span></div>${bars}</div>`;
     }).join('')||'<p class="small">ユーザーがいません</p>';
@@ -1165,15 +3083,62 @@ $('#pcGo').addEventListener('click',async ()=>{
   if(!error) $('#pcPin').value='';
 });
 
-/* ================= 起動 ================= */
+/* --- 復習クイズ --- */
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function openReview(){
+  const passed=ALL_LESSONS.filter(l=>isDone(l.id));
+  const pool=passed.flatMap(l=>l.quiz.map(q=>({q:q.q,c:q.c,a:q.a,exp:q.exp,from:l.id.toUpperCase()+' '+l.t})));
+  $('#sheetTitle').textContent='🔁 復習クイズ';
+  if(pool.length<5){
+    $('#sheetBody').innerHTML='<div class="card"><h2>まだ復習プールが空や</h2><p class="small" style="margin-top:6px">レッスンに合格すると、その問題が復習プールに入る。まずは「次のレッスン」から進めよう。</p></div>';
+    $('#lessonSheet').classList.add('on'); $('#lessonSheet').scrollTop=0; return;
+  }
+  const qs=shuffleArr(pool.slice()).slice(0,10);
+  const picked={};
+  $('#sheetBody').innerHTML='<div class="quiz-intro"><div class="t">🔁 復習クイズ(全'+qs.length+'問)</div><div class="d">合格済みレッスンからランダム出題。満点を維持できてこそ定着や。結果は進捗に影響せえへん。</div></div>'+
+    qs.map((q,qi)=>'<div class="qcard"><div class="qq"><span class="qn">Q'+(qi+1)+'</span>'+q.q+'</div><div class="small" style="margin:-4px 0 8px">出典:'+q.from+'</div>'+q.c.map((op,oi)=>'<button class="opt" data-qi="'+qi+'" data-oi="'+oi+'">'+op+'</button>').join('')+'<div class="qexp" id="rexp-'+qi+'">💡 '+q.exp+'</div></div>').join('')+
+    '<button class="btn org" id="rGrade" style="width:100%;margin-top:14px">採点する</button><div class="result" id="rRes"><div class="rt"></div><div class="rd"></div><button class="btn" id="rAgain" style="margin-top:10px;display:none">もう10問</button></div>';
+  $$('#sheetBody .opt').forEach(op=>op.addEventListener('click',()=>{
+    if(op.disabled) return;
+    picked[op.dataset.qi]=Number(op.dataset.oi);
+    $$('#sheetBody .opt[data-qi="'+op.dataset.qi+'"]').forEach(o=>o.classList.remove('sel'));
+    op.classList.add('sel');
+  }));
+  $('#rGrade').addEventListener('click',()=>{
+    const r=$('#rRes');
+    if(Object.keys(picked).length<qs.length){
+      r.className='result fail'; r.querySelector('.rt').textContent='未回答があるで';
+      r.querySelector('.rd').textContent='全問に答えてから採点しよう'; return;
+    }
+    let ok=0;
+    qs.forEach((q,qi)=>{
+      const sel=picked[qi];
+      $$('#sheetBody .opt[data-qi="'+qi+'"]').forEach(o=>{
+        o.disabled=true; const oi=Number(o.dataset.oi);
+        if(oi===q.a) o.classList.add('correct'); else if(oi===sel) o.classList.add('wrong');
+      });
+      document.getElementById('rexp-'+qi).classList.add('show');
+      if(sel===q.a) ok++;
+    });
+    r.className='result '+(ok===qs.length?'pass':'fail');
+    r.querySelector('.rt').textContent=(ok===qs.length?'💯 満点! ':'')+ok+'/'+qs.length;
+    r.querySelector('.rd').textContent= ok===qs.length?'完璧に定着してるで':'間違えた問題の出典レッスンを開いて読み直そう';
+    const ag=$('#rAgain'); ag.style.display='inline-block'; ag.onclick=openReview;
+    r.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  $('#lessonSheet').classList.add('on'); $('#lessonSheet').scrollTop=0;
+}
+$('#reviewBtn').addEventListener('click',openReview);
+
+/* --- 起動 --- */
 async function boot(){
+  buildCats(); renderTerms(); buildTpls(); todayTerms();
   if(!sb){
-    /* Supabase未設定:この端末だけに保存するローカルモード */
     $('#userName').textContent='ローカルモード';
     $('#switchUser').style.display='none';
     loadLocal(); applyProgressToUI();
     setSync(store.persistent?'この端末に保存':'保存不可(要ホスティング)');
-    document.getElementById('storageNote').textContent='※Supabase未設定のためローカルモード(端末保存)で動作中。ユーザー別のクラウド保存は「08_サーバ設定手順」を参照。';
+    $('#storageNote').textContent='※Supabase未接続のためローカルモード(端末保存)で動作中。';
     return;
   }
   const saved=store.get('session');
@@ -1181,7 +3146,6 @@ async function boot(){
   if(currentUser&&currentUser.id){ await afterLogin(); }
   else { applyProgressToUI(); showLogin(); }
 }
-buildCurr(); buildCats(); renderTerms(); buildTpls(); todayTerms();
 boot();
 </script>
 </body>
