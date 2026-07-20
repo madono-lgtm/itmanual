@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>KYOEI IT事業部 研修アプリ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2A47; --navy-deep:#141E38; --orange:#F08519; --orange-soft:#FDEBD7;
+  --paper:#F7F8F6; --card:#FFFFFF; --ink:#1F2533; --muted:#67708A; --line:#E2E5EC;
+  --green:#2E9E6B; --green-soft:#E4F3EC; --red:#C6403A; --red-soft:#FBEAE9;
+  --radius:14px; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{
+  font-family:'Zen Kaku Gothic New',system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  background:var(--paper); color:var(--ink); line-height:1.65; font-size:15px;
+  padding-bottom:calc(76px + env(safe-area-inset-bottom));
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+/* ---------- header ---------- */
+header{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-deep) 100%);
+  color:#fff;padding:18px 0 20px;position:relative;overflow:hidden;
+}
+header::after{ /* 塗装ローラーの帯 */
+  content:"";position:absolute;right:-40px;top:-30px;width:180px;height:180px;
+  background:var(--orange);opacity:.12;border-radius:24px;transform:rotate(18deg);
+}
+.brand{font-size:11px;letter-spacing:.18em;color:#B7C0D6;font-weight:700}
+h1{font-size:20px;font-weight:900;letter-spacing:.02em;margin-top:2px}
+.sub{font-size:12px;color:#B7C0D6;margin-top:2px}
+
+/* ---------- signature: paint progress ---------- */
+.paint{position:relative;height:18px;background:#2A3757;border-radius:10px;overflow:hidden;margin-top:14px}
+.paint-fill{
+  height:100%;background:linear-gradient(90deg,#F08519,#F6A24C);
+  border-radius:10px 6px 12px 4px; position:relative; transition:width .6s cubic-bezier(.22,1,.36,1);
+  min-width:0;
+}
+.paint-fill::after{ /* ローラーの塗り終わり(かすれ) */
+  content:"";position:absolute;right:-6px;top:0;width:12px;height:100%;
+  background:radial-gradient(circle at 30% 30%,#F6A24C 55%,transparent 56%),
+             radial-gradient(circle at 40% 75%,#F08519 45%,transparent 46%);
+  opacity:.9;
+}
+.paint-label{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;font-size:12px;color:#B7C0D6}
+.paint-label b{font-family:var(--mono);font-size:16px;color:#fff}
+
+/* ---------- tabs ---------- */
+nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:#fff;border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.tabs{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.tab{
+  appearance:none;border:0;background:none;cursor:pointer;
+  padding:9px 2px 8px;text-align:center;color:var(--muted);
+  font-family:inherit;font-size:10.5px;font-weight:700;letter-spacing:.02em;
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+.tab .ic{width:22px;height:22px;display:block}
+.tab.on{color:var(--navy)}
+.tab.on .bar{width:18px;height:3px;border-radius:2px;background:var(--orange);margin-top:2px}
+.tab .bar{width:18px;height:3px;margin-top:2px}
+.tab:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:8px}
+
+/* ---------- cards & common ---------- */
+main{padding-top:18px}
+section.page{display:none}
+section.page.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h2{font-size:15px;font-weight:900;color:var(--navy);display:flex;align-items:center;gap:8px}
+.eyebrow{font-size:10.5px;letter-spacing:.14em;color:var(--orange);font-weight:900}
+.small{font-size:12.5px;color:var(--muted)}
+.btn{
+  appearance:none;border:0;cursor:pointer;font-family:inherit;font-weight:700;
+  background:var(--navy);color:#fff;border-radius:10px;padding:10px 16px;font-size:13.5px;
+}
+.btn.ghost{background:#EEF1F6;color:var(--navy)}
+.btn:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.chip{
+  display:inline-block;background:var(--orange-soft);color:#9A5A10;border-radius:999px;
+  padding:2px 10px;font-size:11.5px;font-weight:700;margin:2px 4px 2px 0;cursor:pointer;border:0;font-family:inherit;
+}
+.chip:focus-visible{outline:2px solid var(--orange);outline-offset:1px}
+.tag{display:inline-block;background:#EEF1F6;color:var(--navy);border-radius:6px;padding:1px 8px;font-size:11px;font-weight:700}
+
+/* ---------- home ---------- */
+.phasebar{display:flex;align-items:center;gap:10px;margin:10px 0}
+.phasebar .nm{width:118px;font-size:12px;font-weight:700;color:var(--navy);flex:none}
+.phasebar .tr{flex:1;height:10px;background:#EDF0F5;border-radius:6px;overflow:hidden}
+.phasebar .fl{height:100%;background:linear-gradient(90deg,#F08519,#F6A24C);border-radius:6px 3px 6px 2px;transition:width .5s ease}
+.phasebar .pc{font-family:var(--mono);font-size:11.5px;color:var(--muted);width:42px;text-align:right;flex:none}
+.banner{
+  background:var(--red-soft);border:1px solid #F0C9C6;border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:14px;
+}
+.banner b{color:var(--red)}
+.banner ol{margin:6px 0 0 18px;font-size:13px}
+
+/* ---------- curriculum ---------- */
+.phase{border:1px solid var(--line);border-radius:var(--radius);background:#fff;margin-bottom:12px;overflow:hidden}
+.phase-h{
+  width:100%;appearance:none;border:0;background:#fff;cursor:pointer;font-family:inherit;text-align:left;
+  display:flex;align-items:center;gap:12px;padding:14px 14px;
+}
+.phase-h:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
+.phase-no{
+  flex:none;width:44px;height:44px;border-radius:10px;background:var(--navy);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;
+}
+.phase-no .k{font-size:8.5px;letter-spacing:.1em;color:#B7C0D6;font-weight:700}
+.phase-no .n{font-family:var(--mono);font-size:17px;font-weight:600}
+.phase-t{flex:1;min-width:0}
+.phase-t .t{font-size:14.5px;font-weight:900;color:var(--navy)}
+.phase-t .w{font-size:11.5px;color:var(--muted)}
+.phase-h .arw{flex:none;color:var(--muted);transition:transform .2s}
+.phase.open .arw{transform:rotate(180deg)}
+.phase-body{display:none;border-top:1px solid var(--line);padding:12px 14px 14px;background:#FBFCFB}
+.phase.open .phase-body{display:block}
+.goal{background:var(--orange-soft);border-radius:10px;padding:10px 12px;font-size:12.5px;color:#7A4A0E;margin-bottom:12px}
+.goal b{color:#9A5A10}
+.week{margin-bottom:14px}
+.week-h{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.week-h .wk{font-family:var(--mono);font-size:11px;font-weight:600;background:var(--navy);color:#fff;border-radius:6px;padding:2px 8px}
+.week-h .wt{font-size:13px;font-weight:900;color:var(--navy)}
+.day{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px}
+.day.done{border-color:#BFE3D2;background:var(--green-soft)}
+.day-h{display:flex;align-items:baseline;gap:8px}
+.day-h .dd{font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--orange);flex:none}
+.day-h .dt{font-size:13.5px;font-weight:700;color:var(--ink)}
+.day-g{font-size:12px;color:var(--muted);margin:3px 0 8px}
+.task{display:flex;gap:9px;align-items:flex-start;padding:5px 0;cursor:pointer}
+.task input{margin-top:3px;width:17px;height:17px;accent-color:var(--orange);flex:none;cursor:pointer}
+.task span{font-size:13px}
+.task input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:#C8CDD9}
+.terms-row{margin-top:6px;padding-top:8px;border-top:1px dashed var(--line)}
+.terms-row .lb{font-size:10.5px;color:var(--muted);font-weight:700;margin-right:4px}
+.exam{background:var(--navy);color:#fff;border-radius:12px;padding:14px;margin-top:4px}
+.exam .et{font-weight:900;font-size:13.5px;display:flex;align-items:center;gap:8px}
+.exam .et .pt{font-family:var(--mono);font-size:11px;background:var(--orange);border-radius:6px;padding:1px 8px}
+.exam ul{margin:8px 0 0 18px;font-size:12.5px;color:#D7DDEA}
+.exam .ps{margin-top:8px;font-size:11.5px;color:#F6A24C;font-weight:700}
+
+/* ---------- glossary ---------- */
+.search{
+  width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:14px;
+  background:#fff;margin-bottom:10px;color:var(--ink);
+}
+.search:focus{outline:2px solid var(--orange);border-color:transparent}
+.cats{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px;-webkit-overflow-scrolling:touch}
+.cat{
+  flex:none;appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;
+  padding:5px 13px;font-family:inherit;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;
+}
+.cat.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cat:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.term{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.term .tt{font-weight:900;color:var(--navy);font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.term .td{font-size:13px;margin-top:4px;color:#3A415A}
+.noresult{text-align:center;color:var(--muted);padding:30px 0;font-size:13px}
+
+/* ---------- templates ---------- */
+.tpl{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;overflow:hidden}
+.tpl-h{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;gap:10px}
+.tpl-h .t{font-weight:900;color:var(--navy);font-size:14px}
+.tpl-h .d{font-size:11.5px;color:var(--muted)}
+.copy{
+  flex:none;appearance:none;border:0;background:var(--orange);color:#fff;font-family:inherit;font-weight:700;
+  border-radius:9px;padding:7px 14px;font-size:12.5px;cursor:pointer;
+}
+.copy.ok{background:var(--green)}
+.copy:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.tpl pre{
+  background:#1B2440;color:#DDE3F0;font-size:12px;line-height:1.6;padding:14px;overflow-x:auto;
+  font-family:var(--mono);white-space:pre-wrap;word-break:break-word;
+}
+
+/* ---------- rules ---------- */
+.rule{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}
+.rule:last-child{border-bottom:0}
+.rule .no{flex:none;font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;background:var(--navy);width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.rule.bad .no{background:var(--red)}
+.rule p{font-size:13.5px}
+.rule p b{color:var(--navy)}
+.rule.bad p b{color:var(--red)}
+.flow{counter-reset:st;margin-top:8px}
+.flow li{list-style:none;position:relative;padding:0 0 14px 34px;font-size:13px}
+.flow li::before{
+  counter-increment:st;content:counter(st);position:absolute;left:0;top:0;
+  width:22px;height:22px;border-radius:50%;background:var(--orange);color:#fff;
+  font-family:var(--mono);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;
+}
+.flow li:not(:last-child)::after{content:"";position:absolute;left:10.5px;top:24px;bottom:2px;width:1.5px;background:var(--line)}
+
+/* ---------- modal ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(20,30,56,.55);z-index:90;display:none;align-items:flex-end;justify-content:center}
+.modal-bg.on{display:flex}
+.modal{
+  background:#fff;border-radius:18px 18px 0 0;width:100%;max-width:760px;padding:20px 18px calc(20px + env(safe-area-inset-bottom));
+  animation:up .25s cubic-bezier(.22,1,.36,1);
+}
+@keyframes up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+.modal .mt{font-weight:900;color:var(--navy);font-size:16px}
+.modal .mc{font-size:11px;margin-left:8px}
+.modal .md{font-size:14px;margin-top:8px;color:#3A415A}
+.modal .close{margin-top:16px;width:100%}
+.storage-note{font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">KYOEI IT DIVISION</div>
+    <h1>片岡蒼汰 育成プログラム</h1>
+    <div class="sub">6ヶ月で「AI活用 → CraftFile開発補佐」へ</div>
+    <div class="paint"><div class="paint-fill" id="paintAll" style="width:0%"></div></div>
+    <div class="paint-label"><span>全体進捗(タスク完了率)</span><b id="pctAll">0%</b></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= HOME ================= -->
+<section class="page on" id="pg-home">
+  <div class="banner">
+    <b>⚠ 三大禁止事項(毎日見る)</b>
+    <ol>
+      <li>指示なしで <b>git push</b> しない(push = 本番反映)</li>
+      <li>mainブランチで直接作業しない</li>
+      <li>--force系・履歴改変コマンドを使わない</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">PROGRESS</div>
+    <h2>フェーズ別の塗り進み</h2>
+    <div id="phaseBars" style="margin-top:8px"></div>
+    <button class="btn" id="resumeBtn" style="margin-top:10px;width:100%">▶ 続きから研修をひらく</button>
+    <div class="storage-note" id="storageNote"></div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">TODAY'S WORDS</div>
+    <h2>今日の用語 3つ</h2>
+    <p class="small">タップで意味を表示。毎日3つずつ覚えたら半年で全部いける。</p>
+    <div id="todayTerms" style="margin-top:8px"></div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">HOW TO ASK</div>
+    <h2>質問のしかた(AI資料化方式)</h2>
+    <p class="small" style="margin-top:4px">質問はチャットの単発ではなく、AIで調べて「質疑提出シート」にまとめて蓮さんへ提出する。シートのテンプレは「テンプレ」タブにある。<br>※本番影響のある操作・緊急事態・体調の相談だけは即・直接声かけでOK。</p>
+  </div>
+</section>
+
+<!-- ================= CURRICULUM ================= -->
+<section class="page" id="pg-curr">
+  <div class="card" style="padding:12px 16px">
+    <p class="small">各Phaseをひらいて、終わったタスクにチェック。チェックはこの端末に保存される。<span style="color:var(--orange);font-weight:700">オレンジのチップ</span>はその日の新出用語(タップで意味)。</p>
+  </div>
+  <div id="phases"></div>
+</section>
+
+<!-- ================= GLOSSARY ================= -->
+<section class="page" id="pg-terms">
+  <input class="search" id="q" type="search" placeholder="用語をさがす(例:コミット、Flexbox)" aria-label="用語検索">
+  <div class="cats" id="cats"></div>
+  <div id="termList"></div>
+</section>
+
+<!-- ================= TEMPLATES ================= -->
+<section class="page" id="pg-tpl">
+  <div class="card" style="padding:12px 16px">
+    <p class="small">よく使う型の置き場。「コピー」で全文コピーして、AIやチャットに貼って使う。</p>
+  </div>
+  <div id="tpls"></div>
+</section>
+
+<!-- ================= RULES ================= -->
+<section class="page" id="pg-rules">
+  <div class="card">
+    <div class="eyebrow" style="color:var(--red)">FORBIDDEN</div>
+    <h2>三大禁止事項</h2>
+    <div style="margin-top:6px">
+      <div class="rule bad"><div class="no">1</div><p><b>指示なしで git push しない。</b>例外なし。KYOEIでは push した瞬間に本番(お客様が使っている環境)へ反映される。push の前に必ず蓮さんの明示的な指示を確認する。</p></div>
+      <div class="rule bad"><div class="no">2</div><p><b>mainブランチで直接作業しない。</b>作業は必ず自分のブランチ(feature/〜)を切ってから。</p></div>
+      <div class="rule bad"><div class="no">3</div><p><b>--force系・履歴改変コマンドを使わない。</b>push --force / reset --hard(共有ブランチ)/ rebase(共有ブランチ)は蓮さん同席時のみ。</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">CRAFTFILE RULES</div>
+    <h2>開発ルール 7ヶ条</h2>
+    <div style="margin-top:6px">
+      <div class="rule"><div class="no">1</div><p><b>git push は指示があるまで絶対しない</b>(禁止事項の再掲。それだけ大事)</p></div>
+      <div class="rule"><div class="no">2</div><p>すべてのチェックポイントで <b>next build がグリーン</b>で通ること</p></div>
+      <div class="rule"><div class="no">3</div><p>スキーマ変更は<b>冪等なSQLマイグレーションファイル</b>で行う(直接ALTERしない)</p></div>
+      <div class="rule"><div class="no">4</div><p>新規Prismaモデルには<b>必ず tenantId</b>(付け忘れ=他社データ混在事故)</p></div>
+      <div class="rule"><div class="no">5</div><p>高さ指定は <b>100dvh 系</b>を使う(100vh 禁止。モバイル対応の全社方針)</p></div>
+      <div class="rule"><div class="no">6</div><p>モーダルは共通の <b>ModalShell</b> を使う。独自モーダルを生やさない</p></div>
+      <div class="rule"><div class="no">7</div><p><b>タップターゲットは44px以上</b>。スマホで押しやすいことを実機で確認</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">QUESTION FLOW</div>
+    <h2>質疑ルール(AI資料化方式)</h2>
+    <ol class="flow" style="margin-top:10px">
+      <li>詰まったら、まず<b>15分は自力で調べる</b>(AIに状況・やったこと・エラー全文・期待する結果をセットで渡す)</li>
+      <li>解決しなければ、AIを使って<b>質疑提出シート</b>を作る(テンプレタブにある)</li>
+      <li>蓮さんに提出 → 回答・赤入れをもらう</li>
+      <li>回答を自分の<b>ナレッジベースに反映</b>して完結(同じシートを2回作らない)</li>
+    </ol>
+    <div class="goal" style="margin-top:6px"><b>例外(すぐ直接声かけてOK):</b>①本番に影響しうる操作(git push・DB操作・削除系)の実行判断 ②お客様・納期の緊急事態 ③体調・メンタルの相談</div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">BRAND</div>
+    <h2>KYOEIブランドカラー</h2>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+      <div style="flex:1;min-width:100px"><div style="height:44px;border-radius:10px;background:#1E2A47"></div><div class="small" style="margin-top:4px">ネイビー<br><span style="font-family:var(--mono)">#1E2A47</span></div></div>
+      <div style="flex:1;min-width:100px"><div style="height:44px;border-radius:10px;background:#F08519"></div><div class="small" style="margin-top:4px">オレンジ<br><span style="font-family:var(--mono)">#F08519</span></div></div>
+      <div style="flex:1;min-width:100px"><div style="height:44px;border-radius:10px;background:#F7F8F6;border:1px solid var(--line)"></div><div class="small" style="margin-top:4px">オフホワイト<br><span style="font-family:var(--mono)">#F7F8F6</span></div></div>
+    </div>
+    <p class="small" style="margin-top:8px">オレンジは面積10〜20%まで(強調・CTAのみ)。提案書はネイビー×シャンパンゴールドの上位トーン。</p>
+  </div>
+</section>
+
+</main>
+
+<nav aria-label="メインメニュー">
+  <div class="tabs">
+    <button class="tab on" data-pg="home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v9a2 2 0 01-2 2h-4v-7h-6v7H5a2 2 0 01-2-2z"/></svg>ホーム<div class="bar"></div></button>
+    <button class="tab" data-pg="curr"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M21 12v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h11"/></svg>研修<div class="bar"></div></button>
+    <button class="tab" data-pg="terms"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>用語集<div class="bar"></div></button>
+    <button class="tab" data-pg="tpl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>テンプレ<div class="bar"></div></button>
+    <button class="tab" data-pg="rules"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>ルール<div class="bar"></div></button>
+  </div>
+</nav>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="mt" id="mTitle">用語 <span class="tag mc" id="mCat"></span></div>
+    <div class="md" id="mDesc"></div>
+    <button class="btn close" id="mClose">とじる</button>
+  </div>
+</div>
+
+<script>
+/* ================= 安全ストレージ(localStorageが使えない環境でも動く) ================= */
+const store = (() => {
+  let mem = {}; let persistent = true;
+  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }
+  catch(e){ persistent = false; }
+  return {
+    persistent,
+    get(k){ try { return persistent ? localStorage.getItem(k) : (mem[k] ?? null); } catch(e){ return mem[k] ?? null; } },
+    set(k,v){ try { if(persistent){ localStorage.setItem(k,v); return; } } catch(e){} mem[k]=v; }
+  };
+})();
+if(!store.persistent){
+  document.getElementById('storageNote').textContent = '※この環境ではチェックが保存されません。ダウンロードしてブラウザで開くと保存されます。';
+}
+
+/* ================= 用語データ ================= */
+const CATS = ["AI","デザイン","Web基礎","Git・環境","CraftFile","仕事術"];
+const TERMS = [
+["AI","生成AI","文章・画像・コードを新しく作り出すAIの総称。ChatGPT、Gemini、Claudeなど。"],
+["AI","LLM(大規模言語モデル)","ChatGPTなどの中身。大量の文章を学習して「次に来る自然な言葉」を予測するプログラム。質問に答えているというより「続きを書いている」。"],
+["AI","プロンプト","AIへの指示文。この書き方の上手さで出力の質が決まる。"],
+["AI","トークン","AIが文章を数える単位。おおまかに文字数の親戚。AIには一度に扱える上限がある。"],
+["AI","コンテキスト","AIに渡している文脈・前提情報。「今どんな会話をしてきたか」。濃いほど出力が的確になる。"],
+["AI","コンテキストウィンドウ","AIが一度に覚えていられる会話量の上限。長い会話では最初の指示が薄れるので、大事な条件は言い直す。"],
+["AI","ハルシネーション","AIがもっともらしい嘘を作る現象。「知りません」と言わず架空の情報を出す。固有名詞・数字・法律・料金は必ず自分で確認。"],
+["AI","Few-shot(例示)","「こういう出力がほしい」というお手本を1〜3個プロンプトに貼るテクニック。品質が一気に安定する。"],
+["AI","壁打ち","AIを相手に相談・議論して考えを整理すること。AIに「お客様役」「批評家役」をやらせるのも壁打ちの一種。"],
+["AI","イテレーション","「作る→直す」の繰り返し。1発で完成させようとせず、修正指示を重ねて仕上げる進め方。"],
+["AI","RCGCO","KYOEI式プロンプトの型。Role(役割)/Context(文脈)/Goal(目的)/Constraints(制約)/Output(出力形式)の5要素。"],
+["AI","OCR","画像の中の文字を読み取ってテキストにする技術。CraftFileでは工事黒板の文字読み取りに使用。"],
+["AI","ファクトチェック","AI出力の事実(数字・固有名詞・制度)を公式サイトなど一次情報で確認する作業。"],
+["デザイン","カラーコード","色を英数字で表す書き方。#1E2A47(KYOEIネイビー)のように「#+6桁」で世界中同じ色を指定できる。"],
+["デザイン","ブランドキット","Canvaに登録する会社の色・ロゴ・フォントのセット。誰が作ってもKYOEIらしくなる。"],
+["デザイン","トーン&マナー","デザインや文章の「雰囲気のルール」。色・フォント・言葉づかいの統一感。"],
+["デザイン","解像度 / dpi","画像のきめ細かさ。印刷は350dpi、Webは72dpiが目安。低いと印刷でボヤける。"],
+["デザイン","RGB / CMYK","色の作り方の方式。RGBは画面用(光)、CMYKは印刷用(インク)。印刷入稿はCMYKにすると色ズレが減る。"],
+["デザイン","塗り足し","印刷物の端まで色を敷くとき、断裁ズレに備えて外側に3mm余分に伸ばす部分。"],
+["デザイン","トンボ","印刷所が断裁位置を合わせるための目印マーク。"],
+["デザイン","セーフエリア","文字やロゴを置いてよい安全地帯。端ギリギリは切れる。"],
+["デザイン","PNG / JPEG / PDF","ファイル形式。PNG=透過できてきれい(SNS向き)、JPEG=軽い(写真向き)、PDF=印刷・資料共有向き。"],
+["デザイン","透過(アルファチャンネル)","背景が透明な画像。スタンプやロゴで使う。PNGはできる、JPEGはできない。"],
+["デザイン","Bulk Create","Canvaの一括作成機能。名簿(CSV)を流し込んで名刺などを人数分いっぺんに量産する。"],
+["デザイン","CTA","Call To Action。「お問い合わせはこちら」など、読んだ人に行動してもらうボタンや一文。"],
+["デザイン","カルーセル","Instagramなどで横スワイプしてめくる複数枚投稿。"],
+["デザイン","タップターゲット","スマホで指で押すボタンの領域。小さいと押せない。KYOEI基準は44px以上。"],
+["Web基礎","HTML","Webページの骨組みを書く言語。見出し・文章・画像・ボタンの構造を作る。"],
+["Web基礎","タグ","HTMLの部品。<h1>見出し</h1> のように <> で囲んで使う。"],
+["Web基礎","CSS","Webページの見た目を整える言語。色・大きさ・配置・余白を指定する。"],
+["Web基礎","セレクタ","CSSで「どの部品に適用するか」を指定する書き方。"],
+["Web基礎","クラス(class)","HTML部品につける名前。CSSやJSから「この名前の部品」と狙い撃ちできる。"],
+["Web基礎","ボックスモデル","HTML部品はぜんぶ「箱」という考え方。中身・内側余白(padding)・枠線(border)・外側余白(margin)の4層。"],
+["Web基礎","margin / padding","margin=箱の外側の余白、padding=箱の内側の余白。「家と塀の間がmargin、壁と家具の間がpadding」。"],
+["Web基礎","Flexbox","CSSで部品を一列に並べる仕組み。横並び・中央寄せ・等間隔はほぼこれで解決。"],
+["Web基礎","Grid","CSSで部品をマス目(表)状に並べる仕組み。ギャラリーやカード一覧に使う。"],
+["Web基礎","レスポンシブ","画面サイズ(スマホ/PC)に合わせて見た目が自動で変わるデザイン。"],
+["Web基礎","メディアクエリ","「画面幅が○px以下ならこのCSS」という切り替えの書き方。レスポンシブの道具。"],
+["Web基礎","vh / dvh","画面の高さ基準の単位。100dvh=画面いっぱい。スマホのアドレスバー問題に対応できるdvhをKYOEIでは使う(vh禁止)。"],
+["Web基礎","JavaScript(JS)","Webページに動きをつける言語。押したら計算する・表示を切り替える、など。"],
+["Web基礎","変数","データに名前をつけて入れる箱。const price = 5000 なら「priceという箱に5000」。"],
+["Web基礎","関数","処理のまとまりに名前をつけたもの。「材料を入れると結果が出てくる機械」。"],
+["Web基礎","配列","データを順番に並べたリスト。[\"堺市\",\"岸和田市\"] のような形。"],
+["Web基礎","オブジェクト","データを「名前:値」のセットでまとめたもの。{ name:\"A邸\", amount:120 }。案件・顧客データは全部この形。"],
+["Web基礎","JSON","オブジェクトを文字として保存・通信するための世界共通の書き方。データのやり取りはほぼJSON。"],
+["Web基礎","DOM","ブラウザが持つHTMLの設計図。JSはDOMを通じてページの中身を書き換える。"],
+["Web基礎","イベント","「クリックされた」「入力された」などユーザーの操作。JSはイベントをきっかけに動く。"],
+["Web基礎","console.log","変数の中身をブラウザ開発画面に表示させる命令。JS学習とデバッグの最重要ツール。"],
+["Web基礎","DevTools","ブラウザ内蔵の点検ツール。F12で開く。エラー確認・スマホ表示再現・部品調査ができる。"],
+["Web基礎","API","プログラム同士がデータをやり取りする窓口。「天気APIを叩く」=天気データをもらいに行く。"],
+["Web基礎","fetch","JavaScriptからAPIにデータを取りに行く命令。"],
+["Web基礎","非同期処理","時間のかかる処理(通信など)を「待っている間に他をやる」仕組み。async/awaitで扱う。"],
+["Web基礎","LocalStorage","ブラウザの中にデータを保存できる小さな倉庫。ページを閉じても残る。このアプリのチェック保存もこれ。"],
+["Web基礎","モーダル","画面の上にかぶさる小窓。確認や入力フォームでよく使う。"],
+["Web基礎","バリデーション","入力チェック。「メール形式が正しいか」「必須が空でないか」を確認する処理。"],
+["Web基礎","デバッグ","バグの原因を探して直す作業。エラー文を読む→切り分ける→直す、の繰り返し。"],
+["Git・環境","VSCode","世界標準のコードエディタ(開発用の高機能メモ帳)。今後の主戦場。"],
+["Git・環境","拡張機能","VSCodeに後付けする便利機能。スマホのアプリみたいなもの。"],
+["Git・環境","ターミナル","文字(コマンド)でパソコンに指示を出す画面。開発では必須。"],
+["Git・環境","コマンド","ターミナルに打つ命令文。ls(一覧)、cd(移動)など。"],
+["Git・環境","パス","ファイルの住所。/Users/kataoka/Desktop/test.html のように場所を表す。"],
+["Git・環境","Node.js","パソコン上でJavaScriptを動かす土台。Next.jsもこの上で動く。"],
+["Git・環境","npm","Node.jsの部品を取ってくる道具。npm install で必要な部品を一括ダウンロード。"],
+["Git・環境","node_modules","他の人が作った部品の置き場フォルダ。巨大なのでGitに入れたらあかん(.gitignore対象)。"],
+["Git・環境","ローカル環境","自分のPCの中だけで動かしている状態。壊しても誰にも迷惑がかからない。"],
+["Git・環境","開発サーバ","作成中のアプリを自分のPCで動かして確認する仕組み。npm run dev で起動。"],
+["Git・環境","Git","ファイルの変更履歴を記録する道具。いつ・誰が・何を変えたかが残り、過去にも戻れる。"],
+["Git・環境","リポジトリ","Gitで管理しているプロジェクトのフォルダ一式。"],
+["Git・環境","コミット","変更のセーブポイントを作ること。ゲームのセーブと同じで、こまめにやるほど安全。"],
+["Git・環境","ブランチ","作業用の並行世界。本体(main)をコピーした世界で作業し、完成したら合流させる。"],
+["Git・環境","マージ","ブランチの変更を本体に合流させること。"],
+["Git・環境","コンフリクト","2人が同じ場所を別々に変更してぶつかった状態。どちらを採用するか手で選んで解決。怖くない。"],
+["Git・環境","push / pull","push=自分の変更をGitHubに送る。pull=最新を取り込む。KYOEIではpushは指示があるまで絶対禁止(本番反映されるため)。"],
+["Git・環境","clone","GitHubのリポジトリを自分のPCに丸ごとコピーしてくること。"],
+["Git・環境","GitHub","Gitのデータをネット上で共有するサービス。チーム開発の拠点。"],
+["Git・環境","PR(プルリクエスト)","「この変更を本体に入れてください」という申請。レビュー後にマージするのがチーム開発の作法。"],
+["Git・環境","コードレビュー","他の人のコードをチェックする工程。品質を保つ仕組みで、ダメ出し大会ではない。"],
+["Git・環境",".gitignore","「これはGitに記録しないで」リスト。node_modulesや.envを載せる。"],
+["Git・環境",".env(環境変数)","パスワードやAPIキーなど秘密情報を書くファイル。絶対にGitにコミットしない。"],
+["Git・環境","sandbox","壊してもいい練習環境。砂場。研修中の作業は基本ここでやる。"],
+["CraftFile","フレームワーク","アプリ開発の土台キット。よく使う仕組みが最初から揃っている。"],
+["CraftFile","Next.js","CraftFileが使うWebアプリのフレームワーク。フォルダ構成がそのままURLになる。"],
+["CraftFile","App Router","Next.jsの画面管理の仕組み。app/projects/page.tsx を作ると /projects というページになる。"],
+["CraftFile","React","画面を「部品(コンポーネント)の組み合わせ」で作る仕組み。Next.jsの中で使われる。"],
+["CraftFile","コンポーネント","画面の部品。「案件カード」「ヘッダー」「ボタン」を部品化して使い回す。"],
+["CraftFile","props","親の部品から子の部品へデータを渡す仕組み。「カード部品に案件データを渡す」など。"],
+["CraftFile","state(useState)","部品が持つ「今の状態」。状態が変わると画面が自動で描き直される、がReactの中心思想。"],
+["CraftFile","TypeScript","JavaScriptに「型」を足した言語。CraftFileは全部これ。"],
+["CraftFile","型","データの種類の宣言。「これは文字」「これは数値」と決めておくと間違いを実行前に発見できる。"],
+["CraftFile","Tailwind CSS","CSSをクラス名で書くスタイル。p-4(余白)flex(横並び)など短いクラスを組み合わせる。"],
+["CraftFile","データベース(DB)","データの倉庫。CraftFileの案件・顧客・見積もりは全部ここに入っている。"],
+["CraftFile","PostgreSQL","CraftFileが使っているデータベースの種類。"],
+["CraftFile","Prisma","プログラムからDBを操作するための翻訳係。SQLを直接書かなくてもDBを扱える。"],
+["CraftFile","スキーマ","DBの設計図。「案件テーブルにはこの項目がある」という定義。schema.prismaに書いてある。"],
+["CraftFile","マイグレーション","DBの設計変更を手順書(SQLファイル)として実行すること。KYOEIでは冪等なファイルで行う。"],
+["CraftFile","冪等(べきとう)","「何回実行しても結果が同じ」性質。間違えて2回流しても壊れない書き方。"],
+["CraftFile","tenantId(マルチテナント)","1つのシステムを複数の会社で共用する方式で、データがどの会社のものかを区別する印。付け忘れると他社にデータが見える大事故。KYOEIでは全モデル必須。"],
+["CraftFile","認証(Auth.js)","ログインの仕組み。CraftFileはAuth.js v5。研修中は触らない領域。"],
+["CraftFile","ビルド(next build)","コードを本番用に変換・チェックする工程。エラーなく通る(グリーン)ことが全作業の合格条件。"],
+["CraftFile","デプロイ","作ったものを本番サーバに反映して使える状態にすること。"],
+["CraftFile","本番環境","お客様が実際に使っている環境。ここでの事故は即お客様に影響する。"],
+["CraftFile","Coolify","KYOEIのデプロイの仕組み(自社サーバ)。git pushすると自動で本番反映される。だからpushは指示があるまで禁止。"],
+["CraftFile","Claude Code","AIがコードを書いてくれる開発ツール。「爆速の同僚」。ただし出力の検品責任は人間にある。"],
+["CraftFile","SaaS","ネット経由で使ってもらうソフトウェアサービス。CraftFileはこの形態。"],
+["仕事術","OJT","On the Job Training。実際の仕事をやりながら学ぶ研修方式。Phase 5後半がこれ。"],
+["仕事術","ルーブリック","評価の採点表。「何ができたら何点か」を先に決めておく仕組み。毎週の1on1で使う。"],
+["仕事術","1on1","上司と1対1の定例振り返り。毎週金曜30分。"],
+["仕事術","ナレッジベース","学んだこと・解決したことを蓄積する自分専用メモ(Notionなど)。同じことを二度調べないための資産。"],
+["仕事術","質疑提出シート","KYOEIの質問方式。質問をAIで調査→シートにまとめて提出。テンプレタブ参照。"],
+["仕事術","要件 / 要件定義","「何を作るか・どうなったら完成か」を言葉にしたもの。開発の出発点。"],
+["仕事術","プロトタイプ","本実装の前に作る試作品。KYOEIでは単一HTMLファイルで作るのが文化。"],
+["仕事術","エラーログ","エラー時にシステムが出す記録・メッセージ。全文コピペしてAIに渡すのが解決の近道。"]
+];
+
+/* ================= カリキュラムデータ ================= */
+/* d:{t:タイトル, g:ねらい, k:[タスク], m:[用語]} */
+const PHASES = [
+{no:0,name:"オンボーディング",wk:"Week 1",
+ goal:"事業とゴールを理解し、道具を全部そろえる週。",
+ weeks:[{w:"W1",t:"準備週",days:[
+  {t:"キックオフ",g:"プログラム全体と評価制度を理解する",k:["全体設計書を読み合わせる","6ヶ月後のゴールを自分の言葉で言う","キャリアパスを確認する"],m:["ルーブリック","1on1"]},
+  {t:"アカウント・道具の準備",g:"研修で使う道具を全部そろえる",k:["ChatGPT/Gemini/Claudeの環境確認","Canvaチーム招待を受ける","Notionでナレッジベースを作る"],m:["ナレッジベース"]},
+  {t:"事業理解と質疑の練習",g:"KYOEIの2事業とCraftFileを知る",k:["2事業(塗装/IT)を人に説明できる","CraftFileを閲覧で触ってみる","質疑提出シートを練習で1枚書く"],m:["SaaS","質疑提出シート"]},
+ ]}],
+ exam:null},
+
+{no:1,name:"AI活用・プロンプト",wk:"Week 2-5",
+ goal:"「なんとなくAIに聞く」から「設計してAIを使う」へ。初見の依頼でも1〜2往復で実用レベルを出せるようになる。",
+ weeks:[
+ {w:"W2",t:"生成AIの仕組み",days:[
+  {t:"LLMの基本構造",g:"AIは「次の言葉の予測機」だと理解する",k:["同じ依頼を3つのAIに投げて比較メモを書く","違いを言語化して提出"],m:["生成AI","LLM","トークン","コンテキスト"]},
+  {t:"ハルシネーション体験",g:"AIの嘘を見抜く目を作る",k:["わざと誤情報を出させる実験をする","堺市の補助金情報を公式サイトで検証する"],m:["ハルシネーション","ファクトチェック"]},
+  {t:"RCGCOフレームワーク",g:"KYOEI式プロンプトの型を覚える",k:["RCGCOの5要素を暗記する","悪い例と良い例を見比べて差を説明する"],m:["プロンプト","RCGCO"]},
+  {t:"演習:悪い例→良い例",g:"型を使うと出力が変わることを体感",k:["お礼メール文を悪い例/RCGCOで比較","求人文を悪い例/RCGCOで比較"],m:[]},
+  {t:"演習:実務5本",g:"実務題材でRCGCOを回す",k:["CraftFile機能紹介文を作る","画像生成プロンプト(ブランド色準拠)を作る","学習内容の要約を作る"],m:["カラーコード"]},
+ ]},
+ {w:"W3",t:"テクニック編",days:[
+  {t:"Few-shotと出力固定",g:"お手本を貼ると品質が跳ねると知る",k:["過去の良い成果物でお手本ライブラリを作り始める","表形式・穴埋め形式の出力指定を練習"],m:["Few-shot"]},
+  {t:"分解と段階実行",g:"大きい依頼は工程に割る",k:["構成→修正→執筆→統一の4工程で提案資料を1本作る"],m:[]},
+  {t:"役割対話と壁打ち",g:"AIに批評家・お客様役をさせる",k:["先週の成果物をお客様役AIにレビューさせる","指摘をふまえた改善版を作る"],m:["壁打ち"]},
+  {t:"修正指示の出し方",g:"「なんかいい感じに」を卒業する",k:["保持する部分+変える部分を分けた差分指示を5回練習"],m:["イテレーション"]},
+  {t:"長い文脈の管理",g:"会話の整理と前提プロンプト",k:["決定事項まとめ→新チャット再開を練習","KYOEI用の前提プロンプトを自作する"],m:["コンテキストウィンドウ"]},
+ ]},
+ {w:"W4",t:"用途別実践",days:[
+  {t:"文章系実務(お客様向け)",g:"実案件レベルの文章を量産",k:["見積もり送付メールを作る","着工前挨拶文を作る","完工お礼状を作る"],m:[]},
+  {t:"文章系実務(社内・販促)",g:"議事録・SNSの型を覚える",k:["議事録要約の流れを練習","Instagram/X向けの書き分けを練習"],m:[]},
+  {t:"画像生成:一貫性",g:"同じテイストを出し続ける技術",k:["参照画像方式を練習する","スタイル記述の定型化を作る"],m:["透過(アルファチャンネル)"]},
+  {t:"画像生成:Canva前提",g:"後工程を考えた生成",k:["テキストなし・余白ありで生成する","施工事例アイキャッチを3案作る"],m:[]},
+  {t:"コード系プロンプト入門",g:"Phase 3への布石",k:["エラー相談テンプレ(4点セット)を練習","AIに自己紹介ページHTMLを生成→全行解説させる→3箇所改造"],m:["HTML","エラーログ"]},
+ ]},
+ {w:"W5",t:"総仕上げ",days:[
+  {t:"模擬案件 前半",g:"CraftFile機能の販促パッケージを通しで作る",k:["紹介文(A4構成)を作る","SNS投稿文2種を作る"],m:[]},
+  {t:"模擬案件 後半",g:"画像とプロンプト設計書まで仕上げる",k:["アイキャッチ画像2案を作る","プロンプト設計書(型と理由)を添付する"],m:[]},
+  {t:"レビューと修正",g:"指摘を受けて1巡直す",k:["蓮さんレビューを受ける","差分指示の型で修正する"],m:[]},
+  {t:"ナレッジ整備",g:"4週間の資産を整理する",k:["お手本ライブラリを整理","前提プロンプト・型テンプレ集を整理"],m:["ナレッジベース"]},
+  {t:"卒業試験",g:"初見お題で実力を証明する",k:["実技試験(120分)を受ける"],m:[]},
+ ]}],
+ exam:{t:"Phase 1 卒業試験",pt:"80点で合格",items:["プロンプト設計(RCGCO5要素) 30点","出力品質(修正なしで社外に出せるか) 30点","イテレーション(差分指示) 20点","検証(ファクトチェック) 10点","説明(型の選択理由) 10点"],ps:"不合格なら該当週を再走して1週間後に再試験。恥ではなく仕組み。"}},
+
+{no:2,name:"デザイン・資料作成",wk:"Week 6-8",
+ goal:"AI+Canvaを「業務品質・ブランド準拠・再現可能」に。指示書1枚で一人で完成できる状態へ。",
+ weeks:[
+ {w:"W6",t:"ブランドとCanva基盤",days:[
+  {t:"KYOEIブランドの理解",g:"色とトーンの規定を叩き込む",k:["ブランドカラー3色+使い分けを暗記","過去資料3点のルール適用を分析","NG資料の違反箇所を3つ指摘"],m:["カラーコード","トーン&マナー"]},
+  {t:"Canva基本操作",g:"整列・ブランドキットを使い切る",k:["ブランドキットの登録と呼び出し","整列・等間隔・グループ化の練習"],m:["ブランドキット"]},
+  {t:"Canva応用+Bulk Create",g:"量産の仕組みを覚える",k:["書き出し設定の使い分けを覚える","架空社員5名の名刺をBulk Createで一括生成"],m:["Bulk Create","PNG / JPEG / PDF"]},
+  {t:"AI画像→Canva連携",g:"KYOEI標準ワークフロー6工程を覚える",k:["6工程(目的→生成→選定→組版→検品→書き出し)を暗記","命名規則でファイルを保存する"],m:[]},
+  {t:"検品の型",g:"検品チェックリストを使いこなす",k:["検品リスト5項目を暗記","過去成果物1点を検品してみる"],m:["セーフエリア"]},
+ ]},
+ {w:"W7",t:"実務パターン別",days:[
+  {t:"SNS投稿セット",g:"保存したくなる投稿の構成",k:["施工事例のカルーセル4枚を作る","キャプション+ハッシュタグ設計"],m:["カルーセル","CTA"]},
+  {t:"営業チラシA4",g:"視線誘導と印刷前提の設計",k:["外壁診断チラシを作る(塗り足し込み)"],m:["塗り足し","トンボ"]},
+  {t:"提案書(複数ページ)",g:"ネイビー×ゴールドの提案トーン",k:["6ページ提案書を通しで作る(構成→文章→組版)"],m:[]},
+  {t:"CraftFile販促物",g:"プロダクトトーンの資料",k:["機能紹介スライド3枚を作る","スクショの見せ方(枠・影・モック)を練習"],m:[]},
+  {t:"印刷入稿の知識",g:"入稿で事故らない知識",k:["解像度/RGB・CMYK/塗り足しを説明できる","チラシを入稿可能データで書き出し+チェックリスト自作"],m:["解像度 / dpi","RGB / CMYK"]},
+ ]},
+ {w:"W8",t:"総合演習",days:[
+  {t:"模擬案件 1/2",g:"1つの施工事例から販促一式を作る",k:["カルーセル4枚+キャプション"],m:[]},
+  {t:"模擬案件 2/2",g:"チラシと完工報告書まで",k:["A4チラシ(印刷PDF)","完工報告書2ページ"],m:[]},
+  {t:"納品仕上げ",g:"検品と命名規則で仕上げる",k:["検品リスト添付","命名規則で全ファイル整理"],m:[]},
+  {t:"テンプレ資産化",g:"作ったものを会社の仕組みにする",k:["Canvaテンプレとして整備","KYOEI販促テンプレ集として共有"],m:[]},
+  {t:"卒業試験",g:"初見題材で実技",k:["実技試験(180分)を受ける"],m:[]},
+ ]}],
+ exam:{t:"Phase 2 卒業試験",pt:"80点で合格",items:["ブランド準拠 25点","完成度(整列・余白・誤字ゼロ) 25点","ワークフロー6工程の遵守 20点","AI画像の設計と選定眼 15点","納品品質(書き出し・命名・検品) 15点"],ps:"感覚ではなくルールで採点される。検品リスト添付は必須。"}},
+
+{no:3,name:"Web開発基礎",wk:"Week 9-14",
+ goal:"コードが読める・単一HTMLプロトタイプが作れる状態へ。学び方は「写経→改造→ゼロから」。AIは使ってよいが、必ず自分で書いてから添削させる。",
+ weeks:[
+ {w:"W9",t:"HTML/CSS 1",days:[
+  {t:"HTMLの構造",g:"タグと骨組みを理解",k:["基本タグ10種を使って自己紹介ページを書く(AIなし)","AIに添削させて指摘を自分の言葉で説明"],m:["HTML","タグ"]},
+  {t:"CSSの基本",g:"ボックスモデルを図で説明できる",k:["ボックスモデルの図を自分で描く","自己紹介ページをKYOEIカラーで装飾"],m:["CSS","セレクタ","ボックスモデル","margin / padding"]},
+  {t:"Flexbox",g:"「並べる」を解決する",k:["ヘッダー/カード横並び/中央寄せの3パターンを作る"],m:["Flexbox"]},
+  {t:"Grid",g:"マス目レイアウト",k:["施工事例ギャラリー(3列)を作る","FlexとGridの使い分けを説明できる"],m:["Grid","クラス(class)"]},
+  {t:"週次課題:LP前半",g:"1ページLP(PC版)を作る",k:["ヒーロー〜CTA〜フッターの構成で自力制作","完成後AIレビュー→反映"],m:[]},
+ ]},
+ {w:"W10",t:"HTML/CSS 2",days:[
+  {t:"レスポンシブ",g:"スマホ対応はKYOEIの最重点",k:["メディアクエリでLPをスマホ対応","dvhを使う理由を説明できる"],m:["レスポンシブ","メディアクエリ","vh / dvh"]},
+  {t:"フォームとUI部品",g:"入力UIの基本",k:["無料診断フォームUIを作る","タップターゲット44pxを守る"],m:["タップターゲット","バリデーション"]},
+  {t:"CSS発展",g:"配置と動き",k:["position4種を試す","CSS変数でブランドカラーを一元管理"],m:[]},
+  {t:"UIパターン",g:"モーダル・タブ・アコーディオン",k:["モーダルを作る","アコーディオンを作る"],m:["モーダル"]},
+  {t:"週次課題:LP完成",g:"完全レスポンシブ+モーダル",k:["スマホ実機で崩れなしを確認","診断申込モーダルを追加"],m:["DevTools"]},
+ ]},
+ {w:"W11",t:"JavaScript 1",days:[
+  {t:"変数・型・演算",g:"console.log習慣を作る",k:["const/letと基本型を練習","全部console.logで確認する癖をつける"],m:["JavaScript(JS)","変数","console.log"]},
+  {t:"条件分岐と関数",g:"処理を部品化する",k:["築年数→推奨メンテ時期を返す関数を書く"],m:["関数"]},
+  {t:"配列とループ",g:"map/filterを厚めに",k:["施工事例データから堺市のみ抽出","金額合計を出す"],m:["配列"]},
+  {t:"オブジェクトとJSON",g:"データの形を理解する",k:["見積もりデータをオブジェクトで設計","合計金額を計算する関数を書く"],m:["オブジェクト","JSON"]},
+  {t:"週次課題:見積もりロジック",g:"計算部分だけ完成させる",k:["面積・塗料・オプション→概算を返す(console上でOK)"],m:[]},
+ ]},
+ {w:"W12",t:"JavaScript 2",days:[
+  {t:"DOM操作",g:"JSでページを書き換える",k:["ボタンで文言と色が変わるページを作る"],m:["DOM"]},
+  {t:"イベント",g:"操作をきっかけに動かす",k:["入力文字数のリアルタイム表示を作る"],m:["イベント"]},
+  {t:"UI×ロジック結合",g:"最初の大きな山。動く見積もりツールへ",k:["W11のロジックをW10のフォームに接続する"],m:[]},
+  {t:"動的リスト描画",g:"Reactの前身となる考え方",k:["配列→カードギャラリーを動的生成","市区別フィルタボタンを付ける"],m:[]},
+  {t:"週次課題:シミュレータ",g:"単一HTMLで完成させる",k:["入力→計算→結果表示→再計算まで作る"],m:["プロトタイプ"]},
+ ]},
+ {w:"W13",t:"JavaScript 3",days:[
+  {t:"非同期の概念",g:"待つ処理の考え方",k:["setTimeout/Promise/async-awaitを写経で体験"],m:["非同期処理"]},
+  {t:"fetchとAPI",g:"外からデータを取ってくる",k:["公開API(天気/郵便番号)から取得して表示"],m:["API","fetch"]},
+  {t:"LocalStorage",g:"保存と復元",k:["シミュレータの入力値を保存・復元できるようにする"],m:["LocalStorage"]},
+  {t:"エラーと向き合う日",g:"デバッグ力はここで決まる",k:["DevToolsの使い方を覚える","バグ5個入りHTMLを全部直す"],m:["デバッグ","DevTools","エラーログ"]},
+  {t:"週次課題:シミュレータ完成版",g:"総仕上げ",k:["レスポンシブ・保存・エラー処理込みで完成"],m:[]},
+ ]},
+ {w:"W14",t:"総合制作",days:[
+  {t:"要件確認",g:"作る前に聞くのも仕事",k:["出題(CraftFile検討中機能)の不明点を質問してから着手"],m:["要件 / 要件定義"]},
+  {t:"制作 1/3",g:"構造とレイアウト",k:["画面骨格をHTML/CSSで作る"],m:[]},
+  {t:"制作 2/3",g:"動きをつける",k:["JSでロジックと操作を実装"],m:[]},
+  {t:"制作 3/3+申告",g:"AI協業の透明化",k:["完成させる","AI任せ/自分で書いた/修正した部分を申告"],m:[]},
+  {t:"卒業試験",g:"初見お題を4時間で",k:["実技試験(半日)を受ける"],m:[]},
+ ]}],
+ exam:{t:"Phase 3 卒業試験",pt:"80点で合格",items:["動作(要件通り・スマホで崩れない) 30点","コード理解(任意の10行を口頭で説明) 30点","品質(ブランド・UI基本) 15点","デバッグ(自力+AIで解決) 15点","要件確認の質 10点"],ps:"コード理解が20点未満なら他が満点でも不合格。写しただけでは先に進めない。"}},
+
+{no:4,name:"開発環境・Git",wk:"Week 15-16",
+ goal:"チーム開発の作法を習得し、CraftFileのリポジトリに安全に触れる状態を作る。最初の30分で禁止事項を叩き込む。",
+ weeks:[
+ {w:"W15",t:"VSCode・ターミナル・Git",days:[
+  {t:"⚠禁止事項+VSCode",g:"三大禁止事項を最初に刷り込む",k:["三大禁止事項+開発ルールを紙に書いて貼る","VSCodeと標準拡張機能7種をセットアップ","ショートカット8種の練習開始"],m:["VSCode","拡張機能"]},
+  {t:"ターミナル基礎",g:"文字でPCに指示を出す",k:["基本コマンド10種を練習","パス概念(絶対/相対)を図で理解","ターミナルだけでフォルダ構成を作る"],m:["ターミナル","コマンド","パス","Node.js","npm"]},
+  {t:"Gitの概念と基本",g:"コミット=セーブポイント",k:["練習リポジトリでinit/status/add/commit","変更→status→diff→add→commitを20回回して手癖にする"],m:["Git","リポジトリ","コミット"]},
+  {t:"ブランチとマージ",g:"並行世界とその合流",k:["ブランチを切って作業→マージ","わざとコンフリクトを起こして解決する"],m:["ブランチ","マージ","コンフリクト"]},
+  {t:"GitHub接続",g:"クラウドと繋がる",k:["GitHubアカウント作成・認証","sandboxで clone/pull/push を練習",".gitignoreの意味を説明できる"],m:["GitHub","clone","push / pull",".gitignore",".env(環境変数)","sandbox"]},
+ ]},
+ {w:"W16",t:"チーム開発フロー",days:[
+  {t:"Pull Requestの作法",g:"KYOEI標準フロー5工程",k:["PRテンプレを覚える","sandboxでPRを3本通す(作成→レビュー→修正→マージ)"],m:["PR(プルリクエスト)"]},
+  {t:"レビューの受け方",g:"指摘は品質工程",k:["厳しめレビュー1本への対応を練習","修正コミットの積み方を覚える"],m:["コードレビュー"]},
+  {t:"困った時のGit",g:"復旧術と相談ライン",k:["restore/stashで3パターンの復旧演習","「やらかしたらコマンド前に相談」を確認"],m:[]},
+  {t:"CraftFile見学",g:"本物に触れる日(変更禁止)",k:["cloneしてローカル起動(蓮さん同席)","フォルダ構成ツアー(app/components/prisma)"],m:["ローカル環境","開発サーバ"]},
+  {t:"卒業試験",g:"clone→PRまで一人で",k:["実技+口頭試問(120分)を受ける"],m:[]},
+ ]}],
+ exam:{t:"Phase 4 卒業試験",pt:"80点で合格",items:["実技:clone→ブランチ→修正→commit→push(許可済)→PR 60点","口頭:pushの前に確認することは? 他3問 40点"],ps:"KYOEIルールの設問(git push確認)を落としたら即不合格・再試験。"}},
+
+{no:5,name:"CraftFile開発補佐",wk:"Week 17-24",
+ goal:"技術スタックを理解し、Claude Codeを活用して実タスク(UI修正・軽微な機能追加)を一人称で完遂できる開発補佐になる。",
+ weeks:[
+ {w:"W17",t:"TypeScript",days:[
+  {t:"TypeScriptとは",g:"型=間違いを実行前に見つける仕組み",k:["基本の型注釈を練習","見積もり計算関数をTS化する"],m:["TypeScript","型"]},
+  {t:"オブジェクトの型",g:"CraftFileのデータの形を知る",k:["type/interfaceを練習","案件・顧客・見積もりの型を自分で設計"],m:[]},
+  {t:"関数の型",g:"読めるレベルのジェネリクス",k:["引数と戻り値の型を練習","useState<Project[]>が読める状態にする"],m:[]},
+  {t:"型エラーの読み方",g:"エラー文が怖くなくなる",k:["頻出エラー2種の意味を説明できる","型エラー10個入りファイルを全部直す"],m:[]},
+  {t:"週次課題",g:"シミュレータの完全TS化",k:["Phase 3成果物のロジックをTypeScript化"],m:[]},
+ ]},
+ {w:"W18",t:"React",days:[
+  {t:"コンポーネントとJSX",g:"画面=部品の組み合わせ",k:["案件カード部品を作る"],m:["React","コンポーネント"]},
+  {t:"props",g:"親から子へデータを渡す",k:["カードに案件データを渡してmapで一覧描画"],m:["props"]},
+  {t:"useState",g:"状態が変わると再描画される",k:["ステータス絞り込みフィルタ付き一覧を作る"],m:["state(useState)"]},
+  {t:"イベントとフォーム",g:"制御コンポーネント",k:["案件の新規追加フォームを作る"],m:[]},
+  {t:"週次課題:案件管理ミニアプリ",g:"一覧・追加・絞り込み・詳細",k:["Reactでミニアプリを完成させる"],m:[]},
+ ]},
+ {w:"W19",t:"Next.js",days:[
+  {t:"Next.jsの構造",g:"フォルダ=URL",k:["CraftFileのapp/を読んでURL対応表を作る"],m:["Next.js","App Router","フレームワーク"]},
+  {t:"Server/Client Component",g:"use clientの判断基準",k:["CraftFileの画面でServer/Clientを仕分けして理由を書く"],m:[]},
+  {t:"Tailwind CSS",g:"クラスでスタイルを書く",k:["頻出クラス15種を覚える","実コンポーネント1つの全クラスを解説する"],m:["Tailwind CSS"]},
+  {t:"データ取得の読解",g:"実コードを読む日",k:["CraftFileのデータ取得コードを蓮さんと読む"],m:[]},
+  {t:"週次課題",g:"ミニアプリをNext.jsへ移植",k:["一覧ページ+詳細ページをApp Routerで作る"],m:[]},
+ ]},
+ {w:"W20",t:"Prisma・DB読解",days:[
+  {t:"DBの基礎",g:"テーブルとリレーション",k:["顧客-案件-見積もりのER図を紙に描く"],m:["データベース(DB)","PostgreSQL"]},
+  {t:"schema.prismaの読解",g:"tenantIdが全モデルにある理由",k:["主要モデル10個の関係図を作る","tenantIdの意味を完全に説明できる"],m:["Prisma","スキーマ","tenantId(マルチテナント)"]},
+  {t:"Prisma Clientの読解",g:"クエリを日本語に翻訳できる",k:["実クエリ5箇所を日本語訳する"],m:[]},
+  {t:"マイグレーションの考え方",g:"冪等なSQLというKYOEI方式",k:["冪等の意味を説明できる","スキーマ変更は提案→レビュー→蓮さん実行の運用を確認"],m:["マイグレーション","冪等(べきとう)"]},
+  {t:"読解総合テスト",g:"最重要ゲート",k:["1機能の「画面→部品→データ取得→DB」の流れを図解して口頭発表(合格までW21に進まない)"],m:[]},
+ ]},
+ {w:"W21",t:"Claude Code協業",days:[
+  {t:"セットアップと基本",g:"爆速の同僚、責任は人間",k:["Claude Codeをセットアップ","基本的な指示を試す"],m:["Claude Code"]},
+  {t:"KYOEI式要件プロンプト",g:"社内の型を継承する",k:["要件プロンプトの型(目的/対象/要件/制約/確認方法)を覚える","過去の実物3本を読んで分析"],m:[]},
+  {t:"AI出力の検品",g:"diffは全行読む",k:["検品観点4種(ルール違反/不要変更/型エラー/build)を覚える","問題入り生成結果から問題点を全部見つける"],m:["ビルド(next build)"]},
+  {t:"ペアプロ演習 1/2",g:"sandboxで小タスク",k:["文言修正+余白調整を全工程(要件→生成→検品→build→PR)で完遂"],m:[]},
+  {t:"ペアプロ演習 2/2",g:"仕上げ",k:["絞り込み1条件追加を完遂","仕込みバグ修正を完遂"],m:[]},
+ ]},
+ {w:"W22",t:"OJT 1",days:[
+  {t:"OJT開始",g:"実タスクの週。push権限付与(確認ルール継続)",k:["★タスク(文言・色・余白)を2〜3本完遂","全タスクでbuildグリーン+実機確認+PR+セルフレビュー"],m:["OJT","本番環境","Coolify","デプロイ"]},
+ ]},
+ {w:"W23",t:"OJT 2",days:[
+  {t:"OJT継続",g:"難易度を上げる",k:["★★タスク(項目追加・バリデーション)を1〜2本完遂","モバイルUI検証の作法(dvh/44px/横スクロール/セーフエリア)でスクショ添付"],m:[]},
+ ]},
+ {w:"W24",t:"OJT 3+最終試験",days:[
+  {t:"OJT仕上げ",g:"小機能を一人称で",k:["★★★タスク(モーダル1枚完結の小機能)に挑戦"],m:[]},
+  {t:"最終卒業試験",g:"要件確認からPRまで一人で1日",k:["最終実技試験を受ける"],m:[]},
+ ]}],
+ exam:{t:"最終卒業試験(プログラム全体)",pt:"80点で合格",items:["完遂(動く・buildグリーン・PR提出) 25点","ルール遵守(7ヶ条違反ゼロ/push違反は即不合格) 20点","コード理解(全変更行を口頭説明) 20点","検品力(AI出力の問題を自力発見) 15点","モバイル品質(実機+スクショ) 10点","コミュニケーション(要件確認・日報・PR説明) 10点"],ps:"合格でCraftFile開発チーム正式アサイン+担当領域の付与。"}},
+];
+
+/* ================= テンプレデータ ================= */
+const TPLS = [
+{t:"質疑提出シート",d:"質問はこれにまとめて提出(AI資料化方式)",c:
+`## 質疑提出シート YYYY/MM/DD No.○○(片岡)
+
+### 1. 質問・課題(何に詰まっているか)
+
+
+### 2. AIでの調査過程(使ったプロンプトを貼る)
+
+
+### 3. AIの回答要約(自分の言葉で3行以内)
+
+
+### 4. 自分の理解と結論(仮説でOK)
+
+
+### 5. 残る不明点
+
+
+### 6. 蓮さんに判断してほしいこと(1行で)
+`},
+{t:"日報",d:"毎日・終業前10分で提出",c:
+`## 日報 YYYY/MM/DD(片岡)
+
+### 今日やったこと
+- 
+
+### できるようになったこと(1つでOK)
+- 
+
+### 詰まったこと+どう対処したか
+- (例:○○のエラー → 15分調査 → AIに△△と質問 → 解決/未解決)
+
+### 明日やること
+- 
+
+### 今日のベストプロンプト or 今日の学びコード(任意)
+- 
+`},
+{t:"RCGCOプロンプトの型",d:"AIへの依頼はこの5要素で設計する",c:
+`# 役割(Role)
+あなたは○○です。
+
+# 文脈(Context)
+(背景・前提・対象読者)
+
+# 目的(Goal)
+(何のための出力か。最重要)
+
+# 制約(Constraints)
+- 文字数:
+- トーン:
+- 禁止事項:
+- 必須要素:
+
+# 出力形式(Output)
+(形式・構成・パターン数。お手本があれば貼る)
+`},
+{t:"エラー相談テンプレ",d:"コードで詰まったらAIにこの4点セットで渡す",c:
+`## やりたいこと
+
+
+## 書いたコード(全文)
+
+
+## エラー全文(コピペ)
+
+
+## 試したこと
+
+`},
+{t:"PRテンプレ",d:"Pull Request作成時にこの形で書く",c:
+`## やったこと
+- 
+
+## 確認方法
+- (どの画面をどう操作すれば確認できるか)
+
+## スクリーンショット
+- (UI変更は必ずBefore/After)
+
+## 確認済みチェック
+- [ ] スマホ表示確認
+- [ ] next build グリーン
+- [ ] KYOEIルール(dvh/ModalShell/tenantId/44px)違反なし
+`},
+{t:"AIに先生をさせる型",d:"分からないコードはこれで解説させる",c:
+`あなたはプログラミング講師です。
+以下のコードを1行ずつ、初心者向けに解説してください。
+専門用語には必ず一言説明を添えてください。
+
+(ここにコードを貼る)
+`},
+{t:"修正指示(差分指示)の型",d:"「なんかいい感じに」を卒業する",c:
+`## 保持する部分(変えないで)
+- 
+
+## 変更する部分
+- ○○を△△に変えて。理由:□□
+
+## 変えないでほしい条件
+- 文字数・トーンは維持
+`},
+];
+
+/* ================= 描画 ================= */
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const termMap={}; TERMS.forEach(t=>termMap[t[1]]=t);
+
+/* --- タブ --- */
+$$('.tab').forEach(b=>b.addEventListener('click',()=>{
+  $$('.tab').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  $$('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById('pg-'+b.dataset.pg).classList.add('on');
+  window.scrollTo({top:0});
+}));
+function goTab(pg){ $$('.tab').forEach(x=>{ if(x.dataset.pg===pg) x.click(); }); }
+
+/* --- カリキュラム描画 --- */
+let taskIds=[];
+function buildCurr(){
+  const root=$('#phases'); let html='';
+  PHASES.forEach((p,pi)=>{
+    html+=`<div class="phase" id="phase-${pi}">
+      <button class="phase-h" data-p="${pi}" aria-expanded="false">
+        <div class="phase-no"><span class="k">PHASE</span><span class="n">${p.no}</span></div>
+        <div class="phase-t"><div class="t">${p.name}</div><div class="w">${p.wk} <span id="pcount-${pi}"></span></div></div>
+        <svg class="arw" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="phase-body">
+        <div class="goal"><b>ねらい:</b>${p.goal}</div>`;
+    p.weeks.forEach((w,wi)=>{
+      html+=`<div class="week"><div class="week-h"><span class="wk">${w.w}</span><span class="wt">${w.t}</span></div>`;
+      w.days.forEach((d,di)=>{
+        const dayId=`p${pi}w${wi}d${di}`;
+        html+=`<div class="day" id="day-${dayId}"><div class="day-h"><span class="dd">DAY</span><span class="dt">${d.t}</span></div><div class="day-g">${d.g}</div>`;
+        d.k.forEach((k,ki)=>{
+          const id=`${dayId}t${ki}`; taskIds.push({id,pi});
+          html+=`<label class="task"><input type="checkbox" data-id="${id}"><span>${k}</span></label>`;
+        });
+        if(d.m && d.m.length){
+          html+=`<div class="terms-row"><span class="lb">今日の用語:</span>`;
+          d.m.forEach(t=>{ html+=`<button class="chip" data-term="${t}">${t}</button>`; });
+          html+=`</div>`;
+        }
+        html+=`</div>`;
+      });
+      html+=`</div>`;
+    });
+    if(p.exam){
+      html+=`<div class="exam"><div class="et">🎓 ${p.exam.t}<span class="pt">${p.exam.pt}</span></div><ul>`;
+      p.exam.items.forEach(i=>html+=`<li>${i}</li>`);
+      html+=`</ul><div class="ps">※${p.exam.ps}</div></div>`;
+    }
+    html+=`</div></div>`;
+  });
+  root.innerHTML=html;
+
+  $$('.phase-h').forEach(h=>h.addEventListener('click',()=>{
+    const ph=h.parentElement; const open=ph.classList.toggle('open');
+    h.setAttribute('aria-expanded',open?'true':'false');
+  }));
+  $$('.task input').forEach(cb=>{
+    cb.checked = store.get('t:'+cb.dataset.id)==='1';
+    cb.addEventListener('change',()=>{
+      store.set('t:'+cb.dataset.id, cb.checked?'1':'0');
+      refreshProgress(); refreshDayDone(cb);
+    });
+    refreshDayDone(cb);
+  });
+  $$('.chip').forEach(c=>c.addEventListener('click',()=>openTerm(c.dataset.term)));
+}
+function refreshDayDone(cb){
+  const day=cb.closest('.day');
+  const all=[...day.querySelectorAll('input')];
+  day.classList.toggle('done', all.length>0 && all.every(x=>x.checked));
+}
+
+/* --- 進捗 --- */
+function refreshProgress(){
+  let total=0,done=0; const per={};
+  taskIds.forEach(t=>{
+    total++; per[t.pi]=per[t.pi]||{t:0,d:0}; per[t.pi].t++;
+    if(store.get('t:'+t.id)==='1'){done++;per[t.pi].d++;}
+  });
+  const pct=total?Math.round(done/total*100):0;
+  $('#paintAll').style.width=pct+'%';
+  $('#pctAll').textContent=pct+'%';
+  let bars='';
+  PHASES.forEach((p,pi)=>{
+    const x=per[pi]||{t:0,d:0};
+    const pp=x.t?Math.round(x.d/x.t*100):0;
+    bars+=`<div class="phasebar"><div class="nm">P${p.no} ${p.name}</div><div class="tr"><div class="fl" style="width:${pp}%"></div></div><div class="pc">${pp}%</div></div>`;
+    const cEl=document.getElementById('pcount-'+pi);
+    if(cEl) cEl.textContent=`・${x.d}/${x.t} 完了`;
+  });
+  $('#phaseBars').innerHTML=bars;
+}
+
+/* --- 続きから --- */
+$('#resumeBtn').addEventListener('click',()=>{
+  goTab('curr');
+  const next=taskIds.find(t=>store.get('t:'+t.id)!=='1');
+  const pi=next?next.pi:PHASES.length-1;
+  const ph=document.getElementById('phase-'+pi);
+  if(ph && !ph.classList.contains('open')) ph.querySelector('.phase-h').click();
+  setTimeout(()=>ph.scrollIntoView({behavior:'smooth',block:'start'}),50);
+});
+
+/* --- 用語集 --- */
+let curCat='すべて';
+function buildCats(){
+  const el=$('#cats'); let html=`<button class="cat on" data-c="すべて">すべて</button>`;
+  CATS.forEach(c=>html+=`<button class="cat" data-c="${c}">${c}</button>`);
+  el.innerHTML=html;
+  $$('.cat').forEach(b=>b.addEventListener('click',()=>{
+    $$('.cat').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    curCat=b.dataset.c; renderTerms();
+  }));
+}
+function renderTerms(){
+  const q=($('#q').value||'').trim().toLowerCase();
+  const list=TERMS.filter(t=>
+    (curCat==='すべて'||t[0]===curCat) &&
+    (!q || t[1].toLowerCase().includes(q) || t[2].toLowerCase().includes(q))
+  );
+  $('#termList').innerHTML = list.length
+    ? list.map(t=>`<div class="term"><div class="tt">${t[1]}<span class="tag">${t[0]}</span></div><div class="td">${t[2]}</div></div>`).join('')
+    : `<div class="noresult">見つからへんかった…。AIに「${q||'その用語'}を初心者向けに説明して」と聞いてみよう。</div>`;
+}
+$('#q').addEventListener('input',renderTerms);
+
+/* --- 用語モーダル --- */
+function openTerm(name){
+  const t=termMap[name];
+  $('#mTitle').childNodes[0].textContent=name+' ';
+  $('#mCat').textContent=t?t[0]:'';
+  $('#mDesc').textContent=t?t[2]:'この用語の解説は用語集タブで検索してみてください。';
+  $('#modalBg').classList.add('on');
+}
+$('#mClose').addEventListener('click',()=>$('#modalBg').classList.remove('on'));
+$('#modalBg').addEventListener('click',e=>{ if(e.target.id==='modalBg') $('#modalBg').classList.remove('on'); });
+
+/* --- 今日の用語(日替わり3つ) --- */
+function todayTerms(){
+  const day=Math.floor(Date.now()/86400000);
+  const picks=[0,1,2].map(i=>TERMS[(day*3+i)%TERMS.length]);
+  $('#todayTerms').innerHTML=picks.map(t=>`<button class="chip" data-term="${t[1]}" style="font-size:13px;padding:6px 14px">${t[1]}</button>`).join('');
+  $$('#todayTerms .chip').forEach(c=>c.addEventListener('click',()=>openTerm(c.dataset.term)));
+}
+
+/* --- テンプレ --- */
+function buildTpls(){
+  $('#tpls').innerHTML=TPLS.map((t,i)=>`
+    <div class="tpl">
+      <div class="tpl-h"><div><div class="t">${t.t}</div><div class="d">${t.d}</div></div>
+      <button class="copy" data-i="${i}">コピー</button></div>
+      <pre>${t.c.replace(/</g,'&lt;')}</pre>
+    </div>`).join('');
+  $$('.copy').forEach(b=>b.addEventListener('click',async ()=>{
+    const txt=TPLS[+b.dataset.i].c;
+    let ok=false;
+    try{ await navigator.clipboard.writeText(txt); ok=true; }
+    catch(e){
+      const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
+      ta.select(); try{ ok=document.execCommand('copy'); }catch(_){} ta.remove();
+    }
+    b.textContent=ok?'コピーした ✓':'長押しでコピーして';
+    b.classList.toggle('ok',ok);
+    setTimeout(()=>{ b.textContent='コピー'; b.classList.remove('ok'); },1800);
+  }));
+}
+
+/* --- init --- */
+buildCurr(); buildCats(); renderTerms(); buildTpls(); todayTerms(); refreshProgress();
+</script>
+</body>
+</html>
