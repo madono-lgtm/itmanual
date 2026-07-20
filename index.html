@@ -214,7 +214,25 @@ section.page.on{display:block;animation:fade .25s ease}
 .modal .md{font-size:14px;margin-top:8px;color:#3A415A}
 .modal .close{margin-top:16px;width:100%}
 .storage-note{font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+
+/* ---------- login ---------- */
+.login-bg{position:fixed;inset:0;background:linear-gradient(160deg,var(--navy),var(--navy-deep));z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.login{background:#fff;border-radius:18px;width:100%;max-width:400px;padding:24px 20px}
+.login .lg-brand{font-size:10px;letter-spacing:.18em;color:var(--orange);font-weight:900}
+.login .lg-t{font-size:18px;font-weight:900;color:var(--navy);margin:2px 0 12px}
+.userbtn{display:flex;align-items:center;gap:10px;width:100%;appearance:none;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer;margin-bottom:8px;text-align:left}
+.userbtn .av{flex:none;width:34px;height:34px;border-radius:50%;background:var(--orange-soft);color:#9A5A10;display:flex;align-items:center;justify-content:center;font-weight:900}
+.userbtn:focus-visible{outline:2px solid var(--orange)}
+.user-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.user-badge{background:rgba(255,255,255,.12);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;color:#fff}
+.user-switch{appearance:none;border:0;background:none;color:#B7C0D6;font-family:inherit;font-size:11px;cursor:pointer;text-decoration:underline}
+.sync{font-size:10.5px;color:#B7C0D6;margin-left:auto}
+.tabs.six{grid-template-columns:repeat(6,1fr)}
+.au-row{display:flex;gap:8px;margin-top:8px}
+.au-row input,.au-row select{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:14px;background:#fff;min-width:0;color:var(--ink)}
+.admin-user{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -225,6 +243,7 @@ section.page.on{display:block;animation:fade .25s ease}
     <div class="sub">6ヶ月で「AI活用 → CraftFile開発補佐」へ</div>
     <div class="paint"><div class="paint-fill" id="paintAll" style="width:0%"></div></div>
     <div class="paint-label"><span>全体進捗(タスク完了率)</span><b id="pctAll">0%</b></div>
+    <div class="user-row"><span class="user-badge" id="userName">—</span><button class="user-switch" id="switchUser">ユーザー切替</button><span class="sync" id="syncState"></span></div>
   </div>
 </header>
 
@@ -259,7 +278,7 @@ section.page.on{display:block;animation:fade .25s ease}
   <div class="card">
     <div class="eyebrow">HOW TO ASK</div>
     <h2>質問のしかた(AI資料化方式)</h2>
-    <p class="small" style="margin-top:4px">質問はチャットの単発ではなく、AIで調べて「質疑提出シート」にまとめて蓮さんへ提出する。シートのテンプレは「テンプレ」タブにある。<br>※本番影響のある操作・緊急事態・体調の相談だけは即・直接声かけでOK。</p>
+    <p class="small" style="margin-top:4px">質問はチャットの単発ではなく、AIで調べて「質疑提出シート」にまとめて真殿さんへ提出する。シートのテンプレは「テンプレ」タブにある。<br>※本番影響のある操作・緊急事態・体調の相談だけは即・直接声かけでOK。</p>
   </div>
 </section>
 
@@ -292,9 +311,9 @@ section.page.on{display:block;animation:fade .25s ease}
     <div class="eyebrow" style="color:var(--red)">FORBIDDEN</div>
     <h2>三大禁止事項</h2>
     <div style="margin-top:6px">
-      <div class="rule bad"><div class="no">1</div><p><b>指示なしで git push しない。</b>例外なし。KYOEIでは push した瞬間に本番(お客様が使っている環境)へ反映される。push の前に必ず蓮さんの明示的な指示を確認する。</p></div>
+      <div class="rule bad"><div class="no">1</div><p><b>指示なしで git push しない。</b>例外なし。KYOEIでは push した瞬間に本番(お客様が使っている環境)へ反映される。push の前に必ず真殿さんの明示的な指示を確認する。</p></div>
       <div class="rule bad"><div class="no">2</div><p><b>mainブランチで直接作業しない。</b>作業は必ず自分のブランチ(feature/〜)を切ってから。</p></div>
-      <div class="rule bad"><div class="no">3</div><p><b>--force系・履歴改変コマンドを使わない。</b>push --force / reset --hard(共有ブランチ)/ rebase(共有ブランチ)は蓮さん同席時のみ。</p></div>
+      <div class="rule bad"><div class="no">3</div><p><b>--force系・履歴改変コマンドを使わない。</b>push --force / reset --hard(共有ブランチ)/ rebase(共有ブランチ)は真殿さん同席時のみ。</p></div>
     </div>
   </div>
 
@@ -318,7 +337,7 @@ section.page.on{display:block;animation:fade .25s ease}
     <ol class="flow" style="margin-top:10px">
       <li>詰まったら、まず<b>15分は自力で調べる</b>(AIに状況・やったこと・エラー全文・期待する結果をセットで渡す)</li>
       <li>解決しなければ、AIを使って<b>質疑提出シート</b>を作る(テンプレタブにある)</li>
-      <li>蓮さんに提出 → 回答・赤入れをもらう</li>
+      <li>真殿さんに提出 → 回答・赤入れをもらう</li>
       <li>回答を自分の<b>ナレッジベースに反映</b>して完結(同じシートを2回作らない)</li>
     </ol>
     <div class="goal" style="margin-top:6px"><b>例外(すぐ直接声かけてOK):</b>①本番に影響しうる操作(git push・DB操作・削除系)の実行判断 ②お客様・納期の緊急事態 ③体調・メンタルの相談</div>
@@ -336,6 +355,31 @@ section.page.on{display:block;animation:fade .25s ease}
   </div>
 </section>
 
+<!-- ================= ADMIN ================= -->
+<section class="page" id="pg-admin">
+  <div class="card">
+    <div class="eyebrow">TEAM</div>
+    <h2>メンバー進捗(管理者)</h2>
+    <div id="adminList" style="margin-top:8px"><p class="small">読み込み中…</p></div>
+    <button class="btn ghost" id="adminReload" style="width:100%;margin-top:6px">最新に更新</button>
+  </div>
+  <div class="card">
+    <div class="eyebrow">ADD USER</div>
+    <h2>ユーザー追加</h2>
+    <p class="small">新しいメンバーはここから追加。追加した瞬間からログインできる。</p>
+    <div class="au-row"><input id="auName" placeholder="名前(例:田中太郎)"><input id="auPin" placeholder="PIN(数字4桁〜)" inputmode="numeric"></div>
+    <div class="au-row"><select id="auRole"><option value="trainee">受講者</option><option value="admin">管理者</option></select><button class="btn" id="auAdd">追加する</button></div>
+    <div class="small" id="auMsg" style="margin-top:6px"></div>
+  </div>
+  <div class="card">
+    <div class="eyebrow">PIN</div>
+    <h2>PIN変更</h2>
+    <div class="au-row"><select id="pcUser"></select><input id="pcPin" placeholder="新しいPIN" inputmode="numeric"></div>
+    <button class="btn" id="pcGo" style="margin-top:8px;width:100%">PINを変更する</button>
+    <div class="small" id="pcMsg" style="margin-top:6px"></div>
+  </div>
+</section>
+
 </main>
 
 <nav aria-label="メインメニュー">
@@ -345,6 +389,7 @@ section.page.on{display:block;animation:fade .25s ease}
     <button class="tab" data-pg="terms"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>用語集<div class="bar"></div></button>
     <button class="tab" data-pg="tpl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>テンプレ<div class="bar"></div></button>
     <button class="tab" data-pg="rules"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>ルール<div class="bar"></div></button>
+    <button class="tab" data-pg="admin" id="adminTab" style="display:none"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>管理<div class="bar"></div></button>
   </div>
 </nav>
 
@@ -353,6 +398,24 @@ section.page.on{display:block;animation:fade .25s ease}
     <div class="mt" id="mTitle">用語 <span class="tag mc" id="mCat"></span></div>
     <div class="md" id="mDesc"></div>
     <button class="btn close" id="mClose">とじる</button>
+  </div>
+</div>
+
+<div class="login-bg" id="loginBg" style="display:none">
+  <div class="login">
+    <div class="lg-brand">KYOEI IT DIVISION</div>
+    <div class="lg-t">研修アプリにログイン</div>
+    <div id="loginStep1">
+      <p class="small" style="margin-bottom:8px">自分の名前を選んでください</p>
+      <div id="loginUsers"></div>
+    </div>
+    <div id="loginStep2" style="display:none">
+      <p class="small" id="pinFor" style="margin-bottom:8px"></p>
+      <input id="pinInput" class="search" inputmode="numeric" maxlength="12" placeholder="PIN(数字)" style="text-align:center;letter-spacing:.3em;margin-bottom:6px" aria-label="PIN入力">
+      <div class="small" id="pinErr" style="color:var(--red)"></div>
+      <button class="btn" id="pinGo" style="width:100%;margin-top:8px">ログイン</button>
+      <button class="btn ghost" id="pinBack" style="width:100%;margin-top:8px">もどる</button>
+    </div>
   </div>
 </div>
 
@@ -368,8 +431,45 @@ const store = (() => {
     set(k,v){ try { if(persistent){ localStorage.setItem(k,v); return; } } catch(e){} mem[k]=v; }
   };
 })();
-if(!store.persistent){
-  document.getElementById('storageNote').textContent = '※この環境ではチェックが保存されません。ダウンロードしてブラウザで開くと保存されます。';
+/* ================= Supabase設定(真殿さん:ここを書き換える) ================= */
+const SUPABASE_CONFIG = {
+  url: "https://kggzjdhmcsykgaxltvck.supabase.co",
+  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZ3pqZGhtY3N5a2dheGx0dmNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ1MzM5NzUsImV4cCI6MjEwMDEwOTk3NX0.au0JS8JFubi4F9Xk9SgnEf8zRFVBGF7vG3lFVzfdTJQ"
+};
+const sb = (SUPABASE_CONFIG.url && SUPABASE_CONFIG.anonKey && window.supabase)
+  ? window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey)
+  : null;
+
+/* ================= ユーザー別進捗(ローカルキャッシュ+クラウド同期) ================= */
+let currentUser = null;   // {id, name, role}
+let progress = {};        // {taskId: 1}
+let syncTimer = null;
+
+function isDone(id){ return progress[id] === 1; }
+function setDone(id, v){ if(v) progress[id] = 1; else delete progress[id]; cacheLocal(); scheduleSync(); }
+function cacheKey(){ return 'prog:' + (currentUser ? currentUser.id : 'local'); }
+function cacheLocal(){ store.set(cacheKey(), JSON.stringify(progress)); }
+function loadLocal(){ try{ progress = JSON.parse(store.get(cacheKey()) || '{}'); }catch(e){ progress = {}; } }
+function setSync(t){ const el = document.getElementById('syncState'); if(el) el.textContent = t; }
+function scheduleSync(){
+  if(!sb || !currentUser) return;
+  setSync('保存待ち…');
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(pushSync, 800);
+}
+async function pushSync(){
+  if(!sb || !currentUser) return;
+  try{
+    const {error} = await sb.from('training_progress')
+      .upsert({ user_id: currentUser.id, data: progress, updated_at: new Date().toISOString() });
+    if(error) throw error;
+    setSync('クラウド保存済み ✓');
+  }catch(e){ setSync('保存失敗…通信を確認'); }
+}
+async function sha256(s){
+  if(!(window.crypto && crypto.subtle)) return null;
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 }
 
 /* ================= 用語データ ================= */
@@ -528,7 +628,7 @@ const PHASES = [
  {w:"W5",t:"総仕上げ",days:[
   {t:"模擬案件 前半",g:"CraftFile機能の販促パッケージを通しで作る",k:["紹介文(A4構成)を作る","SNS投稿文2種を作る"],m:[]},
   {t:"模擬案件 後半",g:"画像とプロンプト設計書まで仕上げる",k:["アイキャッチ画像2案を作る","プロンプト設計書(型と理由)を添付する"],m:[]},
-  {t:"レビューと修正",g:"指摘を受けて1巡直す",k:["蓮さんレビューを受ける","差分指示の型で修正する"],m:[]},
+  {t:"レビューと修正",g:"指摘を受けて1巡直す",k:["真殿さんレビューを受ける","差分指示の型で修正する"],m:[]},
   {t:"ナレッジ整備",g:"4週間の資産を整理する",k:["お手本ライブラリを整理","前提プロンプト・型テンプレ集を整理"],m:["ナレッジベース"]},
   {t:"卒業試験",g:"初見お題で実力を証明する",k:["実技試験(120分)を受ける"],m:[]},
  ]}],
@@ -621,7 +721,7 @@ const PHASES = [
   {t:"Pull Requestの作法",g:"KYOEI標準フロー5工程",k:["PRテンプレを覚える","sandboxでPRを3本通す(作成→レビュー→修正→マージ)"],m:["PR(プルリクエスト)"]},
   {t:"レビューの受け方",g:"指摘は品質工程",k:["厳しめレビュー1本への対応を練習","修正コミットの積み方を覚える"],m:["コードレビュー"]},
   {t:"困った時のGit",g:"復旧術と相談ライン",k:["restore/stashで3パターンの復旧演習","「やらかしたらコマンド前に相談」を確認"],m:[]},
-  {t:"CraftFile見学",g:"本物に触れる日(変更禁止)",k:["cloneしてローカル起動(蓮さん同席)","フォルダ構成ツアー(app/components/prisma)"],m:["ローカル環境","開発サーバ"]},
+  {t:"CraftFile見学",g:"本物に触れる日(変更禁止)",k:["cloneしてローカル起動(真殿さん同席)","フォルダ構成ツアー(app/components/prisma)"],m:["ローカル環境","開発サーバ"]},
   {t:"卒業試験",g:"clone→PRまで一人で",k:["実技+口頭試問(120分)を受ける"],m:[]},
  ]}],
  exam:{t:"Phase 4 卒業試験",pt:"80点で合格",items:["実技:clone→ブランチ→修正→commit→push(許可済)→PR 60点","口頭:pushの前に確認することは? 他3問 40点"],ps:"KYOEIルールの設問(git push確認)を落としたら即不合格・再試験。"}},
@@ -647,14 +747,14 @@ const PHASES = [
   {t:"Next.jsの構造",g:"フォルダ=URL",k:["CraftFileのapp/を読んでURL対応表を作る"],m:["Next.js","App Router","フレームワーク"]},
   {t:"Server/Client Component",g:"use clientの判断基準",k:["CraftFileの画面でServer/Clientを仕分けして理由を書く"],m:[]},
   {t:"Tailwind CSS",g:"クラスでスタイルを書く",k:["頻出クラス15種を覚える","実コンポーネント1つの全クラスを解説する"],m:["Tailwind CSS"]},
-  {t:"データ取得の読解",g:"実コードを読む日",k:["CraftFileのデータ取得コードを蓮さんと読む"],m:[]},
+  {t:"データ取得の読解",g:"実コードを読む日",k:["CraftFileのデータ取得コードを真殿さんと読む"],m:[]},
   {t:"週次課題",g:"ミニアプリをNext.jsへ移植",k:["一覧ページ+詳細ページをApp Routerで作る"],m:[]},
  ]},
  {w:"W20",t:"Prisma・DB読解",days:[
   {t:"DBの基礎",g:"テーブルとリレーション",k:["顧客-案件-見積もりのER図を紙に描く"],m:["データベース(DB)","PostgreSQL"]},
   {t:"schema.prismaの読解",g:"tenantIdが全モデルにある理由",k:["主要モデル10個の関係図を作る","tenantIdの意味を完全に説明できる"],m:["Prisma","スキーマ","tenantId(マルチテナント)"]},
   {t:"Prisma Clientの読解",g:"クエリを日本語に翻訳できる",k:["実クエリ5箇所を日本語訳する"],m:[]},
-  {t:"マイグレーションの考え方",g:"冪等なSQLというKYOEI方式",k:["冪等の意味を説明できる","スキーマ変更は提案→レビュー→蓮さん実行の運用を確認"],m:["マイグレーション","冪等(べきとう)"]},
+  {t:"マイグレーションの考え方",g:"冪等なSQLというKYOEI方式",k:["冪等の意味を説明できる","スキーマ変更は提案→レビュー→真殿さん実行の運用を確認"],m:["マイグレーション","冪等(べきとう)"]},
   {t:"読解総合テスト",g:"最重要ゲート",k:["1機能の「画面→部品→データ取得→DB」の流れを図解して口頭発表(合格までW21に進まない)"],m:[]},
  ]},
  {w:"W21",t:"Claude Code協業",days:[
@@ -697,7 +797,7 @@ const TPLS = [
 ### 5. 残る不明点
 
 
-### 6. 蓮さんに判断してほしいこと(1行で)
+### 6. 真殿さんに判断してほしいこと(1行で)
 `},
 {t:"日報",d:"毎日・終業前10分で提出",c:
 `## 日報 YYYY/MM/DD(片岡)
@@ -841,9 +941,9 @@ function buildCurr(){
     h.setAttribute('aria-expanded',open?'true':'false');
   }));
   $$('.task input').forEach(cb=>{
-    cb.checked = store.get('t:'+cb.dataset.id)==='1';
+    cb.checked = isDone(cb.dataset.id);
     cb.addEventListener('change',()=>{
-      store.set('t:'+cb.dataset.id, cb.checked?'1':'0');
+      setDone(cb.dataset.id, cb.checked);
       refreshProgress(); refreshDayDone(cb);
     });
     refreshDayDone(cb);
@@ -861,7 +961,7 @@ function refreshProgress(){
   let total=0,done=0; const per={};
   taskIds.forEach(t=>{
     total++; per[t.pi]=per[t.pi]||{t:0,d:0}; per[t.pi].t++;
-    if(store.get('t:'+t.id)==='1'){done++;per[t.pi].d++;}
+    if(isDone(t.id)){done++;per[t.pi].d++;}
   });
   const pct=total?Math.round(done/total*100):0;
   $('#paintAll').style.width=pct+'%';
@@ -880,7 +980,7 @@ function refreshProgress(){
 /* --- 続きから --- */
 $('#resumeBtn').addEventListener('click',()=>{
   goTab('curr');
-  const next=taskIds.find(t=>store.get('t:'+t.id)!=='1');
+  const next=taskIds.find(t=>!isDone(t.id));
   const pi=next?next.pi:PHASES.length-1;
   const ph=document.getElementById('phase-'+pi);
   if(ph && !ph.classList.contains('open')) ph.querySelector('.phase-h').click();
@@ -951,8 +1051,138 @@ function buildTpls(){
   }));
 }
 
-/* --- init --- */
-buildCurr(); buildCats(); renderTerms(); buildTpls(); todayTerms(); refreshProgress();
+/* ================= ログイン ================= */
+function applyProgressToUI(){
+  $$('.task input').forEach(cb=>{ cb.checked = isDone(cb.dataset.id); refreshDayDone(cb); });
+  refreshProgress();
+}
+
+let loginUsersCache=[], pendingUser=null;
+async function showLogin(){
+  $('#loginBg').style.display='flex';
+  $('#loginStep1').style.display='block'; $('#loginStep2').style.display='none';
+  const box=$('#loginUsers'); box.innerHTML='<p class="small">読み込み中…</p>';
+  const {data,error}=await sb.from('training_users').select('id,name,role').order('created_at');
+  if(error||!data||!data.length){
+    box.innerHTML='<p class="small" style="color:var(--red)">ユーザー一覧を取得できません。Supabase設定(URL/anonKey)とセットアップSQLの実行を確認してください。</p>';
+    return;
+  }
+  loginUsersCache=data;
+  box.innerHTML=data.map(u=>`<button class="userbtn" data-id="${u.id}"><span class="av">${u.name.slice(0,1)}</span>${u.name}${u.role==='admin'?' <span class="tag">管理者</span>':''}</button>`).join('');
+  box.querySelectorAll('.userbtn').forEach(b=>b.addEventListener('click',()=>{
+    pendingUser=loginUsersCache.find(u=>u.id===b.dataset.id);
+    $('#loginStep1').style.display='none'; $('#loginStep2').style.display='block';
+    $('#pinFor').textContent=pendingUser.name+' さんのPINを入力';
+    $('#pinErr').textContent=''; $('#pinInput').value=''; $('#pinInput').focus();
+  }));
+}
+$('#pinBack').addEventListener('click',()=>{ $('#loginStep2').style.display='none'; $('#loginStep1').style.display='block'; });
+$('#pinGo').addEventListener('click',doLogin);
+$('#pinInput').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+async function doLogin(){
+  const pin=$('#pinInput').value.trim();
+  if(!pin){ $('#pinErr').textContent='PINを入力して'; return; }
+  const h=await sha256(pin);
+  if(!h){ $('#pinErr').textContent='この開き方ではログインできません(https配信で開いてください)'; return; }
+  const {data,error}=await sb.from('training_users').select('id,name,role').eq('id',pendingUser.id).eq('pin_hash',h).maybeSingle();
+  if(error||!data){ $('#pinErr').textContent='PINが違います'; return; }
+  currentUser=data;
+  store.set('session', JSON.stringify(currentUser));
+  await afterLogin();
+}
+async function afterLogin(){
+  $('#loginBg').style.display='none';
+  $('#userName').textContent=currentUser.name;
+  const isAdmin=currentUser.role==='admin';
+  $('#adminTab').style.display=isAdmin?'flex':'none';
+  document.querySelector('.tabs').classList.toggle('six',isAdmin);
+  loadLocal();
+  try{
+    const {data}=await sb.from('training_progress').select('data').eq('user_id',currentUser.id).maybeSingle();
+    if(data&&data.data){ progress=data.data; cacheLocal(); }
+    setSync('クラウド保存済み ✓');
+  }catch(e){ setSync('オフライン(端末に保存中)'); }
+  applyProgressToUI();
+  if(isAdmin) loadAdmin();
+}
+$('#switchUser').addEventListener('click',()=>{
+  if(!sb) return;
+  store.set('session','');
+  currentUser=null; progress={};
+  applyProgressToUI(); goTab('home');
+  $('#adminTab').style.display='none';
+  document.querySelector('.tabs').classList.remove('six');
+  showLogin();
+});
+
+/* ================= 管理ダッシュボード ================= */
+async function loadAdmin(){
+  const wrap=$('#adminList'); wrap.innerHTML='<p class="small">読み込み中…</p>';
+  const phaseTotals={}; taskIds.forEach(t=>{ phaseTotals[t.pi]=(phaseTotals[t.pi]||0)+1; });
+  try{
+    const [u,p]=await Promise.all([
+      sb.from('training_users').select('id,name,role,created_at').order('created_at'),
+      sb.from('training_progress').select('user_id,data,updated_at')
+    ]);
+    const pmap={}; (p.data||[]).forEach(r=>pmap[r.user_id]=r);
+    wrap.innerHTML=(u.data||[]).map(user=>{
+      const rec=pmap[user.id]; const d=rec?(rec.data||{}):{};
+      let done=0; const per={};
+      taskIds.forEach(t=>{ per[t.pi]=per[t.pi]||0; if(d[t.id]===1){done++;per[t.pi]++;} });
+      const pct=taskIds.length?Math.round(done/taskIds.length*100):0;
+      const upd=rec?new Date(rec.updated_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+      const bars=PHASES.map((ph,pi)=>{
+        const pp=phaseTotals[pi]?Math.round((per[pi]||0)/phaseTotals[pi]*100):0;
+        return `<div class="phasebar"><div class="nm" style="width:96px;font-size:11px">P${ph.no} ${ph.name.slice(0,6)}</div><div class="tr"><div class="fl" style="width:${pp}%"></div></div><div class="pc">${pp}%</div></div>`;
+      }).join('');
+      return `<div class="admin-user"><div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><b style="color:var(--navy)">${user.name}</b>${user.role==='admin'?'<span class="tag">管理者</span>':''}<span class="small" style="margin-left:auto">全体 <b style="font-family:var(--mono)">${pct}%</b>・最終更新 ${upd}</span></div>${bars}</div>`;
+    }).join('')||'<p class="small">ユーザーがいません</p>';
+  }catch(e){ wrap.innerHTML='<p class="small" style="color:var(--red)">取得に失敗しました。通信と設定を確認してください。</p>'; }
+  try{
+    const {data}=await sb.from('training_users').select('id,name').order('created_at');
+    $('#pcUser').innerHTML=(data||[]).map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
+  }catch(e){}
+}
+$('#adminReload').addEventListener('click',loadAdmin);
+$('#adminTab').addEventListener('click',()=>{ if(sb&&currentUser&&currentUser.role==='admin') loadAdmin(); });
+$('#auAdd').addEventListener('click',async ()=>{
+  const name=$('#auName').value.trim(), pin=$('#auPin').value.trim(), role=$('#auRole').value;
+  const msg=$('#auMsg');
+  if(!name||!pin){ msg.textContent='名前とPINを入力して'; return; }
+  const h=await sha256(pin);
+  if(!h){ msg.textContent='https配信で開いてください'; return; }
+  const {error}=await sb.from('training_users').insert({name,pin_hash:h,role});
+  msg.textContent=error?('追加失敗:'+(error.message||'同名ユーザーがいるかも')):'追加した ✓';
+  if(!error){ $('#auName').value=''; $('#auPin').value=''; loadAdmin(); }
+});
+$('#pcGo').addEventListener('click',async ()=>{
+  const id=$('#pcUser').value, pin=$('#pcPin').value.trim(); const msg=$('#pcMsg');
+  if(!id||!pin){ msg.textContent='ユーザーと新PINを指定して'; return; }
+  const h=await sha256(pin);
+  if(!h){ msg.textContent='https配信で開いてください'; return; }
+  const {error}=await sb.from('training_users').update({pin_hash:h}).eq('id',id);
+  msg.textContent=error?'変更失敗':'変更した ✓';
+  if(!error) $('#pcPin').value='';
+});
+
+/* ================= 起動 ================= */
+async function boot(){
+  if(!sb){
+    /* Supabase未設定:この端末だけに保存するローカルモード */
+    $('#userName').textContent='ローカルモード';
+    $('#switchUser').style.display='none';
+    loadLocal(); applyProgressToUI();
+    setSync(store.persistent?'この端末に保存':'保存不可(要ホスティング)');
+    document.getElementById('storageNote').textContent='※Supabase未設定のためローカルモード(端末保存)で動作中。ユーザー別のクラウド保存は「08_サーバ設定手順」を参照。';
+    return;
+  }
+  const saved=store.get('session');
+  if(saved){ try{ currentUser=JSON.parse(saved)||null; }catch(e){} }
+  if(currentUser&&currentUser.id){ await afterLogin(); }
+  else { applyProgressToUI(); showLogin(); }
+}
+buildCurr(); buildCats(); renderTerms(); buildTpls(); todayTerms();
+boot();
 </script>
 </body>
 </html>
