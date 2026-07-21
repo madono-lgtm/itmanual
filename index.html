@@ -4959,7 +4959,6 @@ async function afterLogin(){
   const _ids=['progressCard','certCard','howCard','wordsCard'];
   _ids.forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=isAdmin?'none':''; });
   const ahc=document.getElementById('adminHomeCard'); if(ahc) ahc.style.display=isAdmin?'block':'none';
-  if(isAdmin){ setTimeout(()=>{ goTab('admin'); if(sb){ loadAdmin(); loadExamAdmin(); } },0); }
   loadLocal();
   try{
     const {data}=await sb.from('training_progress').select('data').eq('user_id',currentUser.id).maybeSingle();
@@ -4967,7 +4966,7 @@ async function afterLogin(){
     setSync('クラウド保存済み ✓');
   }catch(e){ setSync('オフライン(端末に保存中)'); }
   applyProgressToUI();
-  if(isAdmin) loadAdmin();
+  if(isAdmin){ goTab('admin'); loadAdmin(); loadExamAdmin(); }
 }
 $('#switchUser').addEventListener('click',()=>{
   if(!sb) return;
