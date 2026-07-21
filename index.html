@@ -27,12 +27,15 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+html{height:100%}
 body{
   font-family:'Zen Kaku Gothic New',system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
   background:var(--paper); color:var(--ink); line-height:1.7; font-size:15px;
-  padding-bottom:calc(76px + env(safe-area-inset-bottom));
+  height:100dvh; overflow:hidden;
+  display:flex; flex-direction:column;
   overscroll-behavior-y:none;
 }
+#scrollArea{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:24px}
 .wrap{max-width:760px;margin:0 auto;padding:0 16px}
 header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-deep) 100%);color:#fff;padding:18px 0 20px;position:relative;overflow:hidden}
 header::after{content:"";position:absolute;right:-40px;top:-30px;width:180px;height:180px;background:var(--orange);opacity:.12;border-radius:24px;transform:rotate(18deg)}
@@ -48,7 +51,7 @@ h1{font-size:20px;font-weight:900;letter-spacing:.02em;margin-top:2px}
 .user-badge{background:rgba(255,255,255,.12);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;color:#fff}
 .user-switch{appearance:none;border:0;background:none;color:#B7C0D6;font-family:inherit;font-size:11px;cursor:pointer;text-decoration:underline}
 .sync{font-size:10.5px;color:#B7C0D6;margin-left:auto}
-nav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);transform:translate3d(0,0,0);-webkit-transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+nav{flex:none;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
 nav.kb-hide{display:none}
 .tabs{max-width:760px;margin:0 auto;display:flex}
 .tabs .tab{flex:1;min-width:0}
@@ -295,10 +298,17 @@ body.exam-lock #sheetBack{display:none!important}
 .fbbox{background:#FFF9EE;border:1.5px solid #F2C078;border-radius:10px;padding:10px 12px;margin-top:8px;font-size:12.5px;line-height:1.7}
 .fbbox .fb-l{font-weight:800;color:#9A5A10;font-size:11px;margin-bottom:2px}
 .fb-input{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:8px;font-size:12.5px;font-family:inherit;margin-top:6px;min-height:56px}
+/* ===== 管理:メンバー折りたたみ ===== */
+.mem-head{width:100%;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:none;border:0;padding:2px 0;cursor:pointer;font-family:inherit;text-align:left}
+.mem-caret{flex:none;color:var(--muted);font-size:11px;width:14px}
+.mem-sub{margin:2px 0 0 22px}
+.mem-body{margin-top:8px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+
+<div id="scrollArea">
 
 <header>
   <div class="wrap">
@@ -430,8 +440,9 @@ body.exam-lock #sheetBack{display:none!important}
     <div class="eyebrow">ADD USER</div>
     <h2>ユーザー追加</h2>
     <p class="small">新しいメンバーはここから追加。追加した瞬間からログインできる。</p>
-    <div class="au-row"><input id="auName" placeholder="名前(例:田中太郎)"><input id="auPin" placeholder="PIN(数字4桁〜)" inputmode="numeric"></div>
-    <div class="au-row"><select id="auRole"><option value="trainee">受講者</option><option value="admin">管理者</option></select><button class="btn" id="auAdd">追加する</button></div>
+    <div class="au-row"><input id="auName" placeholder="名前(例:田中太郎)"><input id="auLoginId" placeholder="ログインID(例:tanaka)" autocapitalize="none" spellcheck="false"></div>
+    <div class="au-row"><input id="auPin" placeholder="PIN(数字4桁〜)" inputmode="numeric"><select id="auRole"><option value="trainee">受講者</option><option value="admin">管理者</option></select></div>
+    <div class="au-row"><button class="btn" id="auAdd" style="width:100%">追加する</button></div>
     <div class="small" id="auMsg" style="margin-top:6px"></div>
   </div>
   <div class="card">
@@ -444,6 +455,8 @@ body.exam-lock #sheetBack{display:none!important}
 </section>
 
 </main>
+
+</div><!-- /scrollArea -->
 
 <div class="sheet" id="lessonSheet">
   <div class="sheet-h"><button class="back" id="sheetBack">← もどる</button><div class="ti" id="sheetTitle"></div></div>
@@ -499,16 +512,13 @@ body.exam-lock #sheetBack{display:none!important}
   <div class="login">
     <div class="lg-brand">KYOEI IT DIVISION</div>
     <div class="lg-t">育成プログラムにログイン</div>
-    <div id="loginStep1">
-      <p class="small" style="margin-bottom:8px">自分の名前を選んでください</p>
-      <div id="loginUsers"></div>
-    </div>
-    <div id="loginStep2" style="display:none">
-      <p class="small" id="pinFor" style="margin-bottom:8px"></p>
-      <input id="pinInput" class="search" inputmode="numeric" maxlength="12" placeholder="PIN(数字)" style="text-align:center;letter-spacing:.3em;margin-bottom:6px" aria-label="PIN入力">
+    <div id="loginForm">
+      <p class="small" style="margin-bottom:8px">ログインIDとPINを入力してください</p>
+      <input id="loginIdInput" class="search" autocapitalize="none" autocomplete="username" spellcheck="false" placeholder="ログインID(例:kataoka)" style="margin-bottom:8px" aria-label="ログインID">
+      <input id="pinInput" class="search" inputmode="numeric" maxlength="12" autocomplete="current-password" placeholder="PIN(数字)" style="text-align:center;letter-spacing:.3em;margin-bottom:6px" aria-label="PIN入力">
       <div class="small" id="pinErr" style="color:var(--red)"></div>
       <button class="btn" id="pinGo" style="width:100%;margin-top:8px">ログイン</button>
-      <button class="btn ghost" id="pinBack" style="width:100%;margin-top:8px">もどる</button>
+      <p class="small" style="color:var(--muted);margin-top:10px">IDやPINが分からないときは管理者(真殿さん)に確認してや。</p>
     </div>
   </div>
 </div>
@@ -4231,19 +4241,9 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
 /* --- 背景スクロールロック(シート表示中に後ろのページが動くのを防ぐ) --- */
-let _lockY=0;
 function lockScroll(on){
-  const b=document.body;
-  if(on){
-    if(b.style.position==='fixed') return;
-    _lockY=window.scrollY||0;
-    b.style.position='fixed'; b.style.top=(-_lockY)+'px';
-    b.style.left='0'; b.style.right='0'; b.style.width='100%';
-  }else{
-    if(b.style.position!=='fixed') return;
-    b.style.position=''; b.style.top=''; b.style.left=''; b.style.right=''; b.style.width='';
-    window.scrollTo(0,_lockY);
-  }
+  const sa=document.getElementById('scrollArea');
+  if(sa) sa.style.overflow = on ? 'hidden' : '';
 }
 const ALL_LESSONS = COURSES.flatMap(c => c.lessons.map(l => ({...l, cid: c.id, cname: c.name})));
 
@@ -4252,7 +4252,7 @@ function goTab(pg){
   if(examActive) return;  // 修了試験中はページ移動禁止
   $$('.tab').forEach(t=>t.classList.toggle('on', t.dataset.pg===pg));
   $$('section.page').forEach(s=>s.classList.toggle('on', s.id==='pg-'+pg));
-  window.scrollTo({top:0});
+  const sa=document.getElementById('scrollArea'); if(sa) sa.scrollTo({top:0});
 }
 /* iOS対策:キーボード表示中はビューポートが縮み、fixedのタブバーが画面途中に浮くため隠す */
 if(window.visualViewport){
@@ -4688,7 +4688,7 @@ function openLesson(ci, li, mode){
           r.querySelector('.rd').textContent = wasNew ? '次のレッスンが解放された' : '合格済みレッスンの再確認、ええ習慣や';
           after.textContent = '次のレッスンへ進む ▶';
           after.style.display='inline-block';
-          after.onclick = ()=>{ openLesson(nx.ci, nx.li); window.scrollTo({top:0}); refreshHome(); buildCourses(); };
+          after.onclick = ()=>{ openLesson(nx.ci, nx.li); const sa=document.getElementById('scrollArea'); if(sa) sa.scrollTo({top:0}); refreshHome(); buildCourses(); };
         } else {
           r.querySelector('.rd').textContent = '全レッスン修了!🎊 お疲れさん、ここからが本番や';
           after.textContent = 'コース一覧にもどる';
@@ -4917,35 +4917,31 @@ function applyProgressToUI(){ refreshHome(); buildCourses(); }
 let loginUsersCache=[], pendingUser=null;
 async function showLogin(){
   $('#loginBg').style.display='flex';
-  $('#loginStep1').style.display='block'; $('#loginStep2').style.display='none';
-  const box=$('#loginUsers'); box.innerHTML='<p class="small">読み込み中…</p>';
-  const {data,error}=await sb.from('training_users').select('id,name,role').order('created_at');
-  if(error||!data||!data.length){
-    box.innerHTML='<p class="small" style="color:var(--red)">ユーザー一覧を取得できません。Supabase設定とセットアップSQLの実行を確認してください。</p>';
-    return;
-  }
-  loginUsersCache=data;
-  box.innerHTML=data.map(u=>`<button class="userbtn" data-id="${u.id}"><span class="av">${u.name.slice(0,1)}</span>${u.name}${u.role==='admin'?' <span class="tag">管理者</span>':''}</button>`).join('');
-  box.querySelectorAll('.userbtn').forEach(b=>b.addEventListener('click',()=>{
-    pendingUser=loginUsersCache.find(u=>u.id===b.dataset.id);
-    $('#loginStep1').style.display='none'; $('#loginStep2').style.display='block';
-    $('#pinFor').textContent=pendingUser.name+' さんのPINを入力';
-    $('#pinErr').textContent=''; $('#pinInput').value=''; $('#pinInput').focus();
-  }));
+  $('#pinErr').textContent='';
+  $('#loginIdInput').value=''; $('#pinInput').value='';
+  setTimeout(()=>$('#loginIdInput').focus(),50);
 }
-$('#pinBack').addEventListener('click',()=>{ $('#loginStep2').style.display='none'; $('#loginStep1').style.display='block'; });
 $('#pinGo').addEventListener('click',doLogin);
+$('#loginIdInput').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#pinInput').focus(); });
 $('#pinInput').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
 async function doLogin(){
+  const loginId=$('#loginIdInput').value.trim();
   const pin=$('#pinInput').value.trim();
-  if(!pin){ $('#pinErr').textContent='PINを入力して'; return; }
+  const err=$('#pinErr');
+  if(!loginId){ err.textContent='ログインIDを入力して'; return; }
+  if(!pin){ err.textContent='PINを入力して'; return; }
+  err.textContent='ログイン中…';
   const h=await sha256(pin);
-  if(!h){ $('#pinErr').textContent='この開き方ではログインできません(https配信で開いてください)'; return; }
-  const {data,error}=await sb.from('training_users').select('id,name,role').eq('id',pendingUser.id).eq('pin_hash',h).maybeSingle();
-  if(error||!data){ $('#pinErr').textContent='PINが違います'; return; }
-  currentUser=data;
-  store.set('session', JSON.stringify(currentUser));
-  await afterLogin();
+  if(!h){ err.textContent='この開き方ではログインできません(https配信で開いてください)'; return; }
+  try{
+    const {data,error}=await sb.from('training_users')
+      .select('id,name,role,login_id')
+      .eq('login_id',loginId).eq('pin_hash',h).maybeSingle();
+    if(error||!data){ err.textContent='ログインIDまたはPINが違います'; return; }
+    currentUser=data;
+    store.set('session', JSON.stringify(currentUser));
+    await afterLogin();
+  }catch(e){ err.textContent='通信エラー:'+((e&&e.message)?e.message:String(e)); }
 }
 async function afterLogin(){
   $('#loginBg').style.display='none';
@@ -4983,7 +4979,7 @@ async function loadAdmin(){
   const wrap=$('#adminList'); wrap.innerHTML='<p class="small">読み込み中…</p>';
   try{
     const [u,p]=await Promise.all([
-      sb.from('training_users').select('id,name,role,created_at').order('created_at'),
+      sb.from('training_users').select('id,name,role,login_id,created_at').order('created_at'),
       sb.from('training_progress').select('user_id,data,updated_at')
     ]);
     const pmap={}; (p.data||[]).forEach(r=>pmap[r.user_id]=r);
@@ -5002,19 +4998,35 @@ async function loadAdmin(){
         return `<div class="phasebar"><div class="nm" style="width:110px;font-size:11px">C${c.no} ${c.name.slice(0,7)}${cdone?' ✅':''}</div><div class="tr"><div class="fl" style="width:${pp}%"></div></div><div class="pc">${dn}/${c.lessons.length}</div></div>`;
       }).join('');
       const certBadge = certified
-        ? `<span class="tag" style="background:#1E2A47;color:#F08519;font-weight:800">🏅 AI活用技士(3級)</span>` : '';
+        ? `<span class="tag" style="background:#1E2A47;color:#F08519;font-weight:800">🏅 技士3級</span>` : '';
       return `<div class="admin-user">
-        <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><b style="color:var(--navy)">${user.name}</b>${user.role==='admin'?'<span class="tag">管理者</span>':''}${certBadge}<span class="small" style="margin-left:auto">全体 <b style="font-family:var(--mono)">${pct}%</b>・更新 ${upd}</span></div>
-        ${bars}
-        <button class="btn ghost" style="width:100%;margin-top:8px;font-size:12px" onclick="toggleAdminDetail('${user.id}')">📋 レッスン別の結果を見る</button>
-        <div id="adet-${user.id}" style="display:none;margin-top:8px"></div>
+        <button class="mem-head" onclick="toggleMember('${user.id}')">
+          <span class="mem-caret" id="ca-${user.id}">▶</span>
+          <b style="color:var(--navy)">${user.name}</b>${user.role==='admin'?'<span class="tag">管理者</span>':''}${certBadge}
+          <span class="small" style="margin-left:auto;white-space:nowrap">全体 <b style="font-family:var(--mono)">${pct}%</b></span>
+        </button>
+        <div class="mem-sub small" style="color:var(--muted)">ID: ${user.login_id||'—'} ・ 更新 ${upd}</div>
+        <div id="mem-${user.id}" class="mem-body" style="display:none">
+          ${bars}
+          <button class="btn ghost" style="width:100%;margin-top:8px;font-size:12px" onclick="toggleAdminDetail('${user.id}')">📋 レッスン別の結果を見る</button>
+          <div id="adet-${user.id}" style="display:none;margin-top:8px"></div>
+        </div>
       </div>`;
     }).join('')||'<p class="small">ユーザーがいません</p>';
   }catch(e){ wrap.innerHTML='<p class="small" style="color:var(--red)">取得に失敗しました。通信と設定を確認してください。</p>'; }
   try{
-    const {data}=await sb.from('training_users').select('id,name').order('created_at');
-    $('#pcUser').innerHTML=(data||[]).map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
+    const {data}=await sb.from('training_users').select('id,name,login_id').order('created_at');
+    $('#pcUser').innerHTML=(data||[]).map(u=>`<option value="${u.id}">${u.name}(${u.login_id||'—'})</option>`).join('');
   }catch(e){}
+}
+// 管理者:メンバー行の開閉
+function toggleMember(uid){
+  const body=document.getElementById('mem-'+uid);
+  const caret=document.getElementById('ca-'+uid);
+  if(!body) return;
+  const open = body.style.display==='none';
+  body.style.display = open ? 'block' : 'none';
+  if(caret) caret.textContent = open ? '▼' : '▶';
 }
 // 管理者:ユーザーのレッスン別合否を展開
 function toggleAdminDetail(uid){
@@ -5151,23 +5163,57 @@ const examReloadBtn=$('#examAdminReload');
 if(examReloadBtn) examReloadBtn.addEventListener('click',loadExamAdmin);
 $('#adminTab').addEventListener('click',()=>{ if(sb&&currentUser&&currentUser.role==='admin'){ loadAdmin(); loadExamAdmin(); } });
 $('#auAdd').addEventListener('click',async ()=>{
-  const name=$('#auName').value.trim(), pin=$('#auPin').value.trim(), role=$('#auRole').value;
+  const name=$('#auName').value.trim(), loginId=$('#auLoginId').value.trim(), pin=$('#auPin').value.trim(), role=$('#auRole').value;
   const msg=$('#auMsg');
-  if(!name||!pin){ msg.textContent='名前とPINを入力して'; return; }
-  const h=await sha256(pin);
-  if(!h){ msg.textContent='https配信で開いてください'; return; }
-  const {error}=await sb.from('training_users').insert({name,pin_hash:h,role});
-  msg.textContent=error?('追加失敗:'+(error.message||'同名ユーザーがいるかも')):'追加した ✓';
-  if(!error){ $('#auName').value=''; $('#auPin').value=''; loadAdmin(); }
+  if(!sb){ msg.textContent='オンライン(Supabase接続)時のみ追加できる'; return; }
+  if(!name||!loginId||!pin){ msg.textContent='名前・ログインID・PINを全部入力して'; return; }
+  if(!/^[A-Za-z0-9_.-]{3,}$/.test(loginId)){ msg.textContent='ログインIDは半角英数字(3文字以上)で。記号は _ . - のみ'; return; }
+  if(!/^\d{4,}$/.test(pin)){ msg.textContent='PINは数字4桁以上で入力して'; return; }
+  msg.textContent='追加中…';
+  try{
+    const h=await sha256(pin);
+    if(!h){ msg.textContent='この環境では暗号化が使えへん(https配信で開いてください)'; return; }
+    const {error}=await sb.from('training_users').insert({name, login_id:loginId, pin_hash:h, role});
+    if(error){
+      let detail=error.message||'';
+      if(/login_id/i.test(detail) && /duplicate|unique/i.test(detail)){
+        msg.textContent='追加失敗:ログインID「'+loginId+'」はもう使われてる。別のIDにして。';
+        return;
+      }
+      if(/duplicate key|unique constraint|_name_key/i.test(detail)){
+        msg.textContent='追加失敗:「'+name+'」はもう登録されてる名前や。別の名前にしてや(同姓同名なら「山本蓮2」のように区別を)。';
+        return;
+      }
+      if(/login_id/i.test(detail) && /column|does not exist/i.test(detail)){
+        msg.textContent='追加失敗:login_id列が未作成。add_login_id.sql をSupabaseで実行してや。';
+        return;
+      }
+      if(error.code) detail+=' ['+error.code+']';
+      if(error.details) detail+=' '+error.details;
+      if(/row-level security|RLS/i.test(detail)) detail+=' → SupabaseでRLSが有効になっとる。無効化SQLを実行してや。';
+      msg.textContent='追加失敗:'+detail;
+      return;
+    }
+    msg.textContent='追加した ✓ ID「'+loginId+'」ですぐログインできる';
+    $('#auName').value=''; $('#auLoginId').value=''; $('#auPin').value='';
+    loadAdmin();
+  }catch(e){
+    msg.textContent='追加失敗(通信エラー):'+((e&&e.message)?e.message:String(e));
+  }
 });
 $('#pcGo').addEventListener('click',async ()=>{
   const id=$('#pcUser').value, pin=$('#pcPin').value.trim(); const msg=$('#pcMsg');
+  if(!sb){ msg.textContent='オンライン時のみ変更できる'; return; }
   if(!id||!pin){ msg.textContent='ユーザーと新PINを指定して'; return; }
-  const h=await sha256(pin);
-  if(!h){ msg.textContent='https配信で開いてください'; return; }
-  const {error}=await sb.from('training_users').update({pin_hash:h}).eq('id',id);
-  msg.textContent=error?'変更失敗':'変更した ✓';
-  if(!error) $('#pcPin').value='';
+  if(!/^\d{4,}$/.test(pin)){ msg.textContent='PINは数字4桁以上で入力して'; return; }
+  msg.textContent='変更中…';
+  try{
+    const h=await sha256(pin);
+    if(!h){ msg.textContent='この環境では暗号化が使えへん(https配信で開いてください)'; return; }
+    const {error}=await sb.from('training_users').update({pin_hash:h}).eq('id',id);
+    msg.textContent=error?('変更失敗:'+(error.message||'')):'変更した ✓';
+    if(!error) $('#pcPin').value='';
+  }catch(e){ msg.textContent='変更失敗(通信エラー):'+((e&&e.message)?e.message:String(e)); }
 });
 
 /* --- 復習クイズ --- */
