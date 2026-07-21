@@ -31,6 +31,7 @@ body{
   font-family:'Zen Kaku Gothic New',system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
   background:var(--paper); color:var(--ink); line-height:1.7; font-size:15px;
   padding-bottom:calc(76px + env(safe-area-inset-bottom));
+  overscroll-behavior-y:none;
 }
 .wrap{max-width:760px;margin:0 auto;padding:0 16px}
 header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-deep) 100%);color:#fff;padding:18px 0 20px;position:relative;overflow:hidden}
@@ -47,7 +48,8 @@ h1{font-size:20px;font-weight:900;letter-spacing:.02em;margin-top:2px}
 .user-badge{background:rgba(255,255,255,.12);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;color:#fff}
 .user-switch{appearance:none;border:0;background:none;color:#B7C0D6;font-family:inherit;font-size:11px;cursor:pointer;text-decoration:underline}
 .sync{font-size:10.5px;color:#B7C0D6;margin-left:auto}
-nav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);transform:translate3d(0,0,0);-webkit-transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+nav.kb-hide{display:none}
 .tabs{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
 .tabs.six{grid-template-columns:repeat(6,1fr)}
 .tab{appearance:none;border:0;background:none;cursor:pointer;padding:9px 2px 8px;text-align:center;color:var(--muted);font-family:inherit;font-size:10.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px}
@@ -270,6 +272,29 @@ button,.btn,.opt,.tab,.lesson,.course-h,.chip,.copy,.cat,.userbtn{touch-action:m
   .cert-frame{box-shadow:none;border-color:#C9A24B}
   .cert-actions{display:none!important}
 }
+/* ===== 修了試験 ===== */
+.exam-timer{position:sticky;top:0;z-index:5;background:#1E2A47;color:#fff;border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;box-shadow:0 4px 14px rgba(20,26,41,.25)}
+.exam-timer .tl{font-size:12px;font-weight:700;opacity:.85}
+.exam-timer .tv{font-family:var(--mono);font-size:20px;font-weight:900;letter-spacing:1px}
+.exam-timer.warn .tv{color:#FFB020}
+.exam-timer.danger{background:#7f1d1d}
+.exam-timer.danger .tv{color:#fff}
+body.exam-lock nav{display:none!important}
+body.exam-lock #sheetBack{display:none!important}
+.exam-apply{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+.exam-apply .ea-t{font-weight:900;color:var(--navy);font-size:15px;margin-bottom:6px}
+.exam-apply .ea-d{font-size:12.5px;color:var(--muted);line-height:1.7}
+.exam-status{display:inline-block;font-size:12px;font-weight:800;border-radius:999px;padding:4px 12px;margin:8px 0}
+.exam-status.pending{background:#FFF4E2;color:#9A5A10;border:1px solid #F2C078}
+.exam-status.approved{background:#E7F5EC;color:#1D7A3E;border:1px solid #9AD4AE}
+.hanko{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border:3px solid #C33;border-radius:50%;color:#C33;font-weight:900;font-size:20px;writing-mode:vertical-rl;letter-spacing:2px;transform:rotate(-8deg);background:rgba(204,51,51,.04);font-family:"Zen Kaku Gothic New","Noto Sans JP",serif;flex:none}
+.hanko.sm{width:46px;height:46px;font-size:14px;border-width:2.5px}
+.exam-hist{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px}
+.exam-hist .eh-t{flex:1;min-width:0;font-size:12.5px}
+.exam-hist .eh-t b{display:block;color:var(--navy)}
+.fbbox{background:#FFF9EE;border:1.5px solid #F2C078;border-radius:10px;padding:10px 12px;margin-top:8px;font-size:12.5px;line-height:1.7}
+.fbbox .fb-l{font-weight:800;color:#9A5A10;font-size:11px;margin-bottom:2px}
+.fb-input{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:8px;font-size:12.5px;font-family:inherit;margin-top:6px;min-height:56px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -383,6 +408,12 @@ button,.btn,.opt,.tab,.lesson,.course-h,.chip,.copy,.cat,.userbtn{touch-action:m
 </section>
 
 <section class="page" id="pg-admin">
+  <div class="card">
+    <div class="eyebrow">EXAM</div>
+    <h2>修了試験(申請・承認・フィードバック)</h2>
+    <div id="examAdminList" style="margin-top:8px"><p class="small">読み込み中…</p></div>
+    <button class="btn ghost" id="examAdminReload" style="width:100%;margin-top:6px">試験一覧を更新</button>
+  </div>
   <div class="card">
     <div class="eyebrow">TEAM</div>
     <h2>メンバー進捗(管理者)</h2>
@@ -4212,9 +4243,21 @@ const ALL_LESSONS = COURSES.flatMap(c => c.lessons.map(l => ({...l, cid: c.id, c
 
 /* --- タブ --- */
 function goTab(pg){
+  if(examActive) return;  // 修了試験中はページ移動禁止
   $$('.tab').forEach(t=>t.classList.toggle('on', t.dataset.pg===pg));
   $$('section.page').forEach(s=>s.classList.toggle('on', s.id==='pg-'+pg));
   window.scrollTo({top:0});
+}
+/* iOS対策:キーボード表示中はビューポートが縮み、fixedのタブバーが画面途中に浮くため隠す */
+if(window.visualViewport){
+  const vv=window.visualViewport;
+  const navEl=document.querySelector('nav');
+  const vvFix=()=>{
+    const kb=(window.innerHeight - vv.height) > 120;   // 120px以上縮んでいたらキーボードと判定
+    if(navEl) navEl.classList.toggle('kb-hide', kb);
+  };
+  vv.addEventListener('resize', vvFix);
+  vv.addEventListener('scroll', vvFix);
 }
 $$('.tab').forEach(t=>t.addEventListener('click',()=>goTab(t.dataset.pg)));
 
@@ -4391,10 +4434,216 @@ let curLesson = null;
 function missCount(id){ return progress['miss:'+id]||0; }
 function addMiss(id){ progress['miss:'+id]=(progress['miss:'+id]||0)+1; cacheLocal(); scheduleSync(); }
 
+/* ================= 修了試験(申請・承認・30分・見返し) ================= */
+const EXAM_MINUTES = 30;
+let examActive = false;
+let examTimerId = null;
+function isFinalExam(ci, li){ return li === COURSES[ci].lessons.length-1; }
+function fmtDT(ts){ try{return new Date(ts).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});}catch(e){return '—';} }
+async function fetchMyExams(lessonId){
+  if(!sb||!currentUser) return [];
+  const {data,error}=await sb.from('training_exams').select('*')
+    .eq('user_id',currentUser.id).eq('lesson_id',lessonId)
+    .order('requested_at',{ascending:false});
+  return error?[]:(data||[]);
+}
+function setExamLock(on){
+  examActive = on;
+  document.body.classList.toggle('exam-lock', on);
+}
+function stopExamTimer(){ if(examTimerId){ clearInterval(examTimerId); examTimerId=null; } }
+
+// 学習画面:修了試験の申請UI(テスト入口の代わり)
+async function renderExamEntry(ci, li){
+  const c=COURSES[ci], l=c.lessons[li];
+  const box=$('#examEntry');
+  if(!box) return;
+  if(!sb||!currentUser){
+    box.innerHTML='<div class="exam-apply"><div class="ea-t">🎓 修了試験(承認制)</div><div class="ea-d">修了試験はオンライン接続時のみ受験できる。通信を確認してや。</div></div>';
+    return;
+  }
+  box.innerHTML='<div class="exam-apply"><div class="ea-d">読み込み中…</div></div>';
+  const exams=await fetchMyExams(l.id);
+  const active=exams.find(e=>e.status==='pending'||e.status==='approved');
+  const history=exams.filter(e=>e.status==='done');
+  const passed=isDone(l.id);
+  let html='<div class="exam-apply"><div class="ea-t">🎓 修了試験(承認制・30分)</div>';
+  html+='<div class="ea-d">この修了試験は真殿さんの監修のもとで受ける。申請→承認→受験の流れや。<b>試験中は他のページを開けず、制限時間30分。</b>時間切れは強制終了(その時点で採点)。</div>';
+  if(passed){
+    html+='<div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:10px"><span class="hanko sm">真殿</span><b style="color:var(--green)">合格済み</b></div>';
+  }
+  const taskKeys=(l.task||[]).map((_,i)=>l.id+':t'+i);
+  const undone=taskKeys.filter(k=>!isDone(k)).length;
+  if(active){
+    if(active.status==='pending'){
+      html+='<div class="exam-status pending">📨 申請中 — 真殿さんの承認待ち('+fmtDT(active.requested_at)+' 申請)</div>';
+      html+='<div class="ea-d">承認されたらここに開始ボタンが出る。管理タブから承認してもらってや。</div>';
+    } else {
+      html+='<div class="exam-status approved">✅ 承認済み — 受験できます</div>';
+      html+='<button class="btn org" id="startExamBtn" style="width:100%;margin-top:8px">🎓 修了試験を開始する(30分)</button>';
+      html+='<div class="ea-d" style="margin-top:6px">開始したら途中でやめられへん。教材の見返しも不可。準備ができてから押すこと。</div>';
+    }
+  } else if(!passed) {
+    html+='<button class="btn" id="applyExamBtn" style="width:100%;margin-top:8px"'+(undone>0?' disabled':'')+'>📨 修了試験を申請する</button>';
+    if(undone>0) html+='<div class="ea-d" style="margin-top:6px;color:var(--red)">実技課題が'+undone+'個未完了。全部やってから申請しよう。</div>';
+  }
+  html+='</div>';
+  if(history.length){
+    html+='<div class="small" style="font-weight:800;color:var(--navy);margin-top:12px">📚 過去の受験(見返し)</div>';
+    history.forEach(e=>{
+      const r=e.result||{};
+      const badge=r.pass?'<span style="color:var(--green);font-weight:800">合格</span>':(r.expired?'<span style="color:var(--red);font-weight:800">時間切れ</span>':'<span style="color:var(--red);font-weight:800">不合格</span>');
+      const fbCount=e.feedback?Object.keys(e.feedback).length:0;
+      html+='<div class="exam-hist">'+(r.pass?'<span class="hanko sm">真殿</span>':'')+
+        '<div class="eh-t"><b>'+fmtDT(e.finished_at||e.requested_at)+' 受験</b>'+badge+' '+(r.correct??'—')+'/'+(r.total??'—')+
+        (fbCount?' ・ <span style="color:#9A5A10;font-weight:700">📝 フィードバック'+fbCount+'件</span>':'')+'</div>'+
+        '<button class="btn ghost" style="font-size:12px" onclick="openExamReview(\''+e.id+'\','+ci+','+li+')">見返す</button></div>';
+    });
+  }
+  box.innerHTML=html;
+  const ap=$('#applyExamBtn');
+  if(ap) ap.addEventListener('click',async ()=>{
+    ap.disabled=true; ap.textContent='申請中…';
+    const {error}=await sb.from('training_exams').insert({user_id:currentUser.id, lesson_id:l.id, status:'pending'});
+    if(error){ ap.disabled=false; ap.textContent='📨 修了試験を申請する'; alert('申請に失敗した。通信を確認してもう一回。'); return; }
+    renderExamEntry(ci, li);
+  });
+  const st=$('#startExamBtn');
+  if(st) st.addEventListener('click',()=>openLesson(ci, li, 'exam'));
+}
+
+// 試験モード本体
+async function startExamMode(ci, li){
+  const c=COURSES[ci], l=c.lessons[li];
+  // 承認確認(最新状態を取り直す)
+  const exams=await fetchMyExams(l.id);
+  const approved=exams.find(e=>e.status==='approved');
+  if(!approved){
+    $('#sheetBody').innerHTML='<div class="exam-apply"><div class="ea-t">承認が確認できへん</div><div class="ea-d">申請が承認済みか、通信状態を確認してや。</div><button class="btn" onclick="openLesson('+ci+','+li+')" style="margin-top:10px">教材にもどる</button></div>';
+    return;
+  }
+  setExamLock(true);
+  let remain = EXAM_MINUTES*60;
+  const quizHtml =
+    '<div class="exam-timer" id="examTimer"><span class="tl">🎓 修了試験 — 残り時間</span><span class="tv" id="examTv">30:00</span></div>'+
+    '<div class="quiz-intro"><div class="t">📝 '+c.name+' 修了試験(全'+l.quiz.length+'問)</div><div class="d">制限時間30分。教材は見返せへん。他のページにも移動できへん。時間切れはその時点で自動採点や。全問正解で合格。</div></div>'+
+    '<div id="quizArea">'+ l.quiz.map((q,qi)=>renderQuestion(q,qi,'')).join('') +'</div>'+
+    '<button class="btn org" id="gradeBtn" style="width:100%;margin-top:14px">採点して試験を終了する</button>'+
+    '<div class="result" id="quizResult"><div class="rt"></div><div class="rd"></div><button class="btn" id="afterBtn" style="margin-top:10px;display:none"></button></div>';
+  $('#sheetBody').innerHTML='<div class="small" style="margin-bottom:2px">'+c.name+'</div>'+quizHtml;
+  const qstate=initQuizState(l.quiz,'','#sheetBody');
+  let finished=false;
+  function tick(){
+    remain--;
+    const mm=String(Math.max(0,Math.floor(remain/60))).padStart(2,'0');
+    const ss=String(Math.max(0,remain%60)).padStart(2,'0');
+    const tv=$('#examTv'); if(tv) tv.textContent=mm+':'+ss;
+    const tm=$('#examTimer');
+    if(tm){ tm.classList.toggle('warn',remain<=300&&remain>60); tm.classList.toggle('danger',remain<=60); }
+    if(remain<=0 && !finished){ finishExam(true); }
+  }
+  stopExamTimer();
+  examTimerId=setInterval(tick,1000);
+  async function finishExam(expired){
+    if(finished) return; finished=true;
+    stopExamTimer();
+    const correct=gradeQuiz(l.quiz,qstate,'','#sheetBody');
+    const total=l.quiz.length;
+    const pass=correct===total;
+    // 問題別の解答・正誤を保存
+    const answers=[], perQ=[];
+    l.quiz.forEach((q,qi)=>{
+      const arr=(qstate.picked[qi]||[]).slice();
+      answers.push(arr);
+      perQ.push(arr.length>0 && arr.every((wi,bi)=>wi!==null&&wi!==undefined&&q.bank[wi]===q.bank[q.a[bi]]));
+    });
+    const result={answers,perQ,correct,total,pass,expired:!!expired};
+    try{
+      await sb.from('training_exams').update({status:'done',result,finished_at:new Date().toISOString()}).eq('id',approved.id);
+    }catch(e){}
+    setExamLock(false);
+    const r=$('#quizResult'); const after=$('#afterBtn');
+    $('#gradeBtn').style.display='none';
+    r.className='result '+(pass?'pass':'fail');
+    if(pass){
+      setDone(l.id,true);
+      r.querySelector('.rt').innerHTML='🎉 合格!('+correct+'/'+total+')&nbsp;&nbsp;<span class="hanko sm" style="vertical-align:middle">真殿</span>';
+      r.querySelector('.rd').textContent='修了試験合格や。おめでとう!';
+      after.textContent='つぎへ進む';
+      after.style.display='inline-block';
+      const nx=nextLesson();
+      after.onclick=()=>{ if(nx){openLesson(nx.ci,nx.li);}else{closeSheet();} refreshHome(); buildCourses(); };
+      refreshHome(); buildCourses();
+    } else {
+      addMiss(l.id);
+      r.querySelector('.rt').textContent=(expired?'⏰ 時間切れ・強制終了':'不合格')+'('+correct+'/'+total+')';
+      r.querySelector('.rd').textContent='結果は保存された。真殿さんのフィードバックを待って、教材を読み直してから再申請しよう。';
+      after.textContent='📖 教材にもどる';
+      after.style.display='inline-block';
+      after.onclick=()=>openLesson(ci,li,'study');
+    }
+    r.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  $('#gradeBtn').addEventListener('click',()=>{
+    if(!allAnswered(l.quiz,qstate)){
+      if(!confirm('未回答の問題がある。このまま終了すると未回答は不正解になる。終了する?')) return;
+    } else if(!confirm('採点して試験を終了する。ええか?')) return;
+    finishExam(false);
+  });
+  $('#lessonSheet').classList.add('on'); lockScroll(true);
+  $('#lessonSheet').scrollTop=0;
+}
+
+// 見返し画面(過去の受験:解答・正誤・フィードバック・判子)
+async function openExamReview(examId, ci, li){
+  const c=COURSES[ci], l=c.lessons[li];
+  if(!sb) return;
+  const {data,error}=await sb.from('training_exams').select('*').eq('id',examId).maybeSingle();
+  if(error||!data){ alert('受験データを取得できへんかった'); return; }
+  const r=data.result||{}; const fb=data.feedback||{};
+  $('#sheetTitle').textContent=l.id.toUpperCase()+' 受験の見返し';
+  let html='<div class="small" style="margin-bottom:2px">'+c.name+' ・ '+fmtDT(data.finished_at)+' 受験</div>';
+  html+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0 14px">'+
+    (r.pass?'<span class="hanko">真殿</span>':'')+
+    '<div><b style="font-size:16px;color:'+(r.pass?'var(--green)':'var(--red)')+'">'+(r.pass?'合格':(r.expired?'時間切れ':'不合格'))+'</b>'+
+    '<div class="small">'+(r.correct??'—')+'/'+(r.total??'—')+'問正解</div></div></div>';
+  l.quiz.forEach((q,qi)=>{
+    const ans=(r.answers&&r.answers[qi])||[];
+    const ok=(r.perQ&&r.perQ[qi])||false;
+    const parts=q.fill.split('___');
+    let sent='';
+    parts.forEach((seg,bi)=>{
+      sent+=escapeHtml(seg);
+      if(bi<parts.length-1){
+        const wi=ans[bi];
+        const my=(wi===null||wi===undefined)?'(未回答)':q.bank[wi];
+        const good=wi!==null&&wi!==undefined&&q.bank[wi]===q.bank[q.a[bi]];
+        sent+='<span class="blank filled '+(good?'correct':'wrong')+'"> '+escapeHtml(my)+' </span>';
+        if(!good) sent+='<span class="small" style="color:var(--green);font-weight:700">→ 正解:'+escapeHtml(q.bank[q.a[bi]])+'</span> ';
+      }
+    });
+    html+='<div class="qcard"><div class="qq"><span class="qn">Q'+(qi+1)+'</span>'+(ok?'<span style="color:var(--green);font-weight:800">○</span>':'<span style="color:var(--red);font-weight:800">✕</span>')+'</div>'+
+      '<div class="qfill">'+sent+'</div>'+
+      '<div class="qexp show">💡 '+escapeHtml(q.exp)+'</div>'+
+      (fb[qi]!==undefined&&fb[qi]!==''?'<div class="fbbox"><div class="fb-l">📝 真殿さんからのフィードバック</div>'+escapeHtml(fb[qi])+'</div>':'')+
+      '</div>';
+  });
+  html+='<button class="btn" onclick="openLesson('+ci+','+li+')" style="width:100%;margin-top:12px">教材にもどる</button>';
+  $('#sheetBody').innerHTML=html;
+  $('#lessonSheet').classList.add('on'); lockScroll(true);
+  $('#lessonSheet').scrollTop=0;
+}
+
 function openLesson(ci, li, mode){
-  mode = mode || 'study';   // 'study'=教材 / 'test'=確認テスト(本文は見返せない)
+  mode = mode || 'study';   // 'study'=教材 / 'test'=確認テスト / 'exam'=修了試験
   curLesson = {ci, li};
   const c = COURSES[ci], l = c.lessons[li];
+  if(mode==='exam'){
+    $('#sheetTitle').textContent = `${l.id.toUpperCase()} ${c.name} 修了試験`;
+    startExamMode(ci, li);
+    return;
+  }
+  if(mode==='test' && isFinalExam(ci, li)){ mode='study'; }  // 修了試験は申請経由のみ
   $('#sheetTitle').textContent = `${l.id.toUpperCase()} ${l.t}` + (mode==='test'?' — 確認テスト':'');
   const done = isDone(l.id);
 
@@ -4471,7 +4720,10 @@ function openLesson(ci, li, mode){
       }).join('') + `</div>`;
   }
   const miss = missCount(l.id);
-  const testEntry = `
+  const finalExam = isFinalExam(ci, li);
+  const testEntry = finalExam
+    ? `<div id="examEntry"></div>`
+    : `
     <div class="quiz-intro"><div class="t">📝 確認テスト(全${l.quiz.length}問)</div><div class="d">実践課題を全て完了したら挑戦できる。<b>テスト中はこの教材を見返せへん</b>から、読み込んでから挑もう。全問正解で合格→次のレッスンが解放。${miss?`<br><span style="color:var(--red)">これまでの不合格:${miss}回</span>`:''}</div>
     <button class="btn org" id="startTestBtn" style="width:100%;margin-top:10px">✏️ 確認テストを受ける</button>
     <div class="result" id="gateMsg"><div class="rt"></div><div class="rd"></div></div></div>`;
@@ -4488,23 +4740,27 @@ function openLesson(ci, li, mode){
   $$('#sheetBody .task input').forEach(cb=>{
     cb.addEventListener('change',()=>setDone(cb.dataset.id, cb.checked));
   });
-  // テスト入口(実技ゲート)
-  $('#startTestBtn').addEventListener('click',()=>{
-    const taskKeys=(l.task||[]).map((_,i)=>l.id+':t'+i);
-    const undone=taskKeys.filter(k=>!isDone(k)).length;
-    if(undone>0){
-      const g=$('#gateMsg'); g.className='result fail';
-      g.querySelector('.rt').textContent='実技課題が先や('+undone+'個未完了)';
-      g.querySelector('.rd').textContent='テストは知識、課題は実技。両方そろって合格や。上の🔨実践課題を全部やってチェックを入れてから挑もう';
-      g.scrollIntoView({behavior:'smooth',block:'center'});
-      return;
-    }
-    openLesson(ci, li, 'test');
-  });
+  // テスト入口(実技ゲート)/ 修了試験は申請UI
+  if(finalExam){
+    renderExamEntry(ci, li);
+  } else {
+    $('#startTestBtn').addEventListener('click',()=>{
+      const taskKeys=(l.task||[]).map((_,i)=>l.id+':t'+i);
+      const undone=taskKeys.filter(k=>!isDone(k)).length;
+      if(undone>0){
+        const g=$('#gateMsg'); g.className='result fail';
+        g.querySelector('.rt').textContent='実技課題が先や('+undone+'個未完了)';
+        g.querySelector('.rd').textContent='テストは知識、課題は実技。両方そろって合格や。上の🔨実践課題を全部やってチェックを入れてから挑もう';
+        g.scrollIntoView({behavior:'smooth',block:'center'});
+        return;
+      }
+      openLesson(ci, li, 'test');
+    });
+  }
   $('#lessonSheet').classList.add('on'); lockScroll(true);
   $('#lessonSheet').scrollTop = 0;
 }
-function closeSheet(){ $('#lessonSheet').classList.remove('on'); lockScroll(false); buildCourses(); refreshHome(); }
+function closeSheet(){ if(examActive) return; $('#lessonSheet').classList.remove('on'); lockScroll(false); buildCourses(); refreshHome(); }
 $('#sheetBack').addEventListener('click', closeSheet);
 
 /* --- 認定・修了証 --- */
@@ -4690,6 +4946,10 @@ async function afterLogin(){
   const isAdmin=currentUser.role==='admin';
   $('#adminTab').style.display=isAdmin?'flex':'none';
   $('#tabBar').classList.toggle('six',isAdmin);
+  // 管理者は管理業務に集中:研修タブ(コース・問題)は非表示、開いたら管理タブへ
+  const currTab=document.querySelector('.tab[data-pg="curr"]');
+  if(currTab) currTab.style.display=isAdmin?'none':'flex';
+  if(isAdmin){ setTimeout(()=>{ goTab('admin'); if(sb){ loadAdmin(); loadExamAdmin(); } },0); }
   loadLocal();
   try{
     const {data}=await sb.from('training_progress').select('data').eq('user_id',currentUser.id).maybeSingle();
@@ -4776,7 +5036,111 @@ function toggleAdminDetail(uid){
   box.innerHTML=html; box.style.display='block';
 }
 $('#adminReload').addEventListener('click',loadAdmin);
-$('#adminTab').addEventListener('click',()=>{ if(sb&&currentUser&&currentUser.role==='admin') loadAdmin(); });
+/* --- 管理者:修了試験の承認・フィードバック --- */
+function findLessonById(lessonId){
+  for(let ci=0;ci<COURSES.length;ci++){
+    const li=COURSES[ci].lessons.findIndex(l=>l.id===lessonId);
+    if(li>=0) return {ci,li,c:COURSES[ci],l:COURSES[ci].lessons[li]};
+  }
+  return null;
+}
+async function loadExamAdmin(){
+  const wrap=$('#examAdminList'); if(!wrap) return;
+  wrap.innerHTML='<p class="small">読み込み中…</p>';
+  try{
+    const [ex,us]=await Promise.all([
+      sb.from('training_exams').select('*').order('requested_at',{ascending:false}).limit(60),
+      sb.from('training_users').select('id,name')
+    ]);
+    const umap={}; (us.data||[]).forEach(u=>umap[u.id]=u.name);
+    const rows=ex.data||[];
+    window.__examRows={}; rows.forEach(r=>window.__examRows[r.id]=r);
+    const pend=rows.filter(r=>r.status==='pending');
+    const appr=rows.filter(r=>r.status==='approved');
+    const done=rows.filter(r=>r.status==='done');
+    let html='';
+    html+='<div class="small" style="font-weight:800;color:var(--navy)">📨 承認待ちの申請('+pend.length+')</div>';
+    if(!pend.length) html+='<p class="small" style="color:var(--muted)">いまは申請なし</p>';
+    pend.forEach(r=>{
+      const f=findLessonById(r.lesson_id);
+      html+='<div class="exam-hist"><div class="eh-t"><b>'+(umap[r.user_id]||'?')+'</b>'+(f?('C'+f.c.no+' '+f.c.name+' 修了試験'):r.lesson_id)+' ・ '+fmtDT(r.requested_at)+' 申請</div>'+
+        '<button class="btn org" style="font-size:12px" onclick="approveExam(\''+r.id+'\')">承認する</button></div>';
+    });
+    if(appr.length){
+      html+='<div class="small" style="font-weight:800;color:var(--navy);margin-top:10px">✅ 承認済み・受験待ち('+appr.length+')</div>';
+      appr.forEach(r=>{
+        const f=findLessonById(r.lesson_id);
+        html+='<div class="exam-hist"><div class="eh-t"><b>'+(umap[r.user_id]||'?')+'</b>'+(f?('C'+f.c.no+' 修了試験'):r.lesson_id)+' ・ '+fmtDT(r.approved_at)+' 承認済み</div></div>';
+      });
+    }
+    html+='<div class="small" style="font-weight:800;color:var(--navy);margin-top:10px">📚 受験結果('+done.length+')</div>';
+    if(!done.length) html+='<p class="small" style="color:var(--muted)">まだ受験結果なし</p>';
+    done.forEach(r=>{
+      const f=findLessonById(r.lesson_id);
+      const res=r.result||{};
+      const badge=res.pass?'<span style="color:var(--green);font-weight:800">合格</span>':(res.expired?'<span style="color:var(--red);font-weight:800">時間切れ</span>':'<span style="color:var(--red);font-weight:800">不合格</span>');
+      const fbCount=r.feedback?Object.keys(r.feedback).length:0;
+      html+='<div class="exam-hist">'+(res.pass?'<span class="hanko sm">真殿</span>':'')+
+        '<div class="eh-t"><b>'+(umap[r.user_id]||'?')+' — '+(f?('C'+f.c.no+' '+f.c.name):r.lesson_id)+'</b>'+badge+' '+(res.correct??'—')+'/'+(res.total??'—')+' ・ '+fmtDT(r.finished_at)+(fbCount?' ・ 📝'+fbCount+'件':'')+'</div>'+
+        '<button class="btn ghost" style="font-size:12px" onclick="toggleExamFb(\''+r.id+'\')">採点/FB</button></div>'+
+        '<div id="exfb-'+r.id+'" style="display:none"></div>';
+    });
+    wrap.innerHTML=html;
+  }catch(e){ wrap.innerHTML='<p class="small" style="color:var(--red)">試験データの取得に失敗。training_examsテーブルが作成済みか確認してや。</p>'; }
+}
+async function approveExam(id){
+  if(!confirm('この申請を承認する。受験者は30分の修了試験を開始できるようになる。ええか?')) return;
+  const {error}=await sb.from('training_exams').update({status:'approved',approved_at:new Date().toISOString()}).eq('id',id);
+  if(error){ alert('承認に失敗した'); return; }
+  loadExamAdmin();
+}
+function toggleExamFb(id){
+  const box=document.getElementById('exfb-'+id); if(!box) return;
+  if(box.style.display!=='none'){ box.style.display='none'; box.innerHTML=''; return; }
+  const r=(window.__examRows||{})[id]; if(!r) return;
+  const f=findLessonById(r.lesson_id); if(!f) return;
+  const res=r.result||{}; const fb=r.feedback||{};
+  let html='<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:6px">';
+  f.l.quiz.forEach((q,qi)=>{
+    const ans=(res.answers&&res.answers[qi])||[];
+    const ok=(res.perQ&&res.perQ[qi])||false;
+    const parts=q.fill.split('___');
+    let sent='';
+    parts.forEach((seg,bi)=>{
+      sent+=escapeHtml(seg);
+      if(bi<parts.length-1){
+        const wi=ans[bi];
+        const my=(wi===null||wi===undefined)?'(未回答)':q.bank[wi];
+        const good=wi!==null&&wi!==undefined&&q.bank[wi]===q.bank[q.a[bi]];
+        sent+='<b style="color:'+(good?'var(--green)':'var(--red)')+'">['+escapeHtml(my)+']</b>';
+        if(!good) sent+='<span class="small" style="color:var(--green)">(正:'+escapeHtml(q.bank[q.a[bi]])+')</span>';
+      }
+    });
+    html+='<div style="padding:8px 0;border-bottom:1px solid var(--line)">'+
+      '<div class="small"><b>Q'+(qi+1)+'</b> '+(ok?'<span style="color:var(--green);font-weight:800">○</span>':'<span style="color:var(--red);font-weight:800">✕</span>')+'</div>'+
+      '<div style="font-size:12.5px;line-height:1.8">'+sent+'</div>'+
+      (ok?'':'<textarea class="fb-input" id="fbin-'+id+'-'+qi+'" placeholder="この問題へのフィードバック(なぜ間違えやすいか・どこを読み直すか)">'+escapeHtml(fb[qi]||'')+'</textarea>')+
+      '</div>';
+  });
+  html+='<button class="btn org" style="width:100%;margin-top:10px" onclick="saveExamFb(\''+id+'\')">📝 フィードバックを保存する</button></div>';
+  box.innerHTML=html; box.style.display='block';
+}
+async function saveExamFb(id){
+  const r=(window.__examRows||{})[id]; if(!r) return;
+  const f=findLessonById(r.lesson_id); if(!f) return;
+  const fb={};
+  f.l.quiz.forEach((q,qi)=>{
+    const el=document.getElementById('fbin-'+id+'-'+qi);
+    if(el && el.value.trim()) fb[qi]=el.value.trim();
+  });
+  const {error}=await sb.from('training_exams').update({feedback:fb}).eq('id',id);
+  if(error){ alert('保存に失敗した'); return; }
+  alert('フィードバックを保存した ✓ 受講者の「見返し」に表示される');
+  loadExamAdmin();
+}
+const examReloadBtn=$('#examAdminReload');
+if(examReloadBtn) examReloadBtn.addEventListener('click',loadExamAdmin);
+$('#adminTab').addEventListener('click',()=>{ if(sb&&currentUser&&currentUser.role==='admin'){ loadAdmin(); loadExamAdmin(); } });
 $('#auAdd').addEventListener('click',async ()=>{
   const name=$('#auName').value.trim(), pin=$('#auPin').value.trim(), role=$('#auRole').value;
   const msg=$('#auMsg');
