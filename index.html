@@ -304,7 +304,7 @@ body.exam-lock #sheetBack{display:none!important}
   <div class="wrap">
     <div class="brand">KYOEI IT DIVISION</div>
     <h1>IT技術者育成プログラム</h1>
-    <div class="sub">6コースで「AI基礎 → 3大AI徹底 → Web制作 → 社内システム開発」へ</div>
+    <div class="sub">8コースで「AI基礎 → 3大AI徹底 → LP・デザイン → Web制作 → 社内システム開発」へ</div>
     <div class="paint"><div class="paint-fill" id="paintAll" style="width:0%"></div></div>
     <div class="paint-label"><span>全体進捗(合格レッスン率)</span><b id="pctAll">0%</b></div>
     <div class="user-row"><span class="user-badge" id="userName">—</span><button class="user-switch" id="switchUser">ユーザー切替</button><span class="sync" id="syncState"></span></div>
@@ -322,7 +322,13 @@ body.exam-lock #sheetBack{display:none!important}
       <li>--force系・履歴改変コマンドを使わない</li>
     </ol>
   </div>
-  <div class="card">
+  <div class="card" id="adminHomeCard" style="display:none">
+    <div class="eyebrow">ADMIN</div>
+    <h2>管理者モード</h2>
+    <p class="small" style="margin-top:6px">このアカウントは管理者や。受講者の進捗確認・修了試験の承認とフィードバック・ユーザー管理は、下の<b>「管理」タブ</b>からやってな。受講者向けの教材・テストはこの画面には表示されへん。</p>
+    <button class="btn org" style="width:100%;margin-top:10px" onclick="goTab('admin')">🛠 管理タブを開く</button>
+  </div>
+  <div class="card" id="progressCard">
     <div class="eyebrow">PROGRESS</div>
     <h2>コース別の塗り進み</h2>
     <div id="phaseBars" style="margin-top:8px"></div>
@@ -335,12 +341,12 @@ body.exam-lock #sheetBack{display:none!important}
     <h2>認定・修了証</h2>
     <div id="certBody" style="margin-top:8px"></div>
   </div>
-  <div class="card">
+  <div class="card" id="howCard">
     <div class="eyebrow">HOW IT WORKS</div>
     <h2>進め方</h2>
     <p class="small" style="margin-top:4px">①教材を読む → ②実践課題(実技)を全部やってチェック → ③確認テストで全問正解 → 知識と実技の両方そろって合格、次のレッスンが解放される。<br>合格した問題はホームの「復習クイズ」にランダムで出てくる。反復して満点を維持できてこそ定着や。分からん用語はレッスン内のオレンジのチップか用語集タブで調べる。それでも詰まったら質疑提出シート(テンプレタブ)で真殿さんへ。</p>
   </div>
-  <div class="card">
+  <div class="card" id="wordsCard">
     <div class="eyebrow">TODAY'S WORDS</div>
     <h2>今日の用語 3つ</h2>
     <div id="todayTerms" style="margin-top:8px"></div>
@@ -4784,6 +4790,7 @@ function certNoStr(){
 function refreshCertCard(){
   const card=$('#certCard'), body=$('#certBody');
   if(!card) return;
+  if(currentUser && currentUser.role==='admin'){ card.style.display='none'; return; }
   const total=COURSES.length, done=completedCourseCount();
   card.style.display='block';
   if(allCompleted()){
@@ -4949,6 +4956,10 @@ async function afterLogin(){
   // 管理者は管理業務に集中:研修タブ(コース・問題)は非表示、開いたら管理タブへ
   const currTab=document.querySelector('.tab[data-pg="curr"]');
   if(currTab) currTab.style.display=isAdmin?'none':'flex';
+  // 管理者のホームは管理者向け表示(教材・テストへの入口を出さない)
+  const _ids=['progressCard','certCard','howCard','wordsCard'];
+  _ids.forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=isAdmin?'none':''; });
+  const ahc=document.getElementById('adminHomeCard'); if(ahc) ahc.style.display=isAdmin?'block':'none';
   if(isAdmin){ setTimeout(()=>{ goTab('admin'); if(sb){ loadAdmin(); loadExamAdmin(); } },0); }
   loadLocal();
   try{
