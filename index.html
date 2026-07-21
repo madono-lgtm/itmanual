@@ -232,6 +232,44 @@ button,.btn,.opt,.tab,.lesson,.course-h,.chip,.copy,.cat,.userbtn{touch-action:m
 .sheet-c{overflow-x:hidden}
 .modal{max-height:82dvh;overflow-y:auto;overscroll-behavior:contain}
 .cats{overscroll-behavior-x:contain}
+/* ===== 認定・修了証 ===== */
+.cert-badge{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#1E2A47,#2c3e63);border-radius:14px;padding:16px;color:#fff}
+.cert-badge .cb-seal{flex:none;width:52px;height:52px;border-radius:50%;border:2.5px solid #F08519;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#F08519;background:rgba(240,133,25,.08)}
+.cert-badge .cb-txt{min-width:0}
+.cert-badge .cb-title{font-weight:900;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
+.cert-badge .cb-sub{font-size:11.5px;opacity:.85;margin-top:2px}
+.cert-locked{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:16px;text-align:center;color:var(--muted)}
+.cert-locked .cl-n{font-weight:800;color:var(--navy);font-size:14px;margin-bottom:4px}
+.cert-open-btn{margin-top:10px;width:100%}
+
+.cert-bg{position:fixed;inset:0;background:rgba(20,26,41,.72);z-index:120;display:none;flex-direction:column;padding:16px;overscroll-behavior:contain}
+.cert-bg.on{display:flex}
+.cert-scroll{flex:1;overflow-y:auto;overscroll-behavior:contain;display:flex;align-items:flex-start;justify-content:center}
+.cert-sheet{width:100%;max-width:440px;margin:auto}
+.cert-frame{background:linear-gradient(160deg,#fbfbf7,#f2f0e6);border:2px solid #C9A24B;border-radius:8px;padding:30px 26px 24px;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.35);text-align:center;font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif}
+.cert-frame:before{content:"";position:absolute;inset:7px;border:1px solid #d8c48a;border-radius:5px;pointer-events:none}
+.cert-seal{position:absolute;top:18px;right:18px;width:56px;height:56px;border-radius:50%;border:2.5px solid #C9A24B;color:#B8892E;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;letter-spacing:2px;background:rgba(201,162,75,.06)}
+.cert-org{font-size:12px;letter-spacing:2px;color:#8a7a4a;font-weight:700;margin-bottom:14px}
+.cert-kind{font-size:26px;font-weight:900;color:#1E2A47;letter-spacing:6px;margin-bottom:20px}
+.cert-name-label,.cert-title-label{font-size:10.5px;color:#9a8a5a;letter-spacing:2px;margin-top:8px}
+.cert-name{font-size:22px;font-weight:900;color:#1E2A47;border-bottom:1.5px solid #d8c48a;display:inline-block;padding:2px 24px 6px;margin:4px 0 6px;min-width:180px}
+.cert-title{font-size:18px;font-weight:900;color:#B8892E;margin:4px 0 14px;overflow-wrap:anywhere}
+.cert-body{font-size:12.5px;line-height:1.9;color:#3a3a2a;text-align:left;margin:0 auto 18px;max-width:340px}
+.cert-meta{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #d8c48a;padding-top:12px;margin-top:4px}
+.cert-meta>div{font-size:11px;color:#8a7a4a}
+.cert-meta b{display:block;font-size:14px;color:#1E2A47;margin-top:2px}
+.cert-meta .cert-by{text-align:right}
+.cert-no{font-size:9.5px;color:#a89a6a;letter-spacing:1px;margin-top:12px}
+.cert-actions{display:flex;gap:10px;max-width:440px;width:100%;margin:12px auto 0}
+@media print{
+  body *{visibility:hidden!important}
+  #certBg,#certBg *{visibility:visible!important}
+  #certBg{position:absolute;inset:0;background:#fff;padding:0;display:block!important}
+  .cert-scroll{overflow:visible;display:block}
+  .cert-sheet{max-width:600px;margin:40px auto}
+  .cert-frame{box-shadow:none;border-color:#C9A24B}
+  .cert-actions{display:none!important}
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -266,6 +304,11 @@ button,.btn,.opt,.tab,.lesson,.course-h,.chip,.copy,.cat,.userbtn{touch-action:m
     <button class="btn org" id="resumeBtn" style="margin-top:10px;width:100%">▶ 次のレッスンをはじめる</button>
     <button class="btn ghost" id="reviewBtn" style="margin-top:8px;width:100%">🔁 復習クイズ(合格済みからランダム10問)</button>
     <div class="storage-note" id="storageNote"></div>
+  </div>
+  <div class="card" id="certCard" style="display:none">
+    <div class="eyebrow">CERTIFICATE</div>
+    <h2>認定・修了証</h2>
+    <div id="certBody" style="margin-top:8px"></div>
   </div>
   <div class="card">
     <div class="eyebrow">HOW IT WORKS</div>
@@ -386,6 +429,32 @@ button,.btn,.opt,.tab,.lesson,.course-h,.chip,.copy,.cat,.userbtn{touch-action:m
     <div class="mt" id="mTitle">用語 <span class="tag mc" id="mCat"></span></div>
     <div class="md" id="mDesc"></div>
     <button class="btn close" id="mClose">とじる</button>
+  </div>
+</div>
+
+<div class="cert-bg" id="certBg">
+  <div class="cert-scroll">
+    <div class="cert-sheet" id="certSheet">
+      <div class="cert-frame">
+        <div class="cert-seal">認定</div>
+        <div class="cert-org">株式会社KYOEI IT事業部</div>
+        <div class="cert-kind" id="certKind">修了証</div>
+        <div class="cert-name-label">氏名</div>
+        <div class="cert-name" id="certName">—</div>
+        <div class="cert-title-label">称号</div>
+        <div class="cert-title" id="certTitle">—</div>
+        <div class="cert-body" id="certText"></div>
+        <div class="cert-meta">
+          <div class="cert-date"><span>修了日</span><b id="certDate">—</b></div>
+          <div class="cert-by"><span>認定</span><b id="certBy">真殿 星哉</b></div>
+        </div>
+        <div class="cert-no" id="certNo"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cert-actions">
+    <button class="btn ghost" id="certClose" style="flex:1">とじる</button>
+    <button class="btn org" id="certPrint" style="flex:1">🖨 印刷 / PDF保存</button>
   </div>
 </div>
 
@@ -4225,6 +4294,61 @@ function openLesson(ci, li){
 function closeSheet(){ $('#lessonSheet').classList.remove('on'); lockScroll(false); buildCourses(); refreshHome(); }
 $('#sheetBack').addEventListener('click', closeSheet);
 
+/* --- 認定・修了証 --- */
+// 現行の全課程の称号定義(今後コース追加時はここに上位級を足す)
+const CERT_TITLE = "KYOEI認定 AI活用技士(3級)";
+function allCompleted(){ return ALL_LESSONS.length>0 && ALL_LESSONS.every(l=>isDone(l.id)); }
+function completedCourseCount(){ return COURSES.filter(c=>c.lessons.every(l=>isDone(l.id))).length; }
+// 修了日:進捗に保存された修了日、なければ今日
+function certDateStr(){
+  const saved = progress['__certDate'];
+  if(saved) return saved;
+  const d=new Date();
+  return d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日';
+}
+function certNoStr(){
+  // ユーザー名+固定接頭辞から簡易な認定番号を生成(表示用)
+  const base = (currentUser && currentUser.name) ? currentUser.name : 'TRAINEE';
+  let h=0; for(const ch of base) h=(h*31+ch.charCodeAt(0))>>>0;
+  return 'KYOEI-AI3-' + String(h%100000).padStart(5,'0');
+}
+function refreshCertCard(){
+  const card=$('#certCard'), body=$('#certBody');
+  if(!card) return;
+  const total=COURSES.length, done=completedCourseCount();
+  card.style.display='block';
+  if(allCompleted()){
+    // 修了日を初回到達時に記録
+    if(!progress['__certDate']){ progress['__certDate']=certDateStr(); scheduleSync(); }
+    body.innerHTML =
+      `<div class="cert-badge"><div class="cb-seal">技士<br>3級</div>`+
+      `<div class="cb-txt"><div class="cb-title">${CERT_TITLE}</div>`+
+      `<div class="cb-sub">全${total}コース修了 — AIを実務で使いこなし、開発の入口に立てる証</div></div></div>`+
+      `<button class="btn org cert-open-btn" id="openCertBtn">🏅 修了証を見る / 印刷する</button>`;
+    $('#openCertBtn').onclick=()=>openCert(currentUser?currentUser.name:'', CERT_TITLE, certDateStr());
+  } else {
+    body.innerHTML =
+      `<div class="cert-locked"><div class="cl-n">🔒 ${CERT_TITLE}</div>`+
+      `全${total}コースを修了すると認定。あと <b style="color:var(--orange)">${total-done}</b> コース。`+
+      `<div class="phasebar" style="margin-top:10px"><div class="tr"><div class="fl" style="width:${Math.round(done/total*100)}%"></div></div><div class="pc">${done}/${total}</div></div></div>`;
+  }
+}
+function openCert(name, title, date){
+  $('#certKind').textContent='修 了 証';
+  $('#certName').textContent = name||'—';
+  $('#certTitle').textContent = title;
+  $('#certText').innerHTML =
+    'あなたは株式会社KYOEI IT事業部の育成プログラム全課程を修了し、'+
+    'AIの基礎から3大AIの実務活用、メタプロンプト、LP・デザイン、Web制作、'+
+    '社内システム開発までの知識と実技を修めたことをここに認定します。';
+  $('#certDate').textContent = date;
+  $('#certBy').textContent = '真殿 星哉';
+  $('#certNo').textContent = '認定番号 '+certNoStr();
+  $('#certBg').classList.add('on'); lockScroll(true);
+}
+$('#certClose').addEventListener('click',()=>{ $('#certBg').classList.remove('on'); lockScroll(false); });
+$('#certPrint').addEventListener('click',()=>window.print());
+
 /* --- ホーム --- */
 const TOTAL = ALL_LESSONS.length;
 function refreshHome(){
@@ -4250,6 +4374,7 @@ function refreshHome(){
     btn.textContent = '🎊 全レッスン修了!';
     btn.disabled = true;
   }
+  refreshCertCard();
 }
 function todayTerms(){
   const day = Math.floor(Date.now() / 86400000);
@@ -4380,23 +4505,59 @@ async function loadAdmin(){
       sb.from('training_progress').select('user_id,data,updated_at')
     ]);
     const pmap={}; (p.data||[]).forEach(r=>pmap[r.user_id]=r);
+    window.__adminData = (u.data||[]);
+    window.__adminProg = pmap;
     wrap.innerHTML=(u.data||[]).map(user=>{
       const rec=pmap[user.id]; const d=rec?(rec.data||{}):{};
       const doneAll = ALL_LESSONS.filter(l=>d[l.id]===1).length;
       const pct = TOTAL?Math.round(doneAll/TOTAL*100):0;
       const upd=rec?new Date(rec.updated_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+      const certified = ALL_LESSONS.length>0 && ALL_LESSONS.every(l=>d[l.id]===1);
       const bars=COURSES.map(c=>{
         const dn=c.lessons.filter(l=>d[l.id]===1).length;
         const pp=Math.round(dn/c.lessons.length*100);
-        return `<div class="phasebar"><div class="nm" style="width:110px;font-size:11px">C${c.no} ${c.name.slice(0,7)}</div><div class="tr"><div class="fl" style="width:${pp}%"></div></div><div class="pc">${dn}/${c.lessons.length}</div></div>`;
+        const cdone = dn===c.lessons.length;
+        return `<div class="phasebar"><div class="nm" style="width:110px;font-size:11px">C${c.no} ${c.name.slice(0,7)}${cdone?' ✅':''}</div><div class="tr"><div class="fl" style="width:${pp}%"></div></div><div class="pc">${dn}/${c.lessons.length}</div></div>`;
       }).join('');
-      return `<div class="admin-user"><div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><b style="color:var(--navy)">${user.name}</b>${user.role==='admin'?'<span class="tag">管理者</span>':''}<span class="small" style="margin-left:auto">全体 <b style="font-family:var(--mono)">${pct}%</b>・最終更新 ${upd}</span></div>${bars}</div>`;
+      const certBadge = certified
+        ? `<span class="tag" style="background:#1E2A47;color:#F08519;font-weight:800">🏅 AI活用技士(3級)</span>` : '';
+      return `<div class="admin-user">
+        <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><b style="color:var(--navy)">${user.name}</b>${user.role==='admin'?'<span class="tag">管理者</span>':''}${certBadge}<span class="small" style="margin-left:auto">全体 <b style="font-family:var(--mono)">${pct}%</b>・更新 ${upd}</span></div>
+        ${bars}
+        <button class="btn ghost" style="width:100%;margin-top:8px;font-size:12px" onclick="toggleAdminDetail('${user.id}')">📋 レッスン別の結果を見る</button>
+        <div id="adet-${user.id}" style="display:none;margin-top:8px"></div>
+      </div>`;
     }).join('')||'<p class="small">ユーザーがいません</p>';
   }catch(e){ wrap.innerHTML='<p class="small" style="color:var(--red)">取得に失敗しました。通信と設定を確認してください。</p>'; }
   try{
     const {data}=await sb.from('training_users').select('id,name').order('created_at');
     $('#pcUser').innerHTML=(data||[]).map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
   }catch(e){}
+}
+// 管理者:ユーザーのレッスン別合否を展開
+function toggleAdminDetail(uid){
+  const box=document.getElementById('adet-'+uid);
+  if(!box) return;
+  if(box.style.display!=='none'){ box.style.display='none'; box.innerHTML=''; return; }
+  const rec=(window.__adminProg||{})[uid]; const d=rec?(rec.data||{}):{};
+  let html='';
+  COURSES.forEach(c=>{
+    const rows=c.lessons.map(l=>{
+      const pass=d[l.id]===1;
+      const tasks=(l.task||[]).length;
+      const tdone=(l.task||[]).filter((_,i)=>d[l.id+':t'+i]===1).length;
+      const mark = pass?'<span style="color:var(--green);font-weight:800">合格</span>'
+                       :'<span style="color:var(--muted)">未</span>';
+      const tinfo = tasks?`<span class="small" style="color:var(--muted)">実技 ${tdone}/${tasks}</span>`:'';
+      return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--line)">
+        <span class="small" style="font-family:var(--mono);color:var(--muted);width:52px">${l.id}</span>
+        <span style="flex:1;font-size:12.5px;overflow-wrap:anywhere">${l.t}</span>
+        ${tinfo}${mark}</div>`;
+    }).join('');
+    const dn=c.lessons.filter(l=>d[l.id]===1).length;
+    html+=`<div style="margin-bottom:10px"><div class="small" style="font-weight:800;color:var(--navy);margin-bottom:2px">C${c.no} ${c.name} <span style="color:var(--muted)">(${dn}/${c.lessons.length})</span></div>${rows}</div>`;
+  });
+  box.innerHTML=html; box.style.display='block';
 }
 $('#adminReload').addEventListener('click',loadAdmin);
 $('#adminTab').addEventListener('click',()=>{ if(sb&&currentUser&&currentUser.role==='admin') loadAdmin(); });
