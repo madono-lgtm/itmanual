@@ -1088,7 +1088,7 @@ quiz:[
 {fill:"KYOEIのメインカラーはネイビー___、アクセントのオレンジ___は強調・CTAのみ面積10〜20%まで。",bank:["#1E2A47","#F08519","#F7F8F6","#000000","#FFFFFF"],a:[0,1],exp:"ネイビー#1E2A47・オレンジ#F08519・背景#F7F8F6。"},
 {fill:"経営層向け提案書だけは、ネイビー×___の上位トーンを使う。オレンジは使い___と安っぽくなる。",bank:["シャンパンゴールド","すぎる","赤","減らす","緑"],a:[0,1],exp:"提案書は上位トーン。オレンジは使いすぎ注意。"},
 {fill:"Canvaの___に会社の色・ロゴ・フォントを登録すると、誰が作っても___らしくなる。",bank:["ブランドキット","KYOEI","フォルダ","他社","無地"],a:[0,1],exp:"毎回スポイトで色を探す手間も消える。"},
-{fill:"ファイル名は「日付_用途_内容____」の順。ファイル管理も___のうち。",bank:["版数","品質","色","作者","時刻"],a:[0,1],exp:"20260720_IG投稿_施工事例堺市A邸_v2 のように。"},
+{fill:"ファイル名は「日付 → 用途 → 内容 → ___」の順に区切ってつける。ファイル管理も___のうち。",bank:["版数","品質","色","作者","時刻"],a:[0,1],exp:"20260720_IG投稿_施工事例堺市A邸_v2 のように。"},
 {fill:"CSVを流し込んで名刺などを人数分いっぺんに量産するCanvaの機能を___と呼び、社内の名刺制作でも___がある。",bank:["Bulk Create","実績","印刷","削除","翻訳"],a:[0,1],exp:"一括作成機能。名刺量産の実例あり。"}
 ]},
 {id:"c1-13",t:"制作ワークフローと検品",min:"25分",terms:["セーフエリア","トーン&マナー"],
@@ -1150,6 +1150,14 @@ quiz:[
 {fill:"お客様向け文章では不安を___表現を禁止し、専門用語には一言___を添える。",bank:["煽る","説明","褒める","翻訳","削除"],a:[0,1],exp:"煽らない・用語に説明。"},
 {fill:"提出前チェック3点は、誤字ゼロ・数値と固有名詞の___・お客様役AIの___。",bank:["検証","壁打ち","印刷","保存","課金"],a:[0,1],exp:"誤字・ファクトチェック・壁打ち。全成果物に適用。"},
 {fill:"前提プロンプトはNotionの___に置いてコピペ可能にし、良い出力は「お手本___」として蓄積する。",bank:["ナレッジベース","ライブラリ","フォルダ","削除","印刷"],a:[0,1],exp:"二大資産。調べたこと・作ったものを資産化する。"}
+,
+{fill:"AIは質問に「答えて」いるのではなく、もっともらしい___を書く機械。この理解が___の理解に直結する。",bank:["続き","ハルシネーション","答え","検索","翻訳"],a:[0,1],exp:"続きを書く機械。だから幻覚が起きる。"},
+{fill:"大きい依頼は一発で作らせず___に分け、各工程の間に人間の___を挟む。",bank:["工程","判断","色","時間","予算"],a:[0,1],exp:"タスク分解と人間のチェックポイント。"},
+{fill:"壁打ちでは「あなたは不信感を持つ60代のお客様です」のように___な人物像を与えるほど___な反応が返る。",bank:["具体的","リアル","曖昧","短い","高価"],a:[0,1],exp:"具体的な役ほどリアル。"},
+{fill:"会話が長引いたら「決定事項を___て」と頼み、___チャットに貼って再開する。",bank:["まとめ","新しい","消し","同じ","古い"],a:[0,1],exp:"まとめ→新チャット引き継ぎ。"},
+{fill:"生成画像は___案出して1案選ぶ。1発採用せず___を挟むのがプロ。",bank:["3","選定","10","印刷","保存"],a:[0,1],exp:"複数案→選定。"},
+{fill:"Canvaの___に色・ロゴ・フォントを登録すると、誰が作っても___らしくなる。",bank:["ブランドキット","KYOEI","フォルダ","他社","無地"],a:[0,1],exp:"ブランドキットで統一。"},
+{fill:"制作の6工程は、目的定義→生成→選定→組版→___→書き出し。チェックは物理的にリストを見ながら1項目ずつ___す。",bank:["検品","潰","印刷","保存","翻訳"],a:[0,1],exp:"検品を工程に組み込み、リストで潰す。"}
 ]},
 ]};
 
@@ -1365,6 +1373,14 @@ quiz:[
 {fill:"開発では、メタプロンプトで生成した___プロンプトを、___してから実行する。",bank:["要件","検品","印刷","削除","翻訳"],a:[0,1],exp:"開発は事故が重い。検品が最重要。"},
 {fill:"メタプロンプト側にKYOEIの___リストを固定しておくと、pushの入れ___を防ぐ安全装置になる。",bank:["制約","忘れ","色","増やし","翻訳"],a:[0,1],exp:"制約の自動注入。"},
 {fill:"要件プロンプトを投げる前に、触ってはいけない___が___されているかを必ず確認する。",bank:["領域","除外","色","追加","印刷"],a:[0,1],exp:"対象範囲の検品。ノールック実行は厳禁。"}
+,
+{fill:"メタプロンプトの「メタ」は「___の・についての」という意味で、プロンプトについての___のこと。",bank:["一段上","プロンプト","一段下","感想","画像"],a:[0,1],exp:"一段上のプロンプト。"},
+{fill:"「解説は不要、本文だけ___で出して」と指定するとコピペしやすく、___ボタンも使える。",bank:["コードブロック","コピー","表","印刷","削除"],a:[0,1],exp:"コードブロック出力の指定。"},
+{fill:"AIに先に___させてから書かせると、自分の要件も___される一石二鳥。",bank:["質問","整理","翻訳","保存","削除"],a:[0,1],exp:"質問させる型の効能。"},
+{fill:"別AIへの引き継ぎで会話履歴を丸ごと渡すと___が重くなる。渡すのは完成した___だけ。",bank:["コンテキスト","プロンプト","画像","色","予算"],a:[0,1],exp:"バトンは完成品だけ。"},
+{fill:"設計を___、画像の実行をChatGPTに任せる二段構えのように、プロンプトというバトンを得意なAIに___する。",bank:["Claude","リレー","Excel","保存","翻訳"],a:[0,1],exp:"AIリレーの発想。"},
+{fill:"メタプロンプトは思考の外注ではなく___の外注。採用と修正を決める___は常に自分。",bank:["たたき台","主導権","答え","時間","予算"],a:[0,1],exp:"主導権を手放さない。"},
+{fill:"要件プロンプトの検品で特に見るのは、KYOEI制約の抜けと、触ってはいけない___の___。",bank:["領域","除外","色","追加","翻訳"],a:[0,1],exp:"対象範囲の検品が最重要。"}
 ]},
 ]};
 
@@ -1396,7 +1412,7 @@ body:`<h3>LP=1つの行動に集中させる縦長ページ</h3>
 task:["身近なLP(何かの広告から飛べるページ)を3つ開いて、それぞれ『狙っている1つの行動』が何かを言い当てる","そのうち1つについて、ファーストビューだけ見て『誰向けか・何ができるか』が3秒で分かるか評価する"],
 quiz:[
 {fill:"LPは、来た人を___つの行動に集中させる縦長ページで、成果は___という指標で測る。",bank:["1","CVR","複数","PV","SEO"],a:[0,1],exp:"1LP1ゴール。成果はCVR(コンバージョン率)。"},
-{fill:"LPで他ページへのリンクを減らすのは、選択肢が多いと人が___して___するから。",bank:["迷","離脱","集中","申込","購入"],a:[0,1],exp:"選択肢過多は離脱の元。一本道にする。"},
+{fill:"LPで他ページへのリンクを減らすのは、選択肢が多いと人は___、結局___するから。",bank:["迷い","離脱","集中","申込","購入"],a:[0,1],exp:"選択肢過多は離脱の元。一本道にする。"},
 {fill:"ページを開いてスクロールせず見える最初の画面を___と呼び、人はここで___秒で関係あるか判断する。",bank:["ファーストビュー","3","フッター","30","ヒーロー"],a:[0,1],exp:"ファーストビューで3秒勝負。"},
 {fill:"CVRは、行動した人数を___人数で割った割合で、これを___ことがLP改善の全て。",bank:["見た","上げる","申し込んだ","下げる","保存する"],a:[0,1],exp:"見た人のうち何%が行動したか。上げるのが目的。"},
 {fill:"良いLPは「デザインがおしゃれ」ではなく「___が高い」LP。見た目は___、目的はCVR。",bank:["CVR","手段","PV","目的","色"],a:[0,1],exp:"見た目は手段、CVRが目的。"}
@@ -1572,6 +1588,47 @@ quiz:[
 {fill:"BtoBのベネフィットは「便利になります」でなく「1日1時間の___」のように___で示す。",bank:["削減","数字","増加","感覚","色"],a:[0,1],exp:"数字で示すと稟議に使える。"},
 {fill:"同じLPでも相手が___か法人かで刺さる点が違い、塗装は感情と信頼、CraftFileは___と費用対効果。",bank:["個人","ロジック","会社","感情","色"],a:[0,1],exp:"個人と法人で刺さる点が違う。"}
 ]},
+{id:"dz-06b",t:"実践演習:プロのLPを分解して盗む",min:"50分",terms:["ファーストビュー","CTA","ベネフィット"],
+body:`<h3>読むだけでは身につかへん</h3>
+<p>ここまで、LPの構造・デザイン原則・パターン別の型を学んだ。このレッスンは<b>実践演習</b>や。実在するプロのLPを「分解」して、学んだ知識を<b>見抜く目</b>に変える。デザインが上手くなる一番の近道は、上手い人の作品を構造で読めるようになることや。絵描きの模写と同じやな。</p>
+<h3>演習①:LP分解シート(3本ノック)</h3>
+<p>実在のLPを3本選んで(検索広告やSNS広告から飛べるページが狙い目)、それぞれを次の観点で分解してメモする:</p>
+<div class="exbox">【LP分解シート】
+1. 狙っている「1つの行動」は何か(CVRのゴール)
+2. ファーストビュー:3秒で「誰の・何を解決」が伝わるか
+3. 黄金構造:7ブロック(共感→解決→ベネフィット→
+   証明→不安解消→ひと押し)がどう並んでいるか
+4. ベネフィット:特徴でなく利益で語れているか(例を1つ書き出す)
+5. CTA:文言・色・配置箇所の数
+6. デザイン:3色ルールは守られているか/4大原則の効いている所
+7. 自分ならどこを改善するか(1つ挙げる)</div>
+<p>3本やると、「どのLPも同じ骨格でできてる」ことが体感できるはずや。骨格が見えたら、もう君は"読める人"や。</p>
+<h3>演習②:ダメLPの改善提案</h3>
+<p>次は逆方向。<b>イマイチなLP(古い・ごちゃごちゃした地元企業のサイトなど)を1つ選び、改善提案を作る</b>:</p>
+<ul>
+<li>問題点を4大原則・3色ルール・黄金構造・CTAの観点で列挙する</li>
+<li>「ビフォー→アフター」の改善案を、ファーストビューだけでいいから文言+ラフで描く</li>
+<li>これはそのまま、<b>お客様への提案の練習</b>でもある。KYOEIがWeb制作を受けるとき、この「現状分析→改善提案」がそのまま営業資料になる</li>
+</ul>
+<h3>演習③:AIと分析対決</h3>
+<p>自分の分解が終わったLPを、AIにも分析させて答え合わせする:</p>
+<div class="exbox">(LPのURLまたはスクショを渡して)
+このLPを、以下の観点でプロのLP設計者として分析して:
+- ターゲットと狙っている行動
+- 構造の流れとその意図
+- CTAの設計
+- 改善できる点を3つ
+</div>
+<p>自分が見抜けなかった観点をAIが指摘してきたら、それはそのまま学びや。逆に、AIの分析の浅い所に気づけたら、君の目が育ってる証拠。<b>分析→答え合わせ→差分を吸収</b>のループで、見抜く目は磨かれていく。</p>
+<div class="pointbox"><b>ポイント:</b>この「分解して盗む」習慣は、LPに限らずデザイン全般・文章・コードにまで効く、一生モンの学び方や。ええなと思ったLPはスクショしてNotionの「お手本ライブラリ」に貯めていこう(コース1の資産化の実践や)。ライブラリが10本、20本と貯まる頃には、自分でLPを設計するときに「あのパターンで行こう」と引き出しから出せるようになる。<b>作る力は、読んだ量に比例する</b>で。</div>`,
+task:["LP分解シートを使って実在のLPを3本分解し、メモを真殿さんに提出する","イマイチなLPを1つ選び、問題点の列挙+ファーストビュー改善案(文言+ラフ)を作る","自分が分解したLPをAIにも分析させ、自分が見抜けなかった観点を2つメモする"],
+quiz:[
+{fill:"デザイン上達の近道は、上手い作品を___で読めるようになること。分解を3本やると、どのLPも同じ___でできていると体感できる。",bank:["構造","骨格","感覚","色","値段"],a:[0,1],exp:"構造で読む。骨格の共通性に気づく。"},
+{fill:"LP分解シートでは、狙っている1つの___、ファーストビューの3秒、黄金構造、___(特徴でなく利益)などを確認する。",bank:["行動","ベネフィット","色","価格","文字数"],a:[0,1],exp:"行動・構造・ベネフィットの観点で分解。"},
+{fill:"ダメLPの改善提案は、そのままお客様への___の練習になる。現状分析→改善提案の形は___資料になる。",bank:["提案","営業","印刷","翻訳","保存"],a:[0,1],exp:"分析力は営業資産になる。"},
+{fill:"自分の分解をAIにも分析させて___合わせし、見抜けなかった観点を___するループで目が磨かれる。",bank:["答え","吸収","色","無視","保存"],a:[0,1],exp:"分析→答え合わせ→差分吸収。"},
+{fill:"ええなと思ったLPはお手本___に貯める。作る力は、___量に比例する。",bank:["ライブラリ","読んだ","フォルダ","書いた","消した"],a:[0,1],exp:"資産化の実践。読んだ量が作る力になる。"}
+]},
 {id:"dz-07",t:"デザインを実装につなぐ",min:"35分",terms:["プロトタイプ","レスポンシブ","CTA"],
 body:`<h3>デザインは、実装できてこそ価値になる</h3>
 <p>ここまで学んだデザイン原則・LP構造・動線を、次のWeb制作コースで<b>実際に動くLP</b>にしていく。このレッスンは、デザインと実装の橋渡しや。「良いデザイン」を「動くLP」に変える流れを掴む。</p>
@@ -1648,6 +1705,14 @@ quiz:[
 {fill:"塗装LP(個人)は信頼と安心、BtoB SaaS LP(法人)は___と導入のしやすさが決め手。相手が個人か___かで刺さる点が違う。",bank:["費用対効果","法人","価格","感情","色"],a:[0,1],exp:"個人は信頼、法人は費用対効果。"},
 {fill:"ファーストビューは___秒で誰の何を解決するか伝え、大半が___で見られるのでスマホ最優先で作る。",bank:["3","スマホ","30","PC","10"],a:[0,1],exp:"3秒勝負、スマホ最優先。"},
 {fill:"デザインの知識はAIへの___力になり、出てきたLPはデザイン原則の目で___する。",bank:["指示","検品","保存","翻訳","印刷"],a:[0,1],exp:"指示力と検品眼が武器。"}
+,
+{fill:"LPの語源は「___(land)する場所」。広告やSNSから来た人が最初に___するページ。",bank:["着地","到着","出発","離脱","保存"],a:[0,1],exp:"landing=着地するページ。"},
+{fill:"デザイン上達の近道は、プロのLPを___して構造で読むこと。作る力は___量に比例する。",bank:["分解","読んだ","保存","書いた","消した"],a:[0,1],exp:"分解して盗む。実践演習の核。"},
+{fill:"視線誘導では、要素の少ない画面は___型、文章の多いページは___型の流れを意識する。",bank:["Z","F","L","O","X"],a:[0,1],exp:"Z型とF型。"},
+{fill:"ジャンプ率とは要素の___の差のこと。差が大きいほど___が効いて視線が誘導される。",bank:["大小","メリハリ","色","価格","距離"],a:[0,1],exp:"大小の差=ジャンプ率。"},
+{fill:"BtoBのCTAは「今すぐ契約」でなく資料請求など___一歩にし、そこから商談へ繋ぐ___的な動線を作る。",bank:["軽い","段階","重い","直線","最終"],a:[0,1],exp:"低ハードル+段階的動線。"},
+{fill:"塗装LPで効く信頼の材料は、地域名・施工事例写真・お客様の声・資格保証・___出し・料金の___。",bank:["顔","透明性","背中","高さ","秘密"],a:[0,1],exp:"信頼の総量を積む要素。"},
+{fill:"イマイチなLPの問題点列挙と改善案づくりは、そのままお客様への___の練習になり___資料にもなる。",bank:["提案","営業","印刷","翻訳","保存"],a:[0,1],exp:"分析力は営業資産。"}
 ]},
 
 ]};
@@ -2211,7 +2276,7 @@ Uncaught TypeError: Cannot read properties of null...
 <div class="pointbox"><b>つまづきポイント & 心構え:</b>デバッグの最強の武器は、実は<b>console.log</b>や。「どこまで正しく動いてるか」を、要所要所にconsole.logを挟んで確認する。「ここまでは値が正しい、次の行で変になる」と分かれば、原因の行が特定できる。これを"プリントデバッグ"と言って、プロも日常的にやってる基本技や。<br>そして<b>15分ルール</b>——詰まったら15分は自力+AIで格闘する。でも15分超えたら、意地を張らず質疑提出シートで真殿さんへ。「エラーで半日溶かす」のだけは避ける。エラーは恥やない、詰まるのは当たり前。大事なのは、エラー文を落ち着いて読む習慣と、抱え込まずに聞く判断力や。これができたら、もう立派な開発者やで。</div>`,
 task:["自分の見積もりツールにわざとバグを3つ仕込み(スペルミス等)、エラー文を読んで全部直す","直せないフリをして、エラー相談テンプレ4点セットでAIに相談する練習を1回やる"],
 quiz:[
-{fill:"エラー文「at index.html:42」からは___で起きたと分かる。まずその【0]を見に行く。エラーは敵でなく___。",bank:["42行目","道しるべ","42秒","敵","42個"],a:[0,1],exp:"行番号を見る。エラーは案内板。"},
+{fill:"エラー文「at index.html:42」からは___で起きたと分かるので、まずその行を見に行く。エラーは敵でなく___。",bank:["42行目","道しるべ","42秒","敵","42個"],a:[0,1],exp:"行番号を見る。エラーは案内板。"},
 {fill:"AIにエラー相談するとき、エラー文は___せず全文___する。",bank:["要約","コピペ","翻訳","削除","保存"],a:[0,1],exp:"全文コピペが鉄則。"},
 {fill:"デバッグの最強の武器は___で、要所に挟んでどこまで正しく動くか確認する。詰まったら___ルールで質疑シートへ。",bank:["console.log","15分","alert","30分","print"],a:[0,1],exp:"プリントデバッグ。15分ルール。"},
 {fill:"「Unexpected token」の定番原因は、カッコや引用符の___。エラー相談は、やりたいこと・コード全文・エラー全文・試したことの___点セット。",bank:["閉じ忘れ","4","開き忘れ","3","5"],a:[0,1],exp:"閉じ忘れ。相談は4点セット。"},
@@ -2283,6 +2348,16 @@ quiz:[
 {fill:"入力値を再訪問時にも復元するには___を使い、保存時は JSON.___でオブジェクトを文字にする。",bank:["LocalStorage","stringify","fetch","parse","Cookie"],a:[0,1],exp:"LocalStorage+stringify/parse。"},
 {fill:"「Cannot read properties of null」で最初に疑うのは___のスペルミス。計算前に入力値を___で数値化する。",bank:["querySelector","Number()","fetch","String()","await"],a:[0,1],exp:"セレクタのスペル、Numberで数値化。"},
 {fill:"ボタンにクリック時の処理を結びつけるのは___。通信結果を待つには関数にasyncを付け___を使う。",bank:["addEventListener","await","onClick","then","sync"],a:[0,1],exp:"addEventListener、async/await。"}
+,
+{fill:"Web3言語の役割は、HTML=___、CSS=見た目、JS=___。",bank:["骨組み","動き","色","保存","印刷"],a:[0,1],exp:"構造・見た目・動きの分担。"},
+{fill:"KYOEI流の学習順序は___→改造→ゼロから。AIの出力を理解せず___するのが最大のNG。",bank:["写経","コピペ","印刷","暗記","保存"],a:[0,1],exp:"写経→改造→ゼロから。"},
+{fill:"CSSが効かない時はセレクタの___忘れを疑い、余白の調整は___(F12)で実物を見ながらやる。",bank:["ドット","DevTools","カンマ","Excel","メモ帳"],a:[0,1],exp:"ドット忘れとDevTools。"},
+{fill:"子を横一列に並べるには親に___を指定し、間隔は___で空ける。",bank:["display:flex","gap","display:grid","margin","padding"],a:[0,1],exp:"親にflex、gapで間隔。"},
+{fill:"タップ部品は___px以上。入力欄は___で包むと文字タップでも反応する。",bank:["44","label","24","div","33"],a:[0,1],exp:"44px+label。"},
+{fill:"関数の結果がおかしい時は___の書き忘れを疑う。変数の中身確認は___が基本動作。",bank:["return","console.log","let","alert","const"],a:[0,1],exp:"return忘れとプリントデバッグ。"},
+{fill:"配列の絞り込みは___、変換は___。この2つはReactでもCraftFileでも毎日使う。",bank:["filter","map","push","sort","slice"],a:[0,1],exp:"filter/mapは必修。"},
+{fill:"通信はasyncと___のセットで書く。保存はLocalStorage+JSON.___の組み合わせ。",bank:["await","stringify","then","parse","sync"],a:[0,1],exp:"async/await、stringify保存。"},
+{fill:"プロトタイプは速く作ってよいが、___は妥協しない。AI生成コードは最低3箇所___して自分のものにする。",bank:["理解","改造","印刷","保存","翻訳"],a:[0,1],exp:"理解と改造で身につける。"}
 ]},
 ]};
 
@@ -2747,7 +2822,7 @@ quiz:[
 {fill:"DBの構造変更は直接いじらず、変更内容を___ファイルとして書いて実行する。「何回実行しても結果が同じ」性質を___と呼ぶ。",bank:["マイグレーション","冪等","バックアップ","可逆","ログ"],a:[0,1],exp:"マイグレーションで履歴管理。冪等=2回流しても壊れない。"},
 {fill:"冪等化の基本テクは、無ければ足す___を付けること。2回流しても___。",bank:["IF NOT EXISTS","壊れない","IF EXISTS","消える","REPLACE"],a:[0,1],exp:"IF NOT EXISTSで安全に。"},
 {fill:"DBの接続情報やAPIキーは___ファイルに書き、絶対にGitに___しない。",bank:[".env","コミット","config",".gitignore","push"],a:[0,1],exp:"秘密の直書き・流出は二大事故。"},
-{fill:"マイグレーションをファイルにする利点は、履歴が残る・環境間で再現できる・___できること。研修中の実行判断は本番影響の___。",bank:["レビュー","例外","削除","禁止","保存"],a:[0,1],exp:"レビューできる。実行は直接確認の例外事項。"},
+{fill:"マイグレーションをファイルにする利点は、履歴が残る・環境間で再現できる・___できること。研修中、実行の判断は本番影響があるため質疑シート不要の___として即・直接確認する。",bank:["レビュー","例外","削除","禁止","保存"],a:[0,1],exp:"レビューできる。実行判断は直接確認の例外事項。"},
 {fill:"列の___や型変更はデータ消失リスクがあり最大級に慎重に。列の___は比較的安全。",bank:["削除","追加","変更","保存","複製"],a:[0,1],exp:"削除・変更は危険、追加は安全寄り。"}
 ]},
 {id:"c3-11",t:"Claude Code協業:要件プロンプト",min:"45分",terms:["Claude Code","要件 / 要件定義"],
@@ -2854,7 +2929,7 @@ quiz:[
 {fill:"KYOEIルールの検品では、新規モデルの___と、100vhが___ないかを見る。",bank:["tenantId","混ざって","userId","増えて","消えて"],a:[0,1],exp:"tenantId最重要、dvh確認。"},
 {fill:"分からない変更に出会ったら放置せず、AIに何をしていて___必要かを___させる。",bank:["なぜ","説明","いつ","保存","削除"],a:[0,1],exp:"納得できなければ採用しない。"},
 {fill:"「AIが書いたので分かりません」がNGなのは、提出した瞬間からそれは自分の___であり、___責任があるから。",bank:["コード","説明","時間","色","予算"],a:[0,1],exp:"検品と理解までがセット。"},
-{fill:"検品は「やったつもり」でなく___を見ながら1項目ずつ___する。ベテランほど大事な変更ほど確認する。",bank:["チェックリスト","潰","時計","保存","削除"],a:[0,1],exp:"リストを見ながら潰す。"}
+{fill:"検品は「やったつもり」でなく___を見ながら1項目ずつ___す。ベテランほど、大事な変更ほど確認する。",bank:["チェックリスト","潰","時計","保存","削除"],a:[0,1],exp:"リストを見ながら潰す。"}
 ]},
 {id:"c3-13",t:"OJT:実案件への入り方",min:"30分",terms:["OJT","sandbox","ナレッジベース"],
 body:`<h3>ここからは実戦や</h3>
@@ -3005,7 +3080,7 @@ quiz:[
 {fill:"新機能が動くことと既存機能を壊してないことは別で、後者の確認を___と呼ぶ。「動いた」と「___てない」は別物。",bank:["回帰確認","壊れ","結合テスト","動い","保存し"],a:[0,1],exp:"回帰確認=既存を壊してないか。"},
 {fill:"確認は正常系・異常系・___の3つの角度から。プロとの差は___と境界をどれだけ想像できるか。",bank:["境界","異常系","結合","正常系","負荷"],a:[0,1],exp:"異常系と境界の想像力。"},
 {fill:"良いバグ報告の3点は、___手順・期待する動き・___の動き。誰でも再現できる形で。",bank:["再現","実際","保存","理想","削除"],a:[0,1],exp:"再現手順が最重要。"},
-{fill:"next buildグリーンは品質の___ラインで、実機・回帰・チェックリストと合わせて___になる。",bank:["最低","品質","最高","速度","色"],a:[0,1],exp:"buildは入口、品質はチェーン。"},
+{fill:"next buildグリーンは品質の___ラインで、実機・回帰・チェックリストまで通して初めて___が保証される。",bank:["最低","品質","最高","速度","色"],a:[0,1],exp:"buildは入口。品質は確認のチェーンで保証する。"},
 {fill:"「自分の環境では動いた」で揉めないよう、バグ報告には___(機種・ブラウザ)を必ず書く。確認は頭でなく実際に___を動かす。",bank:["環境","手","時刻","目","足"],a:[0,1],exp:"環境明記、実際に試す。"}
 ]},
 {id:"c3-18",t:"読解演習:コードを読む技術",min:"45分",terms:["スキーマ","コンポーネント","App Router"],
@@ -3072,6 +3147,14 @@ quiz:[
 {fill:"実装完了の合格報告は「next build___・実機確認済み・差分を___できます」。",bank:["グリーン","説明","レッド","保存","削除"],a:[0,1],exp:"build・実機・差分理解の3点。"},
 {fill:"AI生成コードの検品で最優先すべき観点は___(push・秘密・削除範囲)で、tenantId漏れは___で見つける価値がある。",bank:["安全","レビュー","速度","保存","色"],a:[0,1],exp:"安全が最優先。"},
 {fill:"Claude Codeを実案件で使う前提は、Git・環境の基礎を固め、制約明記と人間の___体制があること。強力=___と隣り合わせ。",bank:["確認","危険","保存","安全","削除"],a:[0,1],exp:"免許を取ってから乗る車。"}
+,
+{fill:"ターミナルの現在地確認は___、VSCodeの全体テキスト検索は___。",bank:["pwd","Cmd/Ctrl+Shift+F","ls","Cmd/Ctrl+P","cd"],a:[0,1],exp:"pwd+全体検索。"},
+{fill:"TypeScriptの型エラーは本番前に教えてくれる___。anyで黙らせるのは恩恵を___行為でNG。",bank:["味方","捨てる","敵","増やす","保存する"],a:[0,1],exp:"型エラーは味方。"},
+{fill:"Reactではstateを直接書き換えず___関数を通す。一覧表示は___+keyが定番。",bank:["更新","map","削除","filter","保存"],a:[0,1],exp:"setState経由+map/key。"},
+{fill:"Next.jsでは___構成がURLになる。全ページ共通の枠は___に置く。",bank:["フォルダ","layout.tsx","ファイル","page.tsx","index"],a:[0,1],exp:"フォルダ=URL、共通枠はlayout。"},
+{fill:"確認の3つの角度は正常系・___・境界。バグ報告は再現手順・期待・___の3点セット。",bank:["異常系","実際","結合","理想","予想"],a:[0,1],exp:"異常系と境界の想像力。"},
+{fill:"OJTの3段階は読む→___→作る。最初の目標は自分の___がマージされること。",bank:["直す","PR","消す","日報","メモ"],a:[0,1],exp:"読む→直す→作る、初PRマージ。"},
+{fill:"コード読解は___(データの設計図)から読み始め、画面の文言からの___で該当コードに辿り着く。",bank:["schema.prisma","逆引き","README","翻訳","印刷"],a:[0,1],exp:"設計図から+逆引き。"}
 ]},
 ]};
 
@@ -3081,6 +3164,35 @@ const GPTC = {
 id:"g1", no:2, name:"ChatGPT徹底活用",
 desc:"機能・モデルの違いを理解し、ChatGPTを業務の主力ツールとして使いこなす",
 lessons:[
+{id:"g1-00",t:"ChatGPTとは:成り立ちと基礎知識",min:"25分",terms:["LLM(大規模言語モデル)","生成AI","トークン"],
+body:`<h3>ChatGPTの正体</h3>
+<p>ChatGPTは、アメリカの<b>OpenAI</b>という会社が作った対話型の生成AIや。2022年11月に公開されると、わずか2ヶ月で利用者1億人を突破——史上最速で普及したサービスと言われ、世界中に「生成AIブーム」を巻き起こした。今のAI時代の火付け役、と覚えておけばええ。</p>
+<h3>名前の意味を分解する</h3>
+<p>「ChatGPT」という名前には、仕組みがそのまま入ってる:</p>
+<ul>
+<li><b>Chat</b>:会話。対話形式で使えるという意味</li>
+<li><b>G = Generative(生成)</b>:文章や画像を新しく作り出す</li>
+<li><b>P = Pre-trained(事前学習済み)</b>:大量の文章をあらかじめ学習してある</li>
+<li><b>T = Transformer(トランスフォーマー)</b>:中身の仕組み(モデル構造)の名前。2017年に発表された技術で、今の生成AIブームの土台になった大発明や</li>
+</ul>
+<p>つまりChatGPTは「<b>事前に大量学習した、Transformer型の、会話できる生成AI</b>」。コース1で学んだ「次に来る自然な言葉を予測する機械(LLM)」の代表選手や。</p>
+<h3>できること・できないこと(基礎)</h3>
+<ul>
+<li><b>できる</b>:文章の作成・要約・翻訳・言い換え/アイデア出し/画像の生成と読み取り/コードの作成/Web検索を使った調査/音声での会話</li>
+<li><b>できない・苦手</b>:知らないことを正直に「知らん」と言うこと(ハルシネーション)/最新情報を検索なしで答えること/計算の完全な正確性/「あなたの会社の常識」を勝手に知ってること(だから前提を渡す)</li>
+</ul>
+<h3>ライバルたちとの関係</h3>
+<p>ChatGPTの成功を受けて、Googleが<b>Gemini</b>、Anthropicが<b>Claude</b>を出し、今は3強が競い合ってる(この2つは次のコースで徹底的にやる)。競争のおかげで性能は数ヶ月単位でどんどん上がってる。<b>だから「今できないこと」も半年後にはできてる可能性がある</b>——AIの知識は「構造」で覚えて、最新情報はその都度確かめる、という姿勢が大事なんや。</p>
+<div class="pointbox"><b>ポイント:</b>道具の成り立ちを知ってると、ニュースや新機能の発表を聞いたときに「ああ、あの流れの話やな」と文脈が分かるようになる。お客様や社内に「ChatGPTって何なん?」と聞かれたとき、「OpenAIが作った対話型の生成AIで、次に来る言葉を予測する仕組みです。2022年に出て世界を変えました」と一言で説明できたら、それだけで頼られる存在になれるで。まずは"説明できる基礎"を持とう。</div>`,
+task:["ChatGPT本人に「あなたは誰が作った、どういう仕組みのAI?小学生にも分かるように説明して」と聞き、返答を自分の言葉で3行にまとめる","家族や同僚に「ChatGPTとは何か」を1分で説明してみる(説明できたらチェック)"],
+quiz:[
+{fill:"ChatGPTを作った会社は___で、2022年の公開後わずか2ヶ月で利用者___億人を突破した。",bank:["OpenAI","1","Google","10","Anthropic"],a:[0,1],exp:"OpenAI製。史上最速で1億人に普及した。"},
+{fill:"GPTのGは___(生成)、Pは事前学習済み、Tは___という仕組みの名前。",bank:["Generative","Transformer","Google","Chat","Program"],a:[0,1],exp:"Generative Pre-trained Transformer。"},
+{fill:"Transformerは___年に発表された技術で、今の生成AIブームの___になった。",bank:["2017","土台","2022","結果","2010"],a:[0,1],exp:"2017年の大発明が土台。"},
+{fill:"ChatGPTが苦手なのは、知らないことを正直に知らないと言うこと(___)と、検索なしで___情報を答えること。",bank:["ハルシネーション","最新","トークン","過去","翻訳"],a:[0,1],exp:"幻覚と情報の鮮度が弱点。"},
+{fill:"AIの性能は数ヶ月単位で上がるので、知識は___で覚えて、最新情報はその都度___のが正しい姿勢。",bank:["構造","確かめる","名前","無視する","暗記する"],a:[0,1],exp:"構造で覚え、最新は都度確認。"}
+]},
+
 {id:"g1-01",t:"ChatGPTの全体像と画面",min:"20分",terms:["生成AI","LLM(大規模言語モデル)"],
 body:`<h3>まず全体像をつかむ</h3>
 <p>ChatGPTの画面は、大きく3つの要素でできてる。①左のサイドバー(チャット履歴・プロジェクト)②真ん中のチャット欄 ③画面上部のモデル選択。機能はどんどん増え続けてるけど、迷ったらこの3つの場所を思い出せばええ。</p>
@@ -3280,7 +3392,7 @@ quiz:[
 {fill:"検索つきでも___は起きるので、重要情報は___リンクを開いて原文を確認する。",bank:["ハルシネーション","出典","保存","翻訳","印刷"],a:[0,1],exp:"出典を開いて確認。"},
 {fill:"調査依頼プロンプトには、調査目的・観点・___必須の出力を含める。丸投げだと浅い___が返る。",bank:["出典","一般論","色","結論","価格"],a:[0,1],exp:"目的と観点を渡す。"},
 {fill:"Deep Researchは___消費が大きいので、腰を据えた___だけに使う。",bank:["上限","調査","料金","雑談","保存"],a:[0,1],exp:"重い機能は重い調査だけ。"},
-{fill:"調査結果を___に資料へ貼らず、___を開いて数値や固有名詞を確認してから使う。",bank:["そのまま","出典","丁寧","保存","翻訳"],a:[0,1],exp:"出典確認してから使う。"}
+{fill:"調査結果を___資料へ貼らず、___を開いて数値や固有名詞を確認してから使う。",bank:["そのまま","出典","丁寧に","保存して","翻訳して"],a:[0,1],exp:"出典確認してから使う。"}
 ]},
 {id:"g1-07",t:"音声・画像入力:目と耳を使う",min:"20分",terms:["OCR","壁打ち"],
 body:`<h3>ChatGPTは「見る」「聞く」ができる</h3>
@@ -3370,6 +3482,14 @@ quiz:[
 {fill:"メモリは定期的に___・削除し、顧客の___は覚えさせない。",bank:["確認","個人情報","保存","会社名","ブランド"],a:[0,1],exp:"定期掃除、機密は入れない。"},
 {fill:"画像から読み取った数値は必ず目視___し、手書きの7と1などの読み___に注意。",bank:["検品","間違い","保存","増加","翻訳"],a:[0,1],exp:"OCRは検品とセット。"},
 {fill:"Canvasは長文をチャット往復で直す___を解消し、部分選択→修正指示は___指示のUI版。",bank:["非効率","差分","料金","全体","保存"],a:[0,1],exp:"共同編集で非効率を解消。"}
+,
+{fill:"ChatGPTを作った会社は___。GPTのTは___という仕組みの名前で、2017年発表の技術が土台。",bank:["OpenAI","Transformer","Google","Chat","Anthropic"],a:[0,1],exp:"OpenAI製。Transformerが土台。"},
+{fill:"ファイル添付では、何を___か・どんな___で出すかを先に指定すると的確に抜き出してくれる。",bank:["知りたい","形","消したい","色","値段"],a:[0,1],exp:"目的つき指示の徹底。"},
+{fill:"プロジェクトは用途・___ごとに分ける。詰め込みすぎると1テーマ1チャットの___が薄れる。",bank:["案件","利点","色","時間","費用"],a:[0,1],exp:"案件ごとに部屋を分ける。"},
+{fill:"音声会話は移動中の___に最強。ただし___運転が最優先で、操作は停車中に。",bank:["壁打ち","安全","読書","高速","娯楽"],a:[0,1],exp:"移動中の思考整理。安全第一。"},
+{fill:"写真の読み取り精度は、正面から・影なし・___の3つで大きく上がる。読み取った数値は必ず目視___。",bank:["ピント","検品","逆光","保存","翻訳"],a:[0,1],exp:"撮り方3原則+検品。"},
+{fill:"調査依頼には調査___と観点を渡す。丸投げだと浅い___しか返らない。",bank:["目的","一般論","予算","結論","感想"],a:[0,1],exp:"目的と観点で調査の質が決まる。"},
+{fill:"カスタム指示は自分で___する固定前提、メモリは会話から___溜まる記憶。両方を管理するのがプロ仕様。",bank:["設計","自動で","削除","手動で","有料で"],a:[0,1],exp:"設計と自動蓄積の使い分け。"}
 ]},
 ]};
 
@@ -3378,6 +3498,34 @@ const GEMC = {
 id:"g2", no:3, name:"Gemini徹底活用",
 desc:"長文読解・OCR・Google連携。Geminiを「読む仕事」の主力にする",
 lessons:[
+{id:"g2-00",t:"Geminiとは:Googleが作るAIの基礎知識",min:"25分",terms:["LLM(大規模言語モデル)","コンテキストウィンドウ","生成AI"],
+body:`<h3>Geminiの正体</h3>
+<p>Geminiは、検索エンジンでおなじみの<b>Google</b>が作った生成AIや。Googleは実はAI研究の超名門で、生成AIブームの土台になった<b>Transformer(GPTのT)を発明したのはGoogleの研究者たち</b>なんや(2017年の論文)。つまり、今のAIブームの技術的な生みの親でもある。</p>
+<h3>名前と歩み</h3>
+<ul>
+<li><b>Gemini(ジェミナイ)</b>=ふたご座。Googleの2つのAI研究チーム(Google BrainとDeepMind)が合流して生まれたことに由来すると言われてる</li>
+<li>以前は「Bard(バード)」という名前で提供されてたが、2024年にGeminiへ統一された</li>
+<li>スマホ(特にAndroid)やGoogle検索、Gmailなど、<b>Googleの製品群に深く組み込まれていく</b>のが最大の特徴や</li>
+</ul>
+<h3>Geminiの生まれつきの強み</h3>
+<ul>
+<li><b>マルチモーダル設計</b>:最初から「文章も画像も音声も動画もまとめて理解する」前提で設計された。画像の読み取り(OCR)に強いのはこのため</li>
+<li><b>大きなコンテキストウィンドウ</b>:一度に読める量が大きく、長文・大量データの読解に強い</li>
+<li><b>Googleサービスとの一体化</b>:Gmail・ドキュメント・スプレッドシートの中で直接働ける。これは他のAIには真似できん強み</li>
+<li><b>検索との連携</b>:Google検索と繋がった最新情報へのアクセス</li>
+</ul>
+<h3>「読む仕事の主力」になった理由</h3>
+<p>KYOEIでGeminiを「読む仕事」に使うのは、この生まれつきの設計(マルチモーダル+大容量+Google連携)が理由や。CraftFileの工事黒板OCRにGeminiを採用したのも、画像読み取りの正確さを比較検証した結果や。<b>道具の出自を知ると、なぜその道具がその仕事に向いてるかが腹落ちする</b>やろ。</p>
+<div class="pointbox"><b>ポイント:</b>「GoogleのAI」という出自は、単なる豆知識やない。<b>Googleのサービスを使ってる限り、Geminiとの接点はこれからどんどん増える</b>ということや。検索・Gmail・スプレッドシート——KYOEIの業務がGoogleの上で回ってる以上、Geminiは"そこにいるAI"になっていく。他のAIを開くまでもない場面で、その場でサッと使う。この距離の近さこそ、Geminiの本当の強みやで。</div>`,
+task:["Geminiに「あなたは誰が作った、何が得意なAI?」と聞き、ChatGPTの答えと比べて違いを2つメモする","自分のGoogleアカウントでGeminiを開き、Gmailかドキュメントとの連携機能を1つ探して触ってみる"],
+quiz:[
+{fill:"Geminiを作ったのは___で、生成AIブームの土台となったTransformerを発明したのも同じ会社の研究者たち。GoogleはAI研究の___でもある。",bank:["Google","名門","OpenAI","新参","Meta"],a:[0,1],exp:"GoogleはAI研究の超名門。Transformerの生みの親。"},
+{fill:"Geminiは以前___という名前で提供されており、名前の由来はGoogleの2つのAI研究チームの___とされる。",bank:["Bard","合流","Chat","分裂","Palm"],a:[0,1],exp:"Bard→Gemini。ふたご座=2チームの合流。"},
+{fill:"Geminiは最初から文章・画像・音声をまとめて理解する___設計で、一度に読める量である___も大きい。",bank:["マルチモーダル","コンテキストウィンドウ","シングル","トークン","メモリ"],a:[0,1],exp:"マルチモーダル+大容量が生まれつきの強み。"},
+{fill:"Geminiの他AIに真似できない強みは、Gmailやドキュメントなど___の製品群の中で直接___こと。",bank:["Google","働ける","Apple","休める","Microsoft"],a:[0,1],exp:"Google一体化が独壇場。"},
+{fill:"CraftFileの工事黒板OCRにGeminiを採用したのは、画像___の正確さを___した結果。",bank:["読み取り","比較検証","生成","放置","翻訳"],a:[0,1],exp:"検証して選ばれた実採用例。"}
+]},
+
 {id:"g2-01",t:"Geminiの全体像とモデル(Flash/Pro)",min:"20分",terms:["LLM(大規模言語モデル)","コンテキストウィンドウ"],
 body:`<h3>Geminiの立ち位置</h3>
 <p>GeminiはGoogleが作ったAI。KYOEIでの役割は<b>「読む仕事」の主力</b>や。具体的には、長文PDFの読解、画像・手書きの読み取り(OCR)、そしてGmail・ドキュメント・スプレッドシートとの連携。CraftFileの工事黒板の文字読み取りにGeminiが採用されてるのは、この「読む力」の証明や。</p>
@@ -3548,6 +3696,14 @@ quiz:[
 {fill:"読む仕事の共通鉄則は、出典・位置を言わせて、重要箇所は必ず___すること。名刺のデータ化には___形式が便利。",bank:["検品","CSV","保存","PDF","翻訳"],a:[0,1],exp:"検品の型とCSV出力。"},
 {fill:"速くて軽い___モデルは下調べ向き、精密な分析には___モデルを使い、タスクの重さと揃える。",bank:["Flash","Pro","高速","画像","音声"],a:[0,1],exp:"Flash/Proの使い分け。"},
 {fill:"OCR結果を金額計算に使うなら全___の目視検品が必須で、CraftFileでは工事___のOCRにGeminiを採用。",bank:["数値","黒板","文字","看板","色"],a:[0,1],exp:"全数検品、黒板OCRの実採用。"}
+,
+{fill:"Geminiを作ったのは___で、以前は___という名前で提供されていた。",bank:["Google","Bard","OpenAI","Chat","Gem"],a:[0,1],exp:"Google製、旧名Bard。"},
+{fill:"Geminiは文章・画像・音声をまとめて理解する___設計で、これがOCRの強さの___。",bank:["マルチモーダル","理由","シングル","弱点","結果"],a:[0,1],exp:"マルチモーダルが読み取りの強さの源。"},
+{fill:"生成AIブームの土台となったTransformerを発明したのは___の研究者たち。同社はAI研究の___。",bank:["Google","名門","OpenAI","新参","Apple"],a:[0,1],exp:"GoogleがTransformerの生みの親。"},
+{fill:"感情が絡む謝罪やクレーム対応のメールは、AIは___まで。最終文面は___が仕上げる。",bank:["下書き","人間","送信","AI","保存"],a:[0,1],exp:"感情の調整は人間の仕事。"},
+{fill:"議事録アーカイブや社内マニュアルのQA化には___が向く。アップした資料だけを根拠に___つきで答える。",bank:["NotebookLM","出典","Bard","予想","検索"],a:[0,1],exp:"資料限定+出典表示。"},
+{fill:"紙の料金表や名刺の束をデータ化するとき、読み取りに自信がない箇所には___を付けさせて重点___する。",bank:["?","検品","色","保存","翻訳"],a:[0,1],exp:"不確実申告→重点検品の型。"},
+{fill:"長文読解で条文___つきで出させるのは、原本との___を一瞬で終わらせるため。",bank:["番号","突き合わせ","色","翻訳","保存"],a:[0,1],exp:"位置を言わせて検品を効率化。"}
 ]},
 ]};
 
@@ -3556,6 +3712,30 @@ const CLDC = {
 id:"g3", no:4, name:"Claude徹底活用",
 desc:"モデルの使い分けと上限管理を武器に、文章とコードの主力AIを使いこなす",
 lessons:[
+{id:"g3-00",t:"Claudeとは:Anthropicの成り立ちと思想",min:"25分",terms:["LLM(大規模言語モデル)","生成AI","プロンプト"],
+body:`<h3>Claudeの正体</h3>
+<p>Claudeは、アメリカの<b>Anthropic(アンソロピック)</b>という会社が作った生成AIや。Anthropicは2021年に、<b>元OpenAIの研究者たちが独立して設立</b>した会社。つまりChatGPTを作った会社の中心メンバーの一部が「AIの安全性をもっと重視したい」という思いで飛び出して作ったんが、この会社なんや。</p>
+<h3>「安全性重視」という思想</h3>
+<p>Anthropicの一番の特徴は、<b>AIの安全性・誠実さを設計の中心に置いてる</b>こと。「Constitutional AI(憲法AI)」という独自の手法で、AIに守るべき原則を持たせて訓練してる。その結果として、Claudeには次のような性格がある:</p>
+<ul>
+<li><b>指示への忠実さ</b>:長い制約リストを最後まで守り抜く力が強い。KYOEI制約(pushしない・tenantId必須…)をズラッと並べても崩れにくいのは、この設計思想の恩恵や</li>
+<li><b>慎重で丁寧な文章</b>:自然で論理的な日本語。誇張や暴走が少ない</li>
+<li><b>長文の扱いに強い</b>:長い文書の読み書きが得意</li>
+</ul>
+<h3>名前の由来</h3>
+<p>「Claude」の名前は、情報理論の父<b>クロード・シャノン</b>(Claude Shannon)にちなむと言われてる。シャノンは「情報」を数学で扱えるようにした天才で、今のコンピュータ・通信の理論的な土台を作った人や。由来からも、理知的なキャラクターを狙ってるのが分かるな。</p>
+<h3>KYOEIとClaudeの関係</h3>
+<p>KYOEIでは、Claudeが<b>開発と文章の主力</b>や。CraftFileの開発に使うClaude Codeも、この研修アプリを作ったのも、Anthropic製のClaude。「制約に忠実・コードに強い・長文に強い」という性格が、業務システム開発との相性抜群やからや。モデル名(Haiku/Sonnet/Opus)が俳句・詩から来てるのも、ちょっと文学的でおもろいやろ。</p>
+<div class="pointbox"><b>ポイント:</b>「元OpenAIのメンバーが安全性を求めて独立した会社」という出自を知ると、Claudeの性格(慎重・忠実・丁寧)に納得がいくはずや。AIはどれも同じやなく、<b>作った会社の思想が性格に出る</b>。ChatGPT=何でもできる万能選手、Gemini=Googleと一体の読み取り屋、Claude=誠実で忠実な書き手・作り手。この"人柄"の違いを掴んでおくと、仕事の振り分けが自然にできるようになるで。</div>`,
+task:["Claudeに「あなたを作った会社と、その会社の理念を教えて」と聞き、自分の言葉で3行にまとめる","同じ質問(例:お客様への謝罪文の書き出し)を3大AIに投げて、回答の\"性格の違い\"を感じ取ってメモする"],
+quiz:[
+{fill:"Claudeを作ったAnthropicは、元___の研究者たちが2021年に独立して設立した会社で、AIの___を設計の中心に置いている。",bank:["OpenAI","安全性","Google","速度","Apple"],a:[0,1],exp:"元OpenAI組が安全性重視で独立。"},
+{fill:"Anthropicは___という独自手法でAIに守るべき原則を持たせており、Claudeの長い___リストへの忠実さはその恩恵。",bank:["Constitutional AI","制約","Transformer","出力","検索"],a:[0,1],exp:"憲法AIによる原則の訓練。"},
+{fill:"Claudeの名前は情報理論の父___に由来すると言われ、モデル名のHaiku/Sonnet/Opusは___や詩から来ている。",bank:["クロード・シャノン","俳句","チューリング","小説","エジソン"],a:[0,1],exp:"シャノン+俳句・詩の文学的な命名。"},
+{fill:"AIは作った会社の___が性格に出る。Claudeは誠実で___な書き手・作り手という性格。",bank:["思想","忠実","資本","雑","規模"],a:[0,1],exp:"会社の思想がAIの人柄になる。"},
+{fill:"KYOEIの開発の相棒であるClaude Codeも、この研修アプリを作ったのも___製のAI。制約に忠実で___に強い性格が開発と好相性。",bank:["Anthropic","コード","OpenAI","画像","Google"],a:[0,1],exp:"開発主力の理由は性格との相性。"}
+]},
+
 {id:"g3-01",t:"Claudeの全体像と得意分野",min:"20分",terms:["生成AI","プロトタイプ"],
 body:`<h3>Claudeの立ち位置</h3>
 <p>ClaudeはAnthropicが作ったAI。KYOEIでの役割は<b>「書く仕事と作る仕事」の主力</b>や:</p>
@@ -3794,6 +3974,14 @@ quiz:[
 {fill:"日常の主力は___、勝負どころだけ___に上げるのが上限にも品質にも効率的。",bank:["Sonnet","Opus","Haiku","Flash","Pro"],a:[0,1],exp:"基本Sonnet、勝負どころOpus。"},
 {fill:"Claude Codeを実案件で使う前提は、Git・環境の___を固め、制約明記と人間の___体制があること。",bank:["基礎","確認","応用","自動","保存"],a:[0,1],exp:"基礎と検品体制。"},
 {fill:"上限管理の本質は、賢さを価値の高い仕事に___することで、これができる人がAIを___いる人。",bank:["配分","使いこなして","保存","消して","翻訳"],a:[0,1],exp:"配分の戦略眼。"}
+,
+{fill:"Claudeを作ったAnthropicは、元___の研究者が___を重視して独立した会社。",bank:["OpenAI","安全性","Google","速度","Apple"],a:[0,1],exp:"元OpenAI組の安全性重視。"},
+{fill:"Anthropicの___という手法がClaudeの制約への___さを生んでいる。",bank:["Constitutional AI","忠実","Transformer","曖昧","検索"],a:[0,1],exp:"憲法AIが忠実さの源。"},
+{fill:"Claudeの名前は情報理論の父___に由来。モデル名は俳句・___など文学から。",bank:["クロード・シャノン","詩","チューリング","映画","絵画"],a:[0,1],exp:"シャノン+文学的命名。"},
+{fill:"Projectsに常設する資料は___くし、大きい資料は必要な時だけ___する設計が上級。",bank:["軽","添付","重","削除","印刷"],a:[0,1],exp:"軽く常設+都度添付。"},
+{fill:"Artifactsで迷走したら、現状仕様をまとめて___チャットで作り直す。長い会話は___も食う。",bank:["新","上限","同じ","色","時間"],a:[0,1],exp:"仕切り直しの勇気。"},
+{fill:"AIは作った会社の___が性格に出る。ChatGPT=万能、Gemini=読む、Claude=___で忠実な書き手。",bank:["思想","誠実","資本","雑","大胆"],a:[0,1],exp:"会社の思想=AIの人柄。"},
+{fill:"チラシのアイキャッチは___、リース契約書チェックは___、と4軸で瞬時に振り分けるのがディレクション力。",bank:["ChatGPT","Gemini","Claude","Excel","Siri"],a:[0,1],exp:"画像=ChatGPT、読む=Gemini。"}
 ]},
 ]};
 
@@ -4200,11 +4388,75 @@ function gradeQuiz(quiz, state, prefix, scopeSel){
 }
 
 let curLesson = null;
-function openLesson(ci, li){
+function missCount(id){ return progress['miss:'+id]||0; }
+function addMiss(id){ progress['miss:'+id]=(progress['miss:'+id]||0)+1; cacheLocal(); scheduleSync(); }
+
+function openLesson(ci, li, mode){
+  mode = mode || 'study';   // 'study'=教材 / 'test'=確認テスト(本文は見返せない)
   curLesson = {ci, li};
   const c = COURSES[ci], l = c.lessons[li];
-  $('#sheetTitle').textContent = `${l.id.toUpperCase()} ${l.t}`;
+  $('#sheetTitle').textContent = `${l.id.toUpperCase()} ${l.t}` + (mode==='test'?' — 確認テスト':'');
   const done = isDone(l.id);
+
+  if(mode === 'test'){
+    /* ===== テストモード:本文なし、問題のみ ===== */
+    const quizHtml = `
+      <div class="quiz-intro"><div class="t">📝 確認テスト(全${l.quiz.length}問)</div><div class="d">テスト中は教材を見返せへん。全問正解で合格。間違えたら教材にもどって読み直してから、もう一回挑戦や。</div></div>
+      <div id="quizArea">` +
+      l.quiz.map((q,qi)=>renderQuestion(q,qi,'')).join('') +
+      `</div>
+      <button class="btn org" id="gradeBtn" style="width:100%;margin-top:14px">採点する</button>
+      <div class="result" id="quizResult"><div class="rt"></div><div class="rd"></div><button class="btn" id="afterBtn" style="margin-top:10px;display:none"></button></div>`;
+    $('#sheetBody').innerHTML = `
+      <div class="small" style="margin-bottom:2px">${c.name} ・ ${l.t}${missCount(l.id)?` ・ <span style="color:var(--red)">これまでの不合格 ${missCount(l.id)}回</span>`:''}</div>
+      ${quizHtml}`;
+    const qstate = initQuizState(l.quiz, '', '#sheetBody');
+    $('#gradeBtn').addEventListener('click',()=>{
+      if(!allAnswered(l.quiz, qstate)){
+        $('#quizResult').className='result fail';
+        $('#quizResult .rt').textContent='未回答の問題があるで';
+        $('#quizResult .rd').textContent='全部の空欄を埋めてから採点しよう';
+        return;
+      }
+      const correct = gradeQuiz(l.quiz, qstate, '', '#sheetBody');
+      const pass = correct === l.quiz.length;
+      const r = $('#quizResult');
+      r.className = 'result ' + (pass?'pass':'fail');
+      const after = $('#afterBtn');
+      $('#gradeBtn').style.display='none';
+      if(pass){
+        r.querySelector('.rt').textContent = `🎉 合格!(${correct}/${l.quiz.length})`;
+        const wasNew = !isDone(l.id);
+        setDone(l.id, true);
+        const nx = nextLesson();
+        if(nx){
+          r.querySelector('.rd').textContent = wasNew ? '次のレッスンが解放された' : '合格済みレッスンの再確認、ええ習慣や';
+          after.textContent = '次のレッスンへ進む ▶';
+          after.style.display='inline-block';
+          after.onclick = ()=>{ openLesson(nx.ci, nx.li); window.scrollTo({top:0}); refreshHome(); buildCourses(); };
+        } else {
+          r.querySelector('.rd').textContent = '全レッスン修了!🎊 お疲れさん、ここからが本番や';
+          after.textContent = 'コース一覧にもどる';
+          after.style.display='inline-block';
+          after.onclick = closeSheet;
+        }
+        refreshHome(); buildCourses();
+      } else {
+        addMiss(l.id);
+        r.querySelector('.rt').textContent = `不合格(${correct}/${l.quiz.length})— 通算${missCount(l.id)}回目`;
+        r.querySelector('.rd').textContent = '解説を読んだら、教材にもどって読み直そう。読み直してからの再挑戦が一番身につくで';
+        after.textContent = '📖 教材にもどる';
+        after.style.display='inline-block';
+        after.onclick = ()=>{ openLesson(ci, li, 'study'); $('#lessonSheet').scrollTop=0; };
+      }
+      r.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+    $('#lessonSheet').classList.add('on'); lockScroll(true);
+    $('#lessonSheet').scrollTop = 0;
+    return;
+  }
+
+  /* ===== 学習モード:本文+課題。テストは別画面 ===== */
   let termChips = '';
   if(l.terms && l.terms.length){
     termChips = `<div class="terms-row"><span class="lb">このレッスンの用語:</span>` +
@@ -4218,17 +4470,15 @@ function openLesson(ci, li){
         return `<label class="task"><input type="checkbox" data-id="${k}" ${isDone(k)?'checked':''}><span>${t}</span></label>`;
       }).join('') + `</div>`;
   }
-  const quizHtml = `
-    <div class="quiz-intro"><div class="t">📝 確認テスト(全${l.quiz.length}問)</div><div class="d">上の実践課題(実技)を全て完了してから挑戦できる。全問正解で合格→次のレッスンが解放。何回でも挑戦OK。</div></div>
-    <div id="quizArea">` +
-    l.quiz.map((q,qi)=>renderQuestion(q,qi,'')).join('') +
-    `</div>
-    <button class="btn org" id="gradeBtn" style="width:100%;margin-top:14px">採点する</button>
-    <div class="result" id="quizResult"><div class="rt"></div><div class="rd"></div><button class="btn" id="afterBtn" style="margin-top:10px;display:none"></button></div>`;
+  const miss = missCount(l.id);
+  const testEntry = `
+    <div class="quiz-intro"><div class="t">📝 確認テスト(全${l.quiz.length}問)</div><div class="d">実践課題を全て完了したら挑戦できる。<b>テスト中はこの教材を見返せへん</b>から、読み込んでから挑もう。全問正解で合格→次のレッスンが解放。${miss?`<br><span style="color:var(--red)">これまでの不合格:${miss}回</span>`:''}</div>
+    <button class="btn org" id="startTestBtn" style="width:100%;margin-top:10px">✏️ 確認テストを受ける</button>
+    <div class="result" id="gateMsg"><div class="rt"></div><div class="rd"></div></div></div>`;
   $('#sheetBody').innerHTML = `
     <div class="small" style="margin-bottom:2px">${c.name} ・ 目安${l.min}${done?' ・ <b style="color:var(--green)">合格済み ✓</b>':''}</div>
     <div class="lesson-body">${l.body}</div>
-    ${termChips}${taskHtml}${quizHtml}`;
+    ${termChips}${taskHtml}${testEntry}`;
   // term chips
   $$('#sheetBody .chip').forEach(ch=>ch.addEventListener('click',()=>{
     const term = TERMS.find(t=>t[1]===ch.dataset.term);
@@ -4238,55 +4488,18 @@ function openLesson(ci, li){
   $$('#sheetBody .task input').forEach(cb=>{
     cb.addEventListener('change',()=>setDone(cb.dataset.id, cb.checked));
   });
-  // quiz init(4択・穴埋め両対応)
-  const qstate = initQuizState(l.quiz, '', '#sheetBody');
-  $('#gradeBtn').addEventListener('click',()=>{
+  // テスト入口(実技ゲート)
+  $('#startTestBtn').addEventListener('click',()=>{
     const taskKeys=(l.task||[]).map((_,i)=>l.id+':t'+i);
     const undone=taskKeys.filter(k=>!isDone(k)).length;
     if(undone>0){
-      const r0=$('#quizResult'); r0.className='result fail';
-      r0.querySelector('.rt').textContent='実技課題が先や('+undone+'個未完了)';
-      r0.querySelector('.rd').textContent='テストは知識、課題は実技。両方そろって合格や。上の🔨実践課題を全部やってチェックを入れてから採点しよう';
-      $('#afterBtn').style.display='none';
-      r0.scrollIntoView({behavior:'smooth',block:'center'});
+      const g=$('#gateMsg'); g.className='result fail';
+      g.querySelector('.rt').textContent='実技課題が先や('+undone+'個未完了)';
+      g.querySelector('.rd').textContent='テストは知識、課題は実技。両方そろって合格や。上の🔨実践課題を全部やってチェックを入れてから挑もう';
+      g.scrollIntoView({behavior:'smooth',block:'center'});
       return;
     }
-    if(!allAnswered(l.quiz, qstate)){
-      $('#quizResult').className='result fail';
-      $('#quizResult .rt').textContent='未回答の問題があるで';
-      $('#quizResult .rd').textContent='全部の空欄・選択肢を埋めてから採点しよう';
-      return;
-    }
-    const correct = gradeQuiz(l.quiz, qstate, '', '#sheetBody');
-    const pass = correct === l.quiz.length;
-    const r = $('#quizResult');
-    r.className = 'result ' + (pass?'pass':'fail');
-    const after = $('#afterBtn');
-    if(pass){
-      r.querySelector('.rt').textContent = `🎉 合格!(${correct}/${l.quiz.length})`;
-      const wasNew = !isDone(l.id);
-      setDone(l.id, true);
-      const nx = nextLesson();
-      if(nx){
-        r.querySelector('.rd').textContent = wasNew ? '次のレッスンが解放された' : '合格済みレッスンの再確認、ええ習慣や';
-        after.textContent = '次のレッスンへ進む ▶';
-        after.style.display='inline-block';
-        after.onclick = ()=>{ openLesson(nx.ci, nx.li); window.scrollTo({top:0}); refreshHome(); buildCourses(); };
-      } else {
-        r.querySelector('.rd').textContent = '全レッスン修了!🎊 お疲れさん、ここからが本番や';
-        after.textContent = 'コース一覧にもどる';
-        after.style.display='inline-block';
-        after.onclick = closeSheet;
-      }
-      refreshHome(); buildCourses();
-    } else {
-      r.querySelector('.rt').textContent = `あと少し(${correct}/${l.quiz.length})`;
-      r.querySelector('.rd').textContent = '解説を読んで、もう一回挑戦しよう';
-      after.textContent = 'もう一度挑戦する';
-      after.style.display='inline-block';
-      after.onclick = ()=>openLesson(ci, li);
-    }
-    r.scrollIntoView({behavior:'smooth', block:'center'});
+    openLesson(ci, li, 'test');
   });
   $('#lessonSheet').classList.add('on'); lockScroll(true);
   $('#lessonSheet').scrollTop = 0;
@@ -4546,16 +4759,19 @@ function toggleAdminDetail(uid){
       const pass=d[l.id]===1;
       const tasks=(l.task||[]).length;
       const tdone=(l.task||[]).filter((_,i)=>d[l.id+':t'+i]===1).length;
+      const miss=d['miss:'+l.id]||0;
       const mark = pass?'<span style="color:var(--green);font-weight:800">合格</span>'
                        :'<span style="color:var(--muted)">未</span>';
       const tinfo = tasks?`<span class="small" style="color:var(--muted)">実技 ${tdone}/${tasks}</span>`:'';
+      const minfo = miss?`<span class="small" style="color:var(--red);font-weight:700">✕${miss}回</span>`:'';
       return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--line)">
         <span class="small" style="font-family:var(--mono);color:var(--muted);width:52px">${l.id}</span>
         <span style="flex:1;font-size:12.5px;overflow-wrap:anywhere">${l.t}</span>
-        ${tinfo}${mark}</div>`;
+        ${tinfo}${minfo}${mark}</div>`;
     }).join('');
     const dn=c.lessons.filter(l=>d[l.id]===1).length;
-    html+=`<div style="margin-bottom:10px"><div class="small" style="font-weight:800;color:var(--navy);margin-bottom:2px">C${c.no} ${c.name} <span style="color:var(--muted)">(${dn}/${c.lessons.length})</span></div>${rows}</div>`;
+    const cmiss=c.lessons.reduce((s,l)=>s+(d['miss:'+l.id]||0),0);
+    html+=`<div style="margin-bottom:10px"><div class="small" style="font-weight:800;color:var(--navy);margin-bottom:2px">C${c.no} ${c.name} <span style="color:var(--muted)">(${dn}/${c.lessons.length}${cmiss?` ・ 不合格計${cmiss}回`:''})</span></div>${rows}</div>`;
   });
   box.innerHTML=html; box.style.display='block';
 }
