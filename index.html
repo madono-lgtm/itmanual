@@ -50,8 +50,8 @@ h1{font-size:20px;font-weight:900;letter-spacing:.02em;margin-top:2px}
 .sync{font-size:10.5px;color:#B7C0D6;margin-left:auto}
 nav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);transform:translate3d(0,0,0);-webkit-transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 nav.kb-hide{display:none}
-.tabs{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
-.tabs.six{grid-template-columns:repeat(6,1fr)}
+.tabs{max-width:760px;margin:0 auto;display:flex}
+.tabs .tab{flex:1;min-width:0}
 .tab{appearance:none;border:0;background:none;cursor:pointer;padding:9px 2px 8px;text-align:center;color:var(--muted);font-family:inherit;font-size:10.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px}
 .tab .ic{width:22px;height:22px;display:block}
 .tab.on{color:var(--navy)}
@@ -4952,7 +4952,6 @@ async function afterLogin(){
   $('#userName').textContent=currentUser.name;
   const isAdmin=currentUser.role==='admin';
   $('#adminTab').style.display=isAdmin?'flex':'none';
-  $('#tabBar').classList.toggle('six',isAdmin);
   // 管理者は管理業務に集中:研修タブ(コース・問題)は非表示、開いたら管理タブへ
   const currTab=document.querySelector('.tab[data-pg="curr"]');
   if(currTab) currTab.style.display=isAdmin?'none':'flex';
