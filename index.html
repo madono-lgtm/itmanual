@@ -458,6 +458,14 @@ body.exam-lock #sheetBack{display:none!important}
     <button class="btn" id="lidGo" style="margin-top:8px;width:100%">ログインIDを変更する</button>
     <div class="small" id="lidMsg" style="margin-top:6px"></div>
   </div>
+  <div class="card">
+    <div class="eyebrow" style="color:var(--red)">DELETE USER</div>
+    <h2>ユーザー削除</h2>
+    <p class="small" style="margin:2px 0 6px;color:var(--muted)">辞めた人・テスト用アカウントを削除する。<b style="color:var(--red)">進捗・試験結果も全部消えて元に戻せへん。</b>自分自身は削除できひん。</p>
+    <div class="au-row"><select id="delUser" style="width:100%"></select></div>
+    <button class="btn" id="delGo" style="margin-top:8px;width:100%;background:var(--red);color:#fff">このユーザーを削除する</button>
+    <div class="small" id="delMsg" style="margin-top:6px"></div>
+  </div>
 </section>
 
 </main>
@@ -5025,6 +5033,7 @@ async function loadAdmin(){
     const opts=(data||[]).map(u=>`<option value="${u.id}">${u.name}(${u.login_id||'—'})</option>`).join('');
     $('#pcUser').innerHTML=opts;
     const lu=$('#lidUser'); if(lu) lu.innerHTML=opts;
+    const du=$('#delUser'); if(du) du.innerHTML=(data||[]).filter(u=>!currentUser||u.id!==currentUser.id).map(u=>`<option value="${u.id}">${u.name}(${u.login_id||'—'})</option>`).join('');
   }catch(e){}
 }
 // 管理者:メンバー行の開閉
@@ -5239,6 +5248,25 @@ $('#lidGo').addEventListener('click',async ()=>{
     $('#lidNew').value='';
     loadAdmin();
   }catch(e){ msg.textContent='変更失敗(通信エラー):'+((e&&e.message)?e.message:String(e)); }
+});
+$('#delGo').addEventListener('click',async ()=>{
+  const sel=$('#delUser'); const id=sel.value; const msg=$('#delMsg');
+  if(!sb){ msg.textContent='オンライン時のみ削除できる'; return; }
+  if(!id){ msg.textContent='削除するユーザーを選んで'; return; }
+  if(currentUser && id===currentUser.id){ msg.textContent='自分自身は削除できひん'; return; }
+  const label=sel.options[sel.selectedIndex]?sel.options[sel.selectedIndex].text:'';
+  if(!confirm('「'+label+'」を削除する。\n進捗・試験結果も全部消えて元に戻せへん。\nほんまにええか?')) return;
+  if(!confirm('最終確認:本当に削除する?この操作は取り消せへん。')) return;
+  msg.textContent='削除中…';
+  try{
+    // 関連データを先に削除(進捗・試験)、最後にユーザー本体
+    await sb.from('training_progress').delete().eq('user_id',id);
+    await sb.from('training_exams').delete().eq('user_id',id);
+    const {error}=await sb.from('training_users').delete().eq('id',id);
+    if(error){ msg.textContent='削除失敗:'+(error.message||''); return; }
+    msg.textContent='削除した ✓ 「'+label+'」を消した';
+    loadAdmin(); loadExamAdmin();
+  }catch(e){ msg.textContent='削除失敗(通信エラー):'+((e&&e.message)?e.message:String(e)); }
 });
 
 /* --- 復習クイズ --- */
