@@ -5000,7 +5000,11 @@ async function startExamMode(ci, li){
         perQ.push(sel===q.a);
       }
     });
-    const result={answers,perQ,correct,total,pass,expired:!!expired};
+    // 受験時点の問題内容も保存(後から問題を増減しても見返し・FBがズレないように)
+    const qsnap=l.quiz.map(q=> q.fill
+      ? {fill:q.fill, bank:q.bank, a:q.a, exp:q.exp, svg:q.svg||''}
+      : {q:q.q, c:q.c, a:q.a, exp:q.exp, svg:q.svg||''});
+    const result={answers,perQ,correct,total,pass,expired:!!expired,qsnap};
     try{
       await sb.from('training_exams').update({status:'done',result,finished_at:new Date().toISOString()}).eq('id',approved.id);
     }catch(e){}
@@ -5050,7 +5054,9 @@ async function openExamReview(examId, ci, li){
     (r.pass?'<span class="hanko">真殿</span>':'')+
     '<div><b style="font-size:16px;color:'+(r.pass?'var(--green)':'var(--red)')+'">'+(r.pass?'合格':(r.expired?'時間切れ':'不合格'))+'</b>'+
     '<div class="small">'+(r.correct??'—')+'/'+(r.total??'—')+'問正解</div></div></div>';
-  l.quiz.forEach((q,qi)=>{
+  const quizList=(r.qsnap&&r.qsnap.length)?r.qsnap:l.quiz;
+  if(!r.qsnap){ html+='<div class="fbbox" style="background:#FFF4E2"><div class="fb-l">ℹ お知らせ</div>この受験は問題を増やす前の記録('+(r.total||'?')+'問)や。表示が現在の問題とズレる場合がある。次の受験からは受験時の問題がそのまま残るで。</div>'; }
+  quizList.forEach((q,qi)=>{
     const ans=(r.answers&&r.answers[qi]!==undefined)?r.answers[qi]:null;
     const ok=(r.perQ&&r.perQ[qi])||false;
     let sent='';
@@ -5570,7 +5576,8 @@ function toggleExamFb(id){
   const f=findLessonById(r.lesson_id); if(!f) return;
   const res=r.result||{}; const fb=r.feedback||{};
   let html='<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:6px">';
-  f.l.quiz.forEach((q,qi)=>{
+  const quizList=(res.qsnap&&res.qsnap.length)?res.qsnap:f.l.quiz;
+  quizList.forEach((q,qi)=>{
     const ans=(res.answers&&res.answers[qi]!==undefined)?res.answers[qi]:null;
     const ok=(res.perQ&&res.perQ[qi])||false;
     let sent='';
