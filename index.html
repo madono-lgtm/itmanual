@@ -303,6 +303,10 @@ body.exam-lock #sheetBack{display:none!important}
 .mem-caret{flex:none;color:var(--muted);font-size:11px;width:14px}
 .mem-sub{margin:2px 0 0 22px}
 .mem-body{margin-top:8px}
+.qfig{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0;text-align:center}
+.qfig svg{max-width:100%;height:auto}
+.qtext{font-size:14.5px;line-height:1.8;margin:6px 0 10px;font-weight:600;color:var(--ink)}
+.exam-badge.alt{background:#E7F0FF;color:#1E4B9E;border-color:#B9D0F5}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -1225,6 +1229,37 @@ quiz:[
 {fill:"AIの出力をそのまま使わず、事実確認を___と呼ぶ。数字・固有名詞・日付は特に___する。",bank:["ファクトチェック","確認","翻訳","保存","印刷"],a:[0,1],exp:"ファクトチェックは必須工程。"},
 {fill:"AIに「あなたは○○の専門家です」と与えるのは___設定。狙った視点で答えさせるため。",bank:["役割","","色","価格","時間"],a:[0],exp:"役割設定で視点を固定。"},
 {fill:"KYOEIでAIに絶対入れてはいけないのは、顧客の___情報とパスワード・APIキーなどの___情報。",bank:["個人","機密","公開","一般","色"],a:[0,1],exp:"個人情報・機密は入力しない。"}
+,
+{fill:"AIの回答が長すぎるときは「___字以内で」と___形式を指定すると整う。",bank:["300","出力","30","入力","3000"],a:[0,1],exp:"出力形式の指定。"},
+{fill:"プロンプトに「___は書かないで」と入れるのは制約の一種で、事故を___。",bank:["NG例","減らす","OK例","増やす","色"],a:[0,1],exp:"制約で事故を減らす。"},
+{fill:"AIに前提を渡さないと、___な回答しか返らない。だから___を書く。",bank:["一般的","文脈","具体的","色","価格"],a:[0,1],exp:"文脈が具体性を生む。"},
+{fill:"KYOEIの文章トーンは、煽らず___に、事実___で書く。",bank:["誠実","ベース","派手","無視","感覚"],a:[0,1],exp:"KYOEIのトーン。"},
+{fill:"AIの出力をそのまま社外に出す前に、必ず人間が___する。これが最後の___。",bank:["検品","砦","保存","入口","翻訳"],a:[0,1],exp:"検品が最後の砦。"},
+{fill:"画像生成では、被写体・構図・雰囲気・___・除外指定を書くと狙いに近づく。",bank:["色味","","価格","時間","文字数"],a:[0],exp:"画像プロンプトの要素。"},
+{fill:"生成物のファイル名は「日付_用途_内容_版数」の順。これも___管理の一部で___になる。",bank:["品質","資産","色","負債","時間"],a:[0,1],exp:"命名規則は品質管理。"},
+{fill:"AIとの壁打ちでは、相手役に___な人物像を与えるほど___な反応が返る。",bank:["具体的","リアル","曖昧","雑","短い"],a:[0,1],exp:"役の具体性。"},
+{fill:"長い会話で精度が落ちてきたら、決定事項を___して___チャットに引き継ぐ。",bank:["要約","新しい","削除","古い","保存"],a:[0,1],exp:"要約して仕切り直し。"},
+{fill:"AIは知らないことも___に答えてしまうので、___を疑う姿勢がいる。",bank:["自信満々","常に","正直","たまに","絶対に"],a:[0,1],exp:"常に疑う姿勢。"},
+{fill:"社外向け文章は、誤字・事実・___・トーンの4点を___する。",bank:["数字","検品","色","保存","翻訳"],a:[0,1],exp:"検品の4観点。"},
+{fill:"AIに考えさせたいときは「___して」と段階を踏ませると精度が上がる。",bank:["ステップごとに説明","","一言で","省略","翻訳"],a:[0],exp:"段階的思考。"},
+{fill:"プロンプトは使い捨てでなく、良かったものは___して___にする。",bank:["保存","資産","破棄","負債","翻訳"],a:[0,1],exp:"プロンプトの資産化。"},
+{fill:"AIに渡してよいのは公開情報と社内の___情報まで。顧客の___は渡さない。",bank:["一般","個人情報","機密","公開情報","色"],a:[0,1],exp:"情報の線引き。"},
+{fill:"「___の専門家として」と役割を与えると、その分野の___で答えてくれる。",bank:["外壁塗装","視点","素人","色","価格"],a:[0,1],exp:"役割設定の効果。"},
+{fill:"SNS投稿文では、最初の1行で___を掴み、最後に___を促す。",bank:["興味","行動","価格","色","保存"],a:[0,1],exp:"導入と締め。"},
+{fill:"AIの提案を採用するかどうかを決めるのは常に___で、責任を持つのも同じく本人。AIは___ではない。",bank:["自分","責任者","AI","会社","顧客"],a:[0,1],exp:"主導権と責任は人間。"},
+{fill:"Canvaでの組版では、___を揃えて___を広めに取ると素人っぽさが消える。",bank:["位置","余白","色","文字数","価格"],a:[0,1],exp:"整列と余白。"},
+{fill:"AIに続きを書かせるとき、途中で止まったら「___」と伝えれば再開する。",bank:["続けて","","やめて","保存","翻訳"],a:[0],exp:"続きの促し方。"},
+{fill:"研修中に詰まったら___分は自力とAIで粘り、それでもダメなら___シートへ。",bank:["15","質疑","60","保存","翻訳"],a:[0,1],exp:"15分ルール。"},
+{q:"この図が示すプロンプトの4要素のうち、書き忘れると事故につながりやすいのはどれ?",c:["役割","文脈","制約","出力形式"],a:2,svg:"<svg viewBox='0 0 420 150' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='10' y='20' width='95' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='57' y='45' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>役割</text><rect x='115' y='20' width='95' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='162' y='45' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>文脈</text><rect x='220' y='20' width='95' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='267' y='45' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>制約</text><rect x='325' y='20' width='85' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='367' y='45' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>出力形式</text><text x='210' y='105' font-size='13' fill='#25303F' text-anchor='middle' font-weight='700'>この4つを書くと精度が上がる</text><text x='210' y='130' font-size='11' fill='#6B7684' text-anchor='middle' font-weight='700'>※ 特に「制約」は事故を防ぐ</text></svg>",exp:"制約(やってはいけないこと)の明記が事故を防ぐ。"},
+{q:"AIが事実でないことをもっともらしく答えてしまう現象を何と呼ぶ?",c:["ハルシネーション","キャッシュ","レンダリング","マイグレーション"],a:0,exp:"幻覚。だからファクトチェックが要る。"},
+{q:"お手本を渡して出力形式を真似させる技術は?",c:["Zero-shot","Few-shot","OCR","RAG"],a:1,exp:"Few-shot=お手本を渡す。"},
+{q:"次のうち、AIに入力してはいけないものはどれ?",c:["公開されている業界統計","自社サービスの一般的な説明","顧客の氏名と住所","一般的な塗料の知識"],a:2,exp:"顧客の個人情報は入力禁止。"},
+{q:"生成画像を使うとき、KYOEIのルールとして正しいのは?",c:["1発で出た画像をそのまま採用する","複数案出して選定する","実在の有名人を登場させる","他社キャラクターを使う"],a:1,exp:"複数案→選定が原則。実在人物・他社IPは禁止。"},
+{q:"この流れ図で、③にあたる工程として正しいのは?",c:["そのまま公開する","人間が検品する","AIに再生成させ続ける","保存だけする"],a:1,svg:"<svg viewBox='0 0 430 120' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='8' y='35' width='110' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='63' y='60' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>① 目的を決める</text><defs><marker id='ah12260' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto'><path d='M0,0 L8,4 L0,8 z' fill='#F08519'/></marker></defs><line x1='122' y1='60' x2='142' y2='60' stroke='#F08519' stroke-width='2.5' marker-end='url(#ah12260)'/><rect x='148' y='35' width='110' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='203' y='60' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>② AIに生成</text><defs><marker id='ah26260' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto'><path d='M0,0 L8,4 L0,8 z' fill='#F08519'/></marker></defs><line x1='262' y1='60' x2='282' y2='60' stroke='#F08519' stroke-width='2.5' marker-end='url(#ah26260)'/><rect x='288' y='35' width='135' height='50' rx='8' fill='#FFF4E2' stroke='#F08519' stroke-width='2'/><text x='355' y='60' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>③ 人間が検品</text></svg>",exp:"検品を工程に組み込む。"},
+{q:"1つのチャットに複数テーマを詰め込むと起きることは?",c:["精度が上がる","文脈が混ざって精度が落ちる","保存容量が増える","料金が下がる"],a:1,exp:"コンテキスト汚染。1テーマ1チャット。"},
+{q:"AIの回答が浅いと感じたとき、最も効果的な対処は?",c:["同じ質問を繰り返す","目的と観点を具体的に渡す","文字数を減らす","絵文字を足す"],a:1,exp:"目的と観点が質を決める。"},
+{q:"大きな依頼をAIに投げるときの正しい進め方は?",c:["一度に全部作らせる","工程に分けて各段階で人間が確認する","AIに丸投げして待つ","最後だけ確認する"],a:1,exp:"タスク分解+チェックポイント。"},
+{q:"AIが書いた文章を社外に出す前、最も優先して確認すべきは?",c:["絵文字の数","事実と数字の正確さ","文字の色","保存形式"],a:1,exp:"事実・数字の検品が最優先。"}
 ]},
 ]};
 
@@ -1454,6 +1489,37 @@ quiz:[
 {fill:"要件プロンプトの検品で最重要なのは、KYOEI___の抜けと、触ってはいけない領域の___。",bank:["制約","除外","色","追加","保存"],a:[0,1],exp:"制約と範囲の検品。"},
 {fill:"別AIへ渡すときは会話履歴でなく完成した___だけを渡す。これがAI___の基本。",bank:["プロンプト","リレー","履歴","保存","翻訳"],a:[0,1],exp:"バトンは完成品だけ。"},
 {fill:"メタプロンプトは思考の外注でなく___の外注。採用と修正の___は常に自分が持つ。",bank:["たたき台","主導権","答え","責任","時間"],a:[0,1],exp:"主導権は手放さない。"}
+,
+{fill:"メタプロンプトの「メタ」は「一段___の」という意味。",bank:["上","","下","横","前"],a:[0],exp:"一段上の視点。"},
+{fill:"AIに要件を___させてから書かせると、自分の頭も___される。",bank:["質問","整理","保存","混乱","翻訳"],a:[0,1],exp:"質問させる型。"},
+{fill:"要件プロンプトには目的・対象範囲・___・出力形式を必ず入れる。",bank:["制約","","色","価格","時間"],a:[0],exp:"4要素。"},
+{fill:"「触ってはいけない領域」を書くのは、AIが範囲外を___のを防ぐため。",bank:["変更する","","保存する","無視する","翻訳する"],a:[0],exp:"範囲の明示。"},
+{fill:"検品で最重要なのはKYOEI___の抜けと、対象___の誤り。",bank:["制約","範囲","色","価格","文字数"],a:[0,1],exp:"制約と範囲。"},
+{fill:"別AIに渡すのは会話履歴でなく完成した___だけ。これがAI___。",bank:["プロンプト","リレー","履歴","保存","翻訳"],a:[0,1],exp:"バトンは完成品。"},
+{fill:"メタプロンプトは思考の外注でなく___の外注で、判断は___が持つ。",bank:["たたき台","自分","答え","AI","会社"],a:[0,1],exp:"主導権は自分。"},
+{fill:"「解説不要、本文だけ___で」と指定するとコピペしやすい。",bank:["コードブロック","","表","画像","音声"],a:[0],exp:"出力形式の指定。"},
+{fill:"プロンプトを改善するには、出力の___点をAIに伝えて再設計させる。",bank:["不満","","良い","色","価格"],a:[0],exp:"フィードバックで改善。"},
+{fill:"良い要件プロンプトは、他人が読んでも同じ___が出せるくらい具体的。",bank:["結果","","色","価格","速度"],a:[0],exp:"再現性。"},
+{fill:"AIに「あなたはプロンプト設計者です」と___を与えると質が上がる。",bank:["役割","","制約","色","時間"],a:[0],exp:"役割設定。"},
+{fill:"要件が固まってないうちは、AIと___してから要件プロンプトにする。",bank:["壁打ち","","実装","保存","翻訳"],a:[0],exp:"壁打ち→要件化。"},
+{fill:"メタプロンプトで作った要件は、___して次回も使える___にする。",bank:["保存","資産","破棄","負債","翻訳"],a:[0,1],exp:"資産化。"},
+{fill:"Claude Codeへの依頼では、KYOEIの___事項を毎回明記する。",bank:["禁止","","推奨","色","価格"],a:[0],exp:"制約の明記。"},
+{fill:"AIが質問してきたら、面倒がらず答えるほど成果物の___が上がる。",bank:["精度","","速度","価格","色"],a:[0],exp:"質問は精度の源。"},
+{fill:"要件プロンプトの「対象範囲」は、やること___とやらないことを両方書く。",bank:["だけでなく","","以外","無しで","保存"],a:[0],exp:"両方書く。"},
+{fill:"メタプロンプトが効くのは、依頼が___で自分でも整理できてないとき。",bank:["複雑","","単純","短い","簡単"],a:[0],exp:"複雑な依頼ほど効く。"},
+{fill:"出来上がった要件プロンプトは、投げる前に自分で___する。",bank:["読み返す","","消す","保存だけする","翻訳する"],a:[0],exp:"投げる前の検品。"},
+{fill:"AIに書かせた要件をそのまま使わず、KYOEI固有の___を足すのが人間の仕事。",bank:["事情","","色","価格","速度"],a:[0],exp:"固有事情は人間が。"},
+{fill:"メタプロンプトの価値は、指示の___を上げて手戻りを___こと。",bank:["質","減らす","量","増やす","保存する"],a:[0,1],exp:"手戻りを減らす。"},
+{q:"この図のようにAI間で受け渡す「バトン」として正しいのは?",c:["会話履歴の全文","完成したプロンプトだけ","スクリーンショット","何も渡さない"],a:1,svg:"<svg viewBox='0 0 430 120' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='8' y='35' width='120' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='68' y='60' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>Claudeで要件を設計</text><defs><marker id='ah13260' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto'><path d='M0,0 L8,4 L0,8 z' fill='#F08519'/></marker></defs><line x1='132' y1='60' x2='152' y2='60' stroke='#F08519' stroke-width='2.5' marker-end='url(#ah13260)'/><rect x='158' y='35' width='130' height='50' rx='8' fill='#FFF4E2' stroke='#F08519' stroke-width='2'/><text x='223' y='60' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>プロンプト完成</text><defs><marker id='ah29260' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto'><path d='M0,0 L8,4 L0,8 z' fill='#F08519'/></marker></defs><line x1='292' y1='60' x2='312' y2='60' stroke='#F08519' stroke-width='2.5' marker-end='url(#ah29260)'/><rect x='318' y='35' width='105' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='370' y='60' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>ChatGPTで画像生成</text></svg>",exp:"バトンは完成品だけ。"},
+{q:"メタプロンプトとは何か?",c:["AIにプロンプトを書かせる技術","画像を生成する技術","文章を翻訳する技術","データを保存する技術"],a:0,exp:"一段上のプロンプト。"},
+{q:"要件プロンプトに必ず入れるべきものは?",c:["絵文字","KYOEIの制約と対象範囲","AIの名前","保存先"],a:1,exp:"制約と範囲が要。"},
+{q:"AIに先に質問させる型の効果は?",c:["時間が短縮される","自分の要件も整理される","料金が下がる","保存できる"],a:1,exp:"一石二鳥。"},
+{q:"メタプロンプトを使っても手放してはいけないものは?",c:["採用と修正を決める主導権","キーボード","時間","保存先"],a:0,exp:"主導権は常に自分。"},
+{q:"要件プロンプトの検品で最優先の観点は?",c:["文字数","KYOEI制約の抜けと対象範囲","絵文字の有無","改行の数"],a:1,exp:"制約と範囲。"},
+{q:"良い要件プロンプトの条件は?",c:["短いこと","他人が読んでも同じ結果を出せること","専門用語が多いこと","絵文字が多いこと"],a:1,exp:"再現性。"},
+{q:"メタプロンプトが特に効くのはどんなとき?",c:["依頼が単純なとき","依頼が複雑で自分でも整理できていないとき","急いでいるとき","保存したいとき"],a:1,exp:"複雑な依頼ほど効く。"},
+{q:"AIが生成した要件プロンプトの扱いとして正しいのは?",c:["そのまま投げる","KYOEI固有の事情を足してから投げる","破棄する","保存だけする"],a:1,exp:"固有事情は人間が足す。"},
+{q:"メタプロンプトの一番の価値は?",c:["文字数が減ること","指示の質が上がって手戻りが減ること","料金が下がること","速度が上がること"],a:1,exp:"手戻りを減らす。"}
 ]},
 ]};
 
@@ -1792,6 +1858,37 @@ quiz:[
 {fill:"色の3色ルールは、ベース___%・メイン25%・アクセント5%。アクセントはCTAだけに使う。",bank:["70","","50","90","30"],a:[0],exp:"70:25:5の黄金比。"},
 {fill:"プロのLPを分解する演習で見る観点は、狙う1つの行動・ファーストビュー・黄金構造・___・CTA・デザイン。",bank:["ベネフィット","","価格","文字数","色数"],a:[0],exp:"分解シートの観点。"},
 {fill:"BtoBのLPは感情でなく___と費用対効果で動く。CTAは資料請求など___一歩にする。",bank:["ロジック","軽い","感情","重い","色"],a:[0,1],exp:"法人はロジック+低ハードル。"}
+,
+{fill:"LPの語源は、広告から来た人が最初に___するページということ。",bank:["着地","","出発","保存","離脱"],a:[0],exp:"landing=着地。"},
+{fill:"LPで狙う行動は___つに絞る。増やすと全部が___なる。",bank:["1","弱く","3","強く","5"],a:[0,1],exp:"1LP1ゴール。"},
+{fill:"CVRは、行動した人数÷___人数で計算する。",bank:["見た","","申し込んだ","保存した","離脱した"],a:[0],exp:"CVRの定義。"},
+{fill:"ファーストビューは___秒で「誰の何を解決するか」を伝える。",bank:["3","","30","60","10"],a:[0],exp:"3秒勝負。"},
+{fill:"デザイン4大原則は近接・整列・反復・___。",bank:["強弱","","余白","色相","影"],a:[0],exp:"4大原則。"},
+{fill:"関係するものを近づけてグループに見せるのが___の原則。",bank:["近接","","整列","反復","強弱"],a:[0],exp:"近接。"},
+{fill:"見えない基準線に揃えるのが___。ズレは___っぽさの原因。",bank:["整列","素人","反復","プロ","強弱"],a:[0,1],exp:"整列。"},
+{fill:"同じルールを繰り返して統一感を出すのが___の原則。",bank:["反復","","近接","整列","強弱"],a:[0],exp:"反復。"},
+{fill:"要素の大小の差を___と呼び、これが視線を___する。",bank:["ジャンプ率","誘導","余白","固定","保存"],a:[0,1],exp:"ジャンプ率。"},
+{fill:"初心者は詰め込みがちだが、プロは___を意図的に使う。",bank:["余白","","文字","色","線"],a:[0],exp:"余白は最強の道具。"},
+{fill:"色は3色ルールで、ベース___%・メイン25%・アクセント5%。",bank:["70","","50","30","90"],a:[0],exp:"70:25:5。"},
+{fill:"アクセントカラーは___だけに使うと際立ってCVRが上がる。",bank:["CTA","","背景","本文","枠線"],a:[0],exp:"アクセントはCTA。"},
+{fill:"本文は___px以上、行間は1.6〜1.8が読みやすい。",bank:["16","","10","24","32"],a:[0],exp:"可読性の基準。"},
+{fill:"フォントは___種類までに抑えると散らからない。",bank:["2","","5","10","20"],a:[0],exp:"フォントは2種まで。"},
+{fill:"人は機能でなく___で動くので、特徴を利益に___する。",bank:["ベネフィット","翻訳","価格","保存","暗記"],a:[0,1],exp:"ベネフィット翻訳。"},
+{fill:"CTAは1回でなく要所に___置く。やる気になる___が人それぞれだから。",bank:["繰り返し","タイミング","1回","色","場所"],a:[0,1],exp:"繰り返し配置。"},
+{fill:"塗装LPでは、地域名・施工事例・お客様の声・資格・___出しで信頼を積む。",bank:["顔","","背中","声","名前"],a:[0],exp:"信頼の総量。"},
+{fill:"BtoBのLPでは、ベネフィットを___で示すと稟議に使える。",bank:["数字","","感覚","色","絵"],a:[0],exp:"数字で示す。"},
+{fill:"LPは大半が___で見られるので、___最優先で設計する。",bank:["スマホ","モバイル","PC","デスクトップ","紙"],a:[0,1],exp:"モバイルファースト。"},
+{fill:"プロのLPを___して構造で読む習慣が、作る力を___。",bank:["分解","育てる","保存","削る","翻訳する"],a:[0,1],exp:"分解して盗む。"},
+{q:"このLPの黄金構造で、①に入るべき内容は?",c:["会社の沿革","3秒で誰の何を解決するか+CTA","料金表の詳細","採用情報"],a:1,svg:"<svg viewBox='0 0 300 200' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='60' y='8' width='180' height='28' rx='8' fill='#FFF4E2' stroke='#F08519' stroke-width='2'/><text x='150' y='22' font-size='12' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>① ファーストビュー</text><rect x='60' y='42' width='180' height='24' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='150' y='54' font-size='11' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>② 共感・問題提起</text><rect x='60' y='72' width='180' height='24' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='150' y='84' font-size='11' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>③ 解決策</text><rect x='60' y='102' width='180' height='24' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='150' y='114' font-size='11' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>④ ベネフィット</text><rect x='60' y='132' width='180' height='24' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='150' y='144' font-size='11' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>⑤ 信頼の証明</text><rect x='60' y='162' width='180' height='28' rx='8' fill='#FFF4E2' stroke='#F08519' stroke-width='2'/><text x='150' y='176' font-size='12' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>⑥ 最後のCTA</text></svg>",exp:"ファーストビューで3秒勝負。"},
+{q:"この配色図で、アクセントカラー(オレンジ)を使うべき場所は?",c:["ページ全体の背景","本文の文字色","CTAボタン","枠線すべて"],a:2,svg:"<svg viewBox='0 0 360 120' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='20' y='30' width='196' height='45' fill='#F7F8F6' stroke='#D8DDE6'/><rect x='216' y='30' width='70' height='45' fill='#1E2A47'/><rect x='286' y='30' width='14' height='45' fill='#F08519'/><text x='118' y='58' font-size='12' fill='#25303F' text-anchor='middle' font-weight='700'>ベース 70%</text><text x='251' y='58' font-size='11' fill='#fff' text-anchor='middle' font-weight='700'>メイン25%</text><text x='200' y='95' font-size='11' fill='#25303F' text-anchor='middle' font-weight='700'>アクセント5% は右端のオレンジ</text></svg>",exp:"アクセント5%はCTAに集中。"},
+{q:"「フッ素塗料を使用」を正しくベネフィットに翻訳したものは?",c:["高品質な塗料です","15年塗り替え不要で将来の出費を減らせます","最新技術を採用","業界No.1です"],a:1,exp:"利益で語る。"},
+{q:"要素の少ないファーストビューで意識すべき視線の流れは?",c:["Z型","F型","円型","ランダム"],a:0,exp:"Z型。"},
+{q:"BtoB SaaSのLPで適切なCTAは?",c:["今すぐ契約する","まずは資料をダウンロード","電話をかけ続ける","何も置かない"],a:1,exp:"ハードルを下げる。"},
+{q:"塗装集客LPで信頼を作る要素として最も弱いのは?",c:["施工事例のビフォーアフター写真","同地域のお客様の声","「絶対に業界No.1」という根拠なき断言","一級塗装技能士の資格表示"],a:2,exp:"誇大表現は逆効果。"},
+{q:"デザインが素人っぽく見える二大原因は?",c:["整列の甘さと余白不足","文字が多いことと画像が少ないこと","色が少ないことと線が細いこと","保存形式とファイル名"],a:0,exp:"整列と余白。"},
+{q:"LPのCVRを上げる目的から見て、最も重要なのは?",c:["おしゃれに見えること","1つの行動に迷わず進めること","色数が多いこと","文字が小さいこと"],a:1,exp:"CVRが目的、見た目は手段。"},
+{q:"タップされるボタンの最低サイズの目安は?",c:["約24px","約44px","約10px","約100px"],a:1,exp:"44px以上。"},
+{q:"良いLPを作れるようになる一番の近道は?",c:["色を増やす","プロのLPを分解して構造で読む","文字を増やす","動画を貼る"],a:1,exp:"分解して盗む。"}
 ]},
 
 ]};
@@ -2443,6 +2540,37 @@ quiz:[
 {fill:"スマホで画面いっぱいの高さは100___を使う(100vhは___から)。",bank:["dvh","崩れる","vh","安定する","px"],a:[0,1],exp:"dvhを使う。"},
 {fill:"JSでボタンに処理を結びつけるのは___、部品の文字を書き換えるのは___。",bank:["addEventListener","textContent","querySelector","value","innerHTML"],a:[0,1],exp:"イベント登録と書き換え。"},
 {fill:"AI生成コードは全部___、最低3箇所は自分の意図で___して自分のものにする。",bank:["読み","改造","消し","保存","印刷"],a:[0,1],exp:"読む・改造するで身につく。"}
+,
+{fill:"HTMLは___、CSSは見た目、JavaScriptは___を担当する。",bank:["骨組み","動き","色","保存","印刷"],a:[0,1],exp:"3言語の役割。"},
+{fill:"ブラウザに表示される内容は___タグの中に書く。",bank:["body","","head","title","meta"],a:[0],exp:"表示はbody。"},
+{fill:"箇条書きは___の中に___を並べて作る。",bank:["ul","li","ol","dl","p"],a:[0,1],exp:"ul>li。"},
+{fill:"部品に名前をつけるのが___属性で、CSSやJSから___できる。",bank:["class","狙い撃ち","id","保存","翻訳"],a:[0,1],exp:"classは名札。"},
+{fill:"h1は1ページに___個だけ使うのが基本。",bank:["1","","3","5","10"],a:[0],exp:"h1は1つ。"},
+{fill:"箱の内側の余白は___、外側は___。",bank:["padding","margin","border","gap","content"],a:[0,1],exp:"内=padding、外=margin。"},
+{fill:"CSSでclassを狙うセレクタは___から始める。",bank:["ドット(.)","","シャープ(#)","アット","スラッシュ"],a:[0],exp:"ドット始まり。"},
+{fill:"部品の構造を4層で表したものを___と呼ぶ。",bank:["ボックスモデル","","フレックス","グリッド","DOM"],a:[0],exp:"ボックスモデル。"},
+{fill:"横一列に並べるには親に___を指定し、間隔は___で調整する。",bank:["display:flex","gap","display:block","margin","padding"],a:[0,1],exp:"flexとgap。"},
+{fill:"マス目状の2次元レイアウトが得意なのは___。",bank:["Grid","","Flex","Table","List"],a:[0],exp:"Gridは2次元。"},
+{fill:"KYOEIでは高さ指定に100vhでなく100___を使う。",bank:["dvh","","vw","px","em"],a:[0],exp:"dvhを使う。"},
+{fill:"画面幅で見た目を変える仕組みが___で、KYOEIは___ファーストで書く。",bank:["メディアクエリ","モバイル","フレックス","PC","グリッド"],a:[0,1],exp:"モバイルファースト。"},
+{fill:"入力欄を___で包むと、文字をタップしても反応する。",bank:["label","","div","span","p"],a:[0],exp:"labelで包む。"},
+{fill:"タップ部品は___px以上を確保する。",bank:["44","","24","10","100"],a:[0],exp:"44px以上。"},
+{fill:"変わらない変数は___、変わるものだけ___で宣言する。",bank:["const","let","var","new","def"],a:[0,1],exp:"constが基本。"},
+{fill:"関数が結果を返す命令は___。忘れると___になる。",bank:["return","undefined","print","null","break"],a:[0,1],exp:"return忘れ。"},
+{fill:"配列から条件で絞るのは___、各要素を変換するのは___。",bank:["filter","map","push","sort","slice"],a:[0,1],exp:"filterとmap。"},
+{fill:"オブジェクトを文字にして保存・通信する形式が___。",bank:["JSON","","CSV","XML","PDF"],a:[0],exp:"JSON。"},
+{fill:"ブラウザが持つHTMLの操作用の設計図を___と呼ぶ。",bank:["DOM","","API","JSON","CSS"],a:[0],exp:"DOM。"},
+{fill:"通信は___とawaitをセットで使い、結果は必ず___する。",bank:["async","検品","sync","無視","保存"],a:[0,1],exp:"async/await。"},
+{q:"この図でオレンジの一番外側の領域は何?",c:["padding","border","margin","content"],a:2,svg:"<svg viewBox='0 0 380 175' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='30' y='15' width='320' height='145' fill='#FFF4E2' stroke='#F08519' stroke-width='2'/><rect x='70' y='42' width='240' height='91' fill='#fff' stroke='#1E2A47' stroke-width='2'/><rect x='105' y='62' width='170' height='51' fill='#E7F0FF' stroke='#B9D0F5' stroke-width='2'/><rect x='140' y='78' width='100' height='19' fill='#1E2A47'/><text x='190' y='92' font-size='11' fill='#fff' text-anchor='middle' font-weight='700'>中身</text><text x='190' y='74' font-size='10' fill='#1E4B9E' text-anchor='middle' font-weight='700'>padding</text><text x='190' y='56' font-size='10' fill='#1E2A47' text-anchor='middle' font-weight='700'>border</text><text x='190' y='32' font-size='11' fill='#9A5A10' text-anchor='middle' font-weight='700'>margin</text></svg>",exp:"外側の余白がmargin。"},
+{q:"この図で、子どうしの間隔を空けたいときに使うプロパティは?",c:["gap","padding","border","float"],a:0,svg:"<svg viewBox='0 0 400 120' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='15' y='25' width='370' height='70' fill='none' stroke='#1E2A47' stroke-dasharray='5 4' stroke-width='2'/><rect x='30' y='40' width='90' height='40' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='75' y='60' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>子1</text><rect x='155' y='40' width='90' height='40' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='200' y='60' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>子2</text><rect x='280' y='40' width='90' height='40' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='325' y='60' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>子3</text><text x='200' y='112' font-size='11' fill='#25303F' text-anchor='middle' font-weight='700'>親に display:flex を指定した状態</text></svg>",exp:"flexの間隔はgap。"},
+{q:"スマホでアドレスバーの出入りに影響されない高さ指定は?",c:["100vh","100dvh","100%","100px"],a:1,exp:"dvhが正解。"},
+{q:"CSSが効かないとき、最初に疑うべきなのは?",c:["セレクタのドット忘れ","パソコンの故障","通信速度","ブラウザの種類"],a:0,exp:"ドット忘れが定番。"},
+{q:"「Cannot read properties of null」が出たとき、まず疑うのは?",c:["通信エラー","querySelectorで部品が取れていない","保存容量","ブラウザのバージョン"],a:1,exp:"セレクタのスペルミス等。"},
+{q:"配列から「堺市の案件だけ」を取り出すメソッドは?",c:["map","filter","push","sort"],a:1,exp:"filterで絞る。"},
+{q:"KYOEIでモーダルを作るときの正しいやり方は?",c:["毎回自作する","共通のModalShellを使う","alertで代用する","作らない"],a:1,exp:"共通部品を使う。"},
+{q:"AIが書いたコードの正しい扱いは?",c:["理解せずコピペする","全部読んで最低3箇所は自分で改造する","そのまま本番に出す","保存だけする"],a:1,exp:"読んで改造して自分のものに。"},
+{q:"単一HTMLプロトタイプを先に作る理由は?",c:["本番より速く公開できるから","方向性を固めてから本実装に入れるから","保存が楽だから","料金が安いから"],a:1,exp:"試作→FB→本実装。"},
+{q:"通信結果を待つために関数に付ける必要があるのは?",c:["async","const","class","return"],a:0,exp:"asyncとawaitはセット。"}
 ]},
 ]};
 
@@ -3667,6 +3795,37 @@ quiz:[
 {fill:"Canvasは長文の___やコードの部分修正に向き、短い文章には___。",bank:["推敲","大げさ","保存","最適","翻訳"],a:[0,1],exp:"長文推敲向け。"},
 {fill:"カスタム指示に入れると効果的なのは、会社情報・文章の___・出力の好みなど毎回の___。",bank:["トーン","前提","色","価格","速度"],a:[0,1],exp:"毎回の前提を常設。"},
 {fill:"スタンプ制作では「りょーかい!」の1枚を___にして、全16個の___を統一した。",bank:["基準画像","トーン","背景","価格","文字"],a:[0,1],exp:"参照画像方式の実例。"}
+,
+{fill:"ChatGPTの___機能は、案件ごとにチャットとファイルをまとめられる作業部屋。",bank:["プロジェクト","","メモリ","履歴","保存"],a:[0],exp:"プロジェクト機能。"},
+{fill:"画像生成で背景を透過にしたいときは、プロンプトで___を明示的に指定する。",bank:["透過背景","","白背景","黒背景","色"],a:[0],exp:"透過の指定。"},
+{fill:"ChatGPTに写真を見せて相談できるのは___入力ができるから。現場の___相談に便利。",bank:["画像","写真","音声","文字","動画"],a:[0,1],exp:"画像入力の活用。"},
+{fill:"音声会話は移動中の___に強いが、___運転が最優先。",bank:["壁打ち","安全","入力","高速","記録"],a:[0,1],exp:"移動中の活用と安全。"},
+{fill:"カスタム指示は全チャットに効く___で、メモリは会話から___溜まる。",bank:["前提","自動で","結論","手動で","保存"],a:[0,1],exp:"前提と自動記憶。"},
+{fill:"ChatGPTの画像生成は会話で___を重ねられるのが強み。1回で___を狙わない。",bank:["修正","完成","保存","削除","翻訳"],a:[0,1],exp:"対話で育てる。"},
+{fill:"スタンプなど連作では、___画像を毎回渡してトーンを___。",bank:["基準","統一する","背景","バラす","保存する"],a:[0,1],exp:"参照画像方式。"},
+{fill:"Web検索つき回答でも___は起きるので、___を開いて確かめる。",bank:["ハルシネーション","出典","誤字","保存","翻訳"],a:[0,1],exp:"出典確認。"},
+{fill:"Deep Researchは時間も___も食うので、重い___のときだけ使う。",bank:["上限","調査","電池","雑談","保存"],a:[0,1],exp:"重い機能の使いどころ。"},
+{fill:"Canvasでは文章の一部を___して指示できる。これは___指示のUI版。",bank:["選択","差分","削除","全体","保存"],a:[0,1],exp:"部分選択=差分指示。"},
+{fill:"モデルは名前でなく「速い系/賢い系」の___で捉えると、更新されても___。",bank:["構造","困らない","価格","困る","色"],a:[0,1],exp:"構造で理解する。"},
+{fill:"メールの下書きのような軽い作業には___モデルで十分。複雑な判断には___モデル。",bank:["標準","思考","画像","音声","翻訳"],a:[0,1],exp:"タスクとモデルを揃える。"},
+{fill:"ChatGPTを作ったのは___で、GPTのGは___の意味。",bank:["OpenAI","Generative","Google","Google製","Gemini"],a:[0,1],exp:"OpenAI、Generative。"},
+{fill:"プロジェクトに入れる資料は用途ごとに___、全部を1つに___しない。",bank:["分け","詰め込み","混ぜ","保存","翻訳"],a:[0,1],exp:"用途で分ける。"},
+{fill:"画像に文字を入れたいときは、AIでなく___で後から乗せる。",bank:["Canva","","ChatGPT","Excel","メモ帳"],a:[0],exp:"文字は後入れ。"},
+{fill:"メモリに古い情報が残ると回答が___ので、定期的に___する。",bank:["歪む","掃除","冴える","増やす","保存"],a:[0,1],exp:"メモリの定期掃除。"},
+{fill:"添付ファイルは「読んどいて」でなく、何を___か・どんな___で出すかを指定する。",bank:["知りたい","形式","消したい","色","価格"],a:[0,1],exp:"目的つきで渡す。"},
+{fill:"手書きメモの読み取り結果は、数字の読み___がないか必ず___する。",bank:["間違い","目視確認","速度","保存","翻訳"],a:[0,1],exp:"OCRは検品とセット。"},
+{fill:"有料プランの価値は、賢いモデルを使える___と機能の___にある。",bank:["回数","幅","色","価格","速度"],a:[0,1],exp:"上限と機能の幅。"},
+{fill:"KYOEIでChatGPTが主力なのは___生成と___出しの領域。",bank:["画像","アイデア","文章","読解","経理"],a:[0,1],exp:"画像とアイデア。"},
+{q:"この図で、契約書の条項を精査するような重い判断に使うべきなのは?",c:["標準モデル","思考モデル","どちらでも同じ","使わない"],a:1,svg:"<svg viewBox='0 0 420 140' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='10' y='30' width='120' height='55' rx='8' fill='#E7F0FF' stroke='#1E2A47' stroke-width='2'/><text x='70' y='57' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>標準モデル</text><rect x='150' y='30' width='120' height='55' rx='8' fill='#FFF4E2' stroke='#F08519' stroke-width='2'/><text x='210' y='57' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>思考モデル</text><text x='70' y='105' font-size='12' fill='#1E4B9E' text-anchor='middle' font-weight='700'>速い・軽い</text><text x='210' y='105' font-size='12' fill='#9A5A10' text-anchor='middle' font-weight='700'>賢い・重い</text><text x='345' y='50' font-size='11' fill='#25303F' text-anchor='middle' font-weight='700'>タスクの重さに</text><text x='345' y='70' font-size='11' fill='#25303F' text-anchor='middle' font-weight='700'>合わせて選ぶ</text></svg>",exp:"重い判断は思考モデル。"},
+{q:"ChatGPTを開発した企業は?",c:["Google","Anthropic","OpenAI","Microsoft"],a:2,exp:"OpenAI製。"},
+{q:"GPTの「T」が指す技術は?",c:["Transformer","Translator","Template","Terminal"],a:0,exp:"Transformer(2017年発表)。"},
+{q:"連作イラストのトーンを揃える最も確実な方法は?",c:["毎回ゼロから作る","基準画像を毎回渡す","色を毎回変える","文字を入れる"],a:1,exp:"参照画像方式。"},
+{q:"カスタム指示に入れるのが適切なものは?",c:["顧客の電話番号","APIキー","会社情報と文章のトーン","クレジットカード番号"],a:2,exp:"機密は入れない。前提だけ。"},
+{q:"Deep Researchを使うべき場面は?",c:["今日の天気を知りたい","競合5社を比較した調査レポートが要る","誤字を直したい","絵文字を選びたい"],a:1,exp:"重い調査だけに使う。"},
+{q:"Canvasが最も活きる作業は?",c:["一言の返信","長文の推敲や部分修正","画像生成","音声入力"],a:1,exp:"長文推敲向け。"},
+{q:"ChatGPTのメモリ機能について正しいのは?",c:["絶対に消せない","会話から自動で情報が溜まる","有料でしか使えない","画像だけ覚える"],a:1,exp:"自動で溜まるので定期掃除。"},
+{q:"生成画像に文字を入れる正しい方法は?",c:["AIに文字を描かせる","Canvaなどで後から乗せる","手書きする","入れられない"],a:1,exp:"文字は後入れが確実。"},
+{q:"1テーマ1チャットを守る理由は?",c:["料金が安くなる","文脈が混ざるのを防ぐため","速度が上がるため","保存できるため"],a:1,exp:"コンテキスト汚染の防止。"}
 ]},
 ]};
 
@@ -3887,6 +4046,37 @@ quiz:[
 {fill:"Gmailの下書きをAIに書かせても、___送信は絶対にせず人間が___してから送る。",bank:["自動","検品","手動","保存","翻訳"],a:[0,1],exp:"自動送信は厳禁。"},
 {fill:"写真を撮るときは正面から・影なし・___を合わせる。これだけで読み取り___が上がる。",bank:["ピント","精度","逆光","速度","色"],a:[0,1],exp:"撮り方3原則。"},
 {fill:"Geminiが「読む仕事の主力」なのは、マルチモーダル設計・大容量・___連携という生まれつきの___があるから。",bank:["Google","強み","Apple","弱み","色"],a:[0,1],exp:"出自が強みを作る。"}
+,
+{fill:"Geminiは___社が開発し、Googleの各サービスに深く___されていくのが特徴。",bank:["Google","統合","OpenAI","分離","Apple"],a:[0,1],exp:"Google統合が強み。"},
+{fill:"OCRの精度を上げる撮り方は、正面から・影なし・___を合わせる。",bank:["ピント","","逆光で","遠くから","斜めから"],a:[0],exp:"撮り方3原則。"},
+{fill:"長い資料を読ませたら、必ず___番号やページを言わせて原本と___する。",bank:["条文","突き合わせ","色","保存","翻訳"],a:[0,1],exp:"位置を言わせる。"},
+{fill:"AIの要約は原文の代わりではなく、どこを読むべきかの___にすぎない。",bank:["地図","","答え","写し","保存"],a:[0],exp:"要約は地図。"},
+{fill:"NotebookLMは資料だけを根拠にするので___に強く、必ず___が付く。",bank:["ハルシネーション","出典","誤字","色","価格"],a:[0,1],exp:"資料限定+出典。"},
+{fill:"議事録や施工マニュアルを入れると、___して答えてくれる社内___になる。",bank:["検索","辞書","保存","負債","翻訳"],a:[0,1],exp:"ナレッジのAI化。"},
+{fill:"Gmail連携でAIに下書きさせても、___送信は禁止で人間が___する。",bank:["自動","確認","手動","放置","保存"],a:[0,1],exp:"自動送信は厳禁。"},
+{fill:"メールで最優先に検品すべきは、宛先・固有名詞・___・日付。",bank:["金額","","色","文字数","絵文字"],a:[0],exp:"信用に関わる項目。"},
+{fill:"謝罪やクレーム対応など感情が絡む文面は、AIは___まで、仕上げは___。",bank:["下書き","人間","送信","AI","保存"],a:[0,1],exp:"感情は人間が。"},
+{fill:"Geminiのモデルは、軽い___と精密な___を使い分ける。",bank:["Flash","Pro","Opus","Haiku","Sonnet"],a:[0,1],exp:"Flash/Proの使い分け。"},
+{fill:"名刺や料金表のデータ化は、出力を___形式にすると表計算に取り込みやすい。",bank:["CSV","","PDF","画像","音声"],a:[0],exp:"CSV出力。"},
+{fill:"OCR結果を金額計算に使うなら、全___の目視検品が必須。1桁の誤読が___になる。",bank:["数値","事故","文字","利益","色"],a:[0,1],exp:"全数検品。"},
+{fill:"読み取りに自信がない箇所に___を付けさせると、___的に確認できる。",bank:["?","重点","!","全体","保存"],a:[0,1],exp:"不確実さの申告。"},
+{fill:"Geminiは文章・画像・音声をまとめて扱う___設計なので、___に強い。",bank:["マルチモーダル","読み取り","シングル","計算","保存"],a:[0,1],exp:"マルチモーダル。"},
+{fill:"CraftFileでは工事___のOCRにGeminiを採用している。",bank:["黒板","","看板","名刺","図面"],a:[0],exp:"実プロダクトでの採用。"},
+{fill:"資料が長すぎて要点が散るときは、観点を___して聞くと絞り込める。",bank:["指定","","省略","無視","保存"],a:[0],exp:"観点の指定。"},
+{fill:"AIに読ませる前に、資料の___(何の書類か)を伝えると精度が上がる。",bank:["種類","","色","重さ","価格"],a:[0],exp:"文脈を渡す。"},
+{fill:"複数の見積書を比較させるときは、比較___と出力形式を指定する。",bank:["観点","","色","価格","時間"],a:[0],exp:"観点と形式。"},
+{fill:"Googleサービス上で働けることは、他AIには真似しにくいGeminiの___。",bank:["強み","","弱み","欠点","価格"],a:[0],exp:"独自の強み。"},
+{fill:"専門用語には「一言___つきで」と頼むと、自分の理解に___。",bank:["説明","合う","翻訳","反する","保存"],a:[0,1],exp:"読み手の前提もコンテキスト。"},
+{q:"この流れで、KYOEIが絶対に省略してはいけない工程は?",c:["現場写真の撮影","AIの読み取り","人による目視検品","保存"],a:2,svg:"<svg viewBox='0 0 440 110' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='8' y='30' width='100' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='58' y='55' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>現場写真</text><defs><marker id='ah11255' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto'><path d='M0,0 L8,4 L0,8 z' fill='#F08519'/></marker></defs><line x1='112' y1='55' x2='132' y2='55' stroke='#F08519' stroke-width='2.5' marker-end='url(#ah11255)'/><rect x='138' y='30' width='110' height='50' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='193' y='55' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>AIが読取</text><defs><marker id='ah25255' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto'><path d='M0,0 L8,4 L0,8 z' fill='#F08519'/></marker></defs><line x1='252' y1='55' x2='272' y2='55' stroke='#F08519' stroke-width='2.5' marker-end='url(#ah25255)'/><rect x='278' y='30' width='155' height='50' rx='8' fill='#FFF4E2' stroke='#F08519' stroke-width='2'/><text x='355' y='55' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>人が目視検品</text></svg>",exp:"OCRは検品とセット。"},
+{q:"Geminiを開発した企業は?",c:["OpenAI","Google","Anthropic","Meta"],a:1,exp:"Google製。"},
+{q:"Geminiの旧名称は?",c:["Bard","Copilot","Claude","Llama"],a:0,exp:"Bard→Gemini。"},
+{q:"NotebookLMがハルシネーションに強い理由は?",c:["高性能なモデルだから","アップした資料だけを根拠にするから","有料だから","短文しか扱わないから"],a:1,exp:"資料限定+出典表示。"},
+{q:"手書き数字のOCRで特に誤読が多い組み合わせは?",c:["7と1","あとい","AとB","○と□"],a:0,exp:"7と1、0と6は定番。"},
+{q:"AIに書かせたメールについて、KYOEIのルールとして正しいのは?",c:["自動送信してよい","人間が検品してから送る","宛先だけ見ればよい","送信後に確認する"],a:1,exp:"自動送信は絶対NG。"},
+{q:"長文資料を読ませるとき、検品を効率化する指示は?",c:["短くまとめて","条文番号つきで出して","絵文字を使って","英語で書いて"],a:1,exp:"位置を言わせて突き合わせ。"},
+{q:"Geminiの「マルチモーダル」とは?",c:["複数人で使えること","文章・画像・音声などをまとめて扱えること","複数言語に対応すること","複数保存できること"],a:1,exp:"複数の様式を扱う設計。"},
+{q:"Transformerを発明した研究者が所属していた企業は?",c:["OpenAI","Google","Apple","Amazon"],a:1,exp:"GoogleがAIブームの技術的生みの親。"},
+{q:"社内マニュアルをQA化するのに最も向くツールは?",c:["NotebookLM","画像生成","表計算","メモ帳"],a:0,exp:"資料限定QAが得意。"}
 ]},
 ]};
 
@@ -4171,6 +4361,37 @@ quiz:[
 {fill:"長いチャットほど上限を食うのは、毎回それまでの会話___を読み直すから。対策は要約して___チャットへ。",bank:["全文","新しい","一部","古い","同じ"],a:[0,1],exp:"読み直し量が消費を決める。"},
 {fill:"日常の主力は___、重要提案書の最終版や複雑な設計だけ___に上げる。",bank:["Sonnet","Opus","Haiku","Flash","Pro"],a:[0,1],exp:"基本Sonnet、勝負どころOpus。"},
 {fill:"Claude Codeはコマンド実行までできるため、___など禁止事項も実行できてしまう。だから制約を毎回___する。",bank:["push","明記","保存","commit","翻訳"],a:[0,1],exp:"制約明記が安全装置。"}
+,
+{fill:"Anthropicは元___のメンバーが___を重視して2021年に設立した。",bank:["OpenAI","安全性","Google","速度","Meta"],a:[0,1],exp:"安全性重視で独立。"},
+{fill:"Claudeは長い___リストを守り切る力が強く、KYOEIの依頼と相性がいい。",bank:["制約","","短い","色","価格"],a:[0],exp:"制約への忠実さ。"},
+{fill:"3階級は軽い順に Haiku → ___ → ___。",bank:["Sonnet","Opus","Haiku","Flash","Pro"],a:[0,1],exp:"3階級。"},
+{fill:"迷ったら主力は___。重要提案の最終版だけ___に上げる。",bank:["Sonnet","Opus","Haiku","Flash","Pro"],a:[0,1],exp:"基本Sonnet。"},
+{fill:"会話が長くなるほど上限を食うのは、毎回___を読み直すから。",bank:["全文","","一部","半分","色"],a:[0],exp:"読み直し量。"},
+{fill:"上限対策は、要約して___チャットへ引き継ぎ、軽作業は___モデルで。",bank:["新しい","軽い","古い","重い","保存"],a:[0,1],exp:"仕切り直しと配分。"},
+{fill:"Projectsに常設する資料は___くして、重い資料は必要時だけ___。",bank:["軽","添付","重","削除","保存"],a:[0,1],exp:"軽く常設。"},
+{fill:"Artifactsは生成物を横で___でき、___の製造装置になる。",bank:["実行","試作","保存","本番","翻訳"],a:[0,1],exp:"試作の装置。"},
+{fill:"Artifactsの成果物は試作品なので、本番前に必ず___する。",bank:["検品","","公開","保存","印刷"],a:[0],exp:"試作と本番は別。"},
+{fill:"修正を重ねて迷走したら、仕様をまとめて___チャットで作り直す。",bank:["新","","同じ","古い","保存"],a:[0],exp:"仕切り直しの勇気。"},
+{fill:"Claudeの名前は情報理論の父___に由来するとされる。",bank:["クロード・シャノン","","チューリング","ノイマン","エジソン"],a:[0],exp:"シャノン由来。"},
+{fill:"AIは作った会社の___が性格に出る。Claudeは誠実で___な書き手。",bank:["思想","忠実","資本","雑","高価"],a:[0,1],exp:"思想が人柄になる。"},
+{fill:"AI選択の4軸は、得意分野・タスクの重さ・上限の残り・データの___と機密度。",bank:["場所","","色","量","形"],a:[0],exp:"4軸で判断。"},
+{fill:"重要な成果物は2つのAIに同じ依頼を投げる___で見落としを拾える。",bank:["クロスチェック","","丸投げ","保存","翻訳"],a:[0],exp:"クロスチェック。"},
+{fill:"Claude Codeはコマンド実行までできるので、___など禁止操作も可能。だから制約を毎回___。",bank:["push","明記","保存","省略","翻訳"],a:[0,1],exp:"制約明記が安全装置。"},
+{fill:"今の段階では、設計の壁打ちや___はチャットのClaudeでできる。",bank:["コードレビュー","","本番デプロイ","push","削除"],a:[0],exp:"設計と検品はチャットで。"},
+{fill:"KYOEIでClaudeが開発主力なのは、___に強く制約に___だから。",bank:["コード","忠実","画像","無頓着","音声"],a:[0,1],exp:"開発との相性。"},
+{fill:"プロジェクト知識に絶対入れないのは顧客の個人情報と___キー。",bank:["API","","一般","公開","色"],a:[0],exp:"機密は入れない。"},
+{fill:"上限管理の本質はケチることでなく、賢さを価値の高い仕事に___すること。",bank:["配分","","節約","保存","翻訳"],a:[0],exp:"配分の戦略眼。"},
+{fill:"モデル名のHaiku・Sonnet・Opusは___や詩に由来する文学的な命名。",bank:["俳句","","小説","映画","絵画"],a:[0],exp:"文学的命名。"},
+{q:"この3階級の図で、日常業務の主力にすべきモデルは?",c:["Opus","Sonnet","Haiku","どれでもよい"],a:1,svg:"<svg viewBox='0 0 420 150' xmlns='http://www.w3.org/2000/svg' style='font-family:sans-serif'><rect x='140' y='15' width='140' height='35' rx='8' fill='#FFF4E2' stroke='#F08519' stroke-width='2'/><text x='210' y='32' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>Opus(最上位)</text><rect x='110' y='60' width='200' height='35' rx='8' fill='#E7F0FF' stroke='#1E2A47' stroke-width='2'/><text x='210' y='77' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>Sonnet(主力)</text><rect x='80' y='105' width='260' height='35' rx='8' fill='#fff' stroke='#1E2A47' stroke-width='2'/><text x='210' y='122' font-size='13' fill='#1E2A47' text-anchor='middle' dominant-baseline='middle' font-weight='700'>Haiku(軽量)</text><text x='30' y='35' font-size='12' fill='#25303F' text-anchor='middle' font-weight='700'>重い</text><text x='30' y='127' font-size='12' fill='#25303F' text-anchor='middle' font-weight='700'>軽い</text></svg>",exp:"基本Sonnet、勝負どころOpus。"},
+{q:"Anthropicを設立したのは主にどこの出身者?",c:["Googleの元社員","OpenAIの元研究者","Appleの元幹部","大学のみの研究者"],a:1,exp:"元OpenAI組。"},
+{q:"Claudeの制約への忠実さを支える独自手法は?",c:["Constitutional AI","Transformer","OCR","RAG"],a:0,exp:"憲法AI。"},
+{q:"長いチャットが上限を多く消費する理由は?",c:["保存容量が増えるから","毎回それまでの会話全文を読み直すから","画像が増えるから","時間が経つから"],a:1,exp:"読み直し量が消費を決める。"},
+{q:"Artifactsで作ったものの正しい扱いは?",c:["そのまま本番公開","試作品として検品してから使う","保存せず捨てる","顧客に直接見せる"],a:1,exp:"試作と本番品質は別。"},
+{q:"Projectsのプロジェクト知識に入れてよいものは?",c:["顧客の個人情報","APIキー","開発ルールや要件の型","パスワード"],a:2,exp:"機密は入れない。"},
+{q:"Claude Codeを今すぐ実案件で使わない理由は?",c:["性能が低いから","有料だから","Git・環境の基礎と検品体制が先だから","日本語が使えないから"],a:2,exp:"免許を取ってから乗る。"},
+{q:"3つのAIの役割分担として正しい組み合わせは?",c:["画像=Claude / 読む=ChatGPT","画像=ChatGPT / 読む=Gemini / 書く作る=Claude","全部同じ","読む=Claude / 書く=Gemini"],a:1,exp:"得意分野で振り分ける。"},
+{q:"重要な成果物で見落としを減らす方法は?",c:["1つのAIに何度も聞く","2つのAIに同じ依頼を投げて比較する","AIを使わない","時間をかける"],a:1,exp:"クロスチェック。"},
+{q:"上限管理の考え方として正しいのは?",c:["とにかく使わない","賢さを価値の高い仕事に配分する","常に最上位モデルを使う","常に最軽量モデルを使う"],a:1,exp:"配分の戦略眼。"}
 ]},
 ]};
 
@@ -4471,6 +4692,7 @@ function isFill(q){ return !!q.fill; }
 // 1問分のHTMLを返す。prefix はDOM衝突回避用(通常='' / 復習='r')
 function renderQuestion(q, qi, prefix){
   const p = prefix||'';
+  const fig = q.svg ? `<div class="qfig">${q.svg}</div>` : '';
   if(isFill(q)){
     const parts = q.fill.split('___');
     const blanks = parts.slice(0,-1).map((seg,bi)=>
@@ -4480,15 +4702,18 @@ function renderQuestion(q, qi, prefix){
       `<button class="word" data-qi="${qi}" data-wi="${wi}">${escapeHtml(w)}</button>`).join('');
     return `<div class="qcard" data-qi="${qi}">
       <div class="qq"><span class="qn">Q${qi+1}</span><span class="exam-badge">語群から選択</span></div>
+      ${fig}
       <div class="qfill">${sentence}</div>
       <div class="banklabel">▼ 語群(タップして空欄に入れる/空欄タップで取り消し)</div>
       <div class="bank">${words}</div>
       <div class="qexp" id="${p}exp-${qi}">💡 ${escapeHtml(q.exp)}</div>
     </div>`;
   }
-  // 従来の4択
+  // 4択(図解つきも可)
   return `<div class="qcard" data-qi="${qi}">
-    <div class="qq"><span class="qn">Q${qi+1}</span>${escapeHtml(q.q)}</div>
+    <div class="qq"><span class="qn">Q${qi+1}</span><span class="exam-badge alt">${q.svg?'図を見て選択':'4択'}</span></div>
+    ${fig}
+    <div class="qtext">${escapeHtml(q.q)}</div>
     ${q.c.map((op,oi)=>`<button class="opt" data-qi="${qi}" data-oi="${oi}">${escapeHtml(op)}</button>`).join('')}
     <div class="qexp" id="${p}exp-${qi}">💡 ${escapeHtml(q.exp)}</div>
   </div>`;
@@ -4584,7 +4809,7 @@ function addMiss(id){ progress['miss:'+id]=(progress['miss:'+id]||0)+1; cacheLoc
 
 /* ================= 修了試験(申請・承認・30分・見返し) ================= */
 // 試験時間:問題数×1.5分(最低30分)。20問=30分 / 100問=150分
-function examMinutes(total){ return Math.max(30, Math.ceil(total*1.5)); }
+function examMinutes(total){ return Math.max(30, Math.ceil(total*0.6)); }
 // 合格ライン:修了試験は9割、通常の確認テストは全問正解
 function passMark(total, isExam){ return isExam ? Math.ceil(total*0.9) : total; }
 let examActive = false;
@@ -4732,12 +4957,19 @@ async function startExamMode(ci, li){
     const total=l.quiz.length;
     const need=passMark(total,true);
     const pass=correct>=need;
-    // 問題別の解答・正誤を保存
+    // 問題別の解答・正誤を保存(穴埋め=配列 / 4択=数値 の両対応)
     const answers=[], perQ=[];
     l.quiz.forEach((q,qi)=>{
-      const arr=(qstate.picked[qi]||[]).slice();
-      answers.push(arr);
-      perQ.push(arr.length>0 && arr.every((wi,bi)=>wi!==null&&wi!==undefined&&q.bank[wi]===q.bank[q.a[bi]]));
+      const picked=qstate.picked[qi];
+      if(isFill(q)){
+        const arr=Array.isArray(picked)?picked.slice():[];
+        answers.push(arr);
+        perQ.push(arr.length>0 && arr.every((wi,bi)=>wi!==null&&wi!==undefined&&q.bank[wi]===q.bank[q.a[bi]]));
+      } else {
+        const sel=(picked===undefined||picked===null)?null:picked;
+        answers.push(sel);
+        perQ.push(sel===q.a);
+      }
     });
     const result={answers,perQ,correct,total,pass,expired:!!expired};
     try{
@@ -4790,20 +5022,28 @@ async function openExamReview(examId, ci, li){
     '<div><b style="font-size:16px;color:'+(r.pass?'var(--green)':'var(--red)')+'">'+(r.pass?'合格':(r.expired?'時間切れ':'不合格'))+'</b>'+
     '<div class="small">'+(r.correct??'—')+'/'+(r.total??'—')+'問正解</div></div></div>';
   l.quiz.forEach((q,qi)=>{
-    const ans=(r.answers&&r.answers[qi])||[];
+    const ans=(r.answers&&r.answers[qi]!==undefined)?r.answers[qi]:null;
     const ok=(r.perQ&&r.perQ[qi])||false;
-    const parts=q.fill.split('___');
     let sent='';
-    parts.forEach((seg,bi)=>{
-      sent+=escapeHtml(seg);
-      if(bi<parts.length-1){
-        const wi=ans[bi];
-        const my=(wi===null||wi===undefined)?'(未回答)':q.bank[wi];
-        const good=wi!==null&&wi!==undefined&&q.bank[wi]===q.bank[q.a[bi]];
-        sent+='<span class="blank filled '+(good?'correct':'wrong')+'"> '+escapeHtml(my)+' </span>';
-        if(!good) sent+='<span class="small" style="color:var(--green);font-weight:700">→ 正解:'+escapeHtml(q.bank[q.a[bi]])+'</span> ';
-      }
-    });
+    if(isFill(q)){
+      const parts=q.fill.split('___');
+      const arr=Array.isArray(ans)?ans:[];
+      parts.forEach((seg,bi)=>{
+        sent+=escapeHtml(seg);
+        if(bi<parts.length-1){
+          const wi=arr[bi];
+          const my=(wi===null||wi===undefined)?'(未回答)':q.bank[wi];
+          const good=wi!==null&&wi!==undefined&&q.bank[wi]===q.bank[q.a[bi]];
+          sent+='<span class="blank filled '+(good?'correct':'wrong')+'"> '+escapeHtml(my)+' </span>';
+          if(!good) sent+='<span class="small" style="color:var(--green);font-weight:700">→ 正解:'+escapeHtml(q.bank[q.a[bi]])+'</span> ';
+        }
+      });
+    } else {
+      const my=(ans===null||ans===undefined)?'(未回答)':q.c[ans];
+      sent=(q.svg?q.svg:'')+'<div style="font-weight:600;margin-bottom:6px">'+escapeHtml(q.q)+'</div>'+
+        '<div>あなたの解答:<b style="color:'+(ok?'var(--green)':'var(--red)')+'">'+escapeHtml(my)+'</b></div>'+
+        (ok?'':'<div class="small" style="color:var(--green);font-weight:700">→ 正解:'+escapeHtml(q.c[q.a])+'</div>');
+    }
     html+='<div class="qcard"><div class="qq"><span class="qn">Q'+(qi+1)+'</span>'+(ok?'<span style="color:var(--green);font-weight:800">○</span>':'<span style="color:var(--red);font-weight:800">✕</span>')+'</div>'+
       '<div class="qfill">'+sent+'</div>'+
       '<div class="qexp show">💡 '+escapeHtml(q.exp)+'</div>'+
@@ -5302,20 +5542,27 @@ function toggleExamFb(id){
   const res=r.result||{}; const fb=r.feedback||{};
   let html='<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:6px">';
   f.l.quiz.forEach((q,qi)=>{
-    const ans=(res.answers&&res.answers[qi])||[];
+    const ans=(res.answers&&res.answers[qi]!==undefined)?res.answers[qi]:null;
     const ok=(res.perQ&&res.perQ[qi])||false;
-    const parts=q.fill.split('___');
     let sent='';
-    parts.forEach((seg,bi)=>{
-      sent+=escapeHtml(seg);
-      if(bi<parts.length-1){
-        const wi=ans[bi];
-        const my=(wi===null||wi===undefined)?'(未回答)':q.bank[wi];
-        const good=wi!==null&&wi!==undefined&&q.bank[wi]===q.bank[q.a[bi]];
-        sent+='<b style="color:'+(good?'var(--green)':'var(--red)')+'">['+escapeHtml(my)+']</b>';
-        if(!good) sent+='<span class="small" style="color:var(--green)">(正:'+escapeHtml(q.bank[q.a[bi]])+')</span>';
-      }
-    });
+    if(isFill(q)){
+      const parts=q.fill.split('___');
+      const arr=Array.isArray(ans)?ans:[];
+      parts.forEach((seg,bi)=>{
+        sent+=escapeHtml(seg);
+        if(bi<parts.length-1){
+          const wi=arr[bi];
+          const my=(wi===null||wi===undefined)?'(未回答)':q.bank[wi];
+          const good=wi!==null&&wi!==undefined&&q.bank[wi]===q.bank[q.a[bi]];
+          sent+='<b style="color:'+(good?'var(--green)':'var(--red)')+'">['+escapeHtml(my)+']</b>';
+          if(!good) sent+='<span class="small" style="color:var(--green)">(正:'+escapeHtml(q.bank[q.a[bi]])+')</span>';
+        }
+      });
+    } else {
+      const my=(ans===null||ans===undefined)?'(未回答)':q.c[ans];
+      sent=escapeHtml(q.q)+' → <b style="color:'+(ok?'var(--green)':'var(--red)')+'">'+escapeHtml(my)+'</b>'+
+        (ok?'':'<span class="small" style="color:var(--green)">(正:'+escapeHtml(q.c[q.a])+')</span>');
+    }
     html+='<div style="padding:8px 0;border-bottom:1px solid var(--line)">'+
       '<div class="small"><b>Q'+(qi+1)+'</b> '+(ok?'<span style="color:var(--green);font-weight:800">○</span>':'<span style="color:var(--red);font-weight:800">✕</span>')+'</div>'+
       '<div style="font-size:12.5px;line-height:1.8">'+sent+'</div>'+
