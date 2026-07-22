@@ -4460,12 +4460,16 @@ let examActive = false;
 let examTimerId = null;
 function isFinalExam(ci, li){ return li === COURSES[ci].lessons.length-1; }
 function fmtDT(ts){ try{return new Date(ts).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});}catch(e){return '—';} }
+let lastExamError = '';
 async function fetchMyExams(lessonId){
   if(!sb||!currentUser) return [];
-  const {data,error}=await sb.from('training_exams').select('*')
-    .eq('user_id',currentUser.id).eq('lesson_id',lessonId)
-    .order('requested_at',{ascending:false});
-  return error?[]:(data||[]);
+  try{
+    const {data,error}=await sb.from('training_exams').select('*')
+      .eq('user_id',currentUser.id).eq('lesson_id',lessonId)
+      .order('requested_at',{ascending:false});
+    lastExamError = error ? (error.message||'') : '';
+    return error?[]:(data||[]);
+  }catch(e){ lastExamError=(e&&e.message)?e.message:String(e); return []; }
 }
 function setExamLock(on){
   examActive = on;
@@ -4484,6 +4488,10 @@ async function renderExamEntry(ci, li){
   }
   box.innerHTML='<div class="exam-apply"><div class="ea-d">読み込み中…</div></div>';
   const exams=await fetchMyExams(l.id);
+  if(lastExamError && /does not exist|schema cache/i.test(lastExamError)){
+    box.innerHTML='<div class="exam-apply"><div class="ea-t">⚠ 試験テーブルが未作成</div><div class="ea-d">Supabaseで <b>setup_all.sql</b> を実行すると修了試験が使えるようになる。<br><span class="small" style="color:var(--muted)">'+escapeHtml(lastExamError)+'</span></div></div>';
+    return;
+  }
   const active=exams.find(e=>e.status==='pending'||e.status==='approved');
   const history=exams.filter(e=>e.status==='done');
   const passed=isDone(l.id);
@@ -4524,9 +4532,33 @@ async function renderExamEntry(ci, li){
   const ap=$('#applyExamBtn');
   if(ap) ap.addEventListener('click',async ()=>{
     ap.disabled=true; ap.textContent='申請中…';
-    const {error}=await sb.from('training_exams').insert({user_id:currentUser.id, lesson_id:l.id, status:'pending'});
-    if(error){ ap.disabled=false; ap.textContent='📨 修了試験を申請する'; alert('申請に失敗した。通信を確認してもう一回。'); return; }
-    renderExamEntry(ci, li);
+    try{
+      const {error}=await sb.from('training_exams').insert({user_id:currentUser.id, lesson_id:l.id, status:'pending'});
+      if(error){
+        ap.disabled=false; ap.textContent='📨 修了試験を申請する';
+        let d=error.message||'';
+        if(error.code) d+=' ['+error.code+']';
+        if(error.details) d+=' '+error.details;
+        if(/relation .*training_exams.* does not exist|schema cache/i.test(d))
+          d='training_examsテーブルが無い。setup_all.sql をSupabaseで実行してや。';
+        else if(/row-level security|RLS/i.test(d))
+          d='RLSが有効になっとる。fix_rls_disable.sql を実行してや。';
+        else if(/violates foreign key/i.test(d))
+          d='ユーザー情報が古い。一度ログアウトして入り直してみて。';
+        const box=document.createElement('div');
+        box.className='small'; box.style.color='var(--red)'; box.style.marginTop='6px';
+        box.textContent='申請に失敗:'+d;
+        ap.parentNode.appendChild(box);
+        return;
+      }
+      renderExamEntry(ci, li);
+    }catch(e){
+      ap.disabled=false; ap.textContent='📨 修了試験を申請する';
+      const box=document.createElement('div');
+      box.className='small'; box.style.color='var(--red)'; box.style.marginTop='6px';
+      box.textContent='申請に失敗(通信エラー):'+((e&&e.message)?e.message:String(e));
+      ap.parentNode.appendChild(box);
+    }
   });
   const st=$('#startExamBtn');
   if(st) st.addEventListener('click',()=>openLesson(ci, li, 'exam'));
