@@ -4667,18 +4667,15 @@ async function renderExamEntry(ci, li){
       const {error}=await sb.from('training_exams').insert({user_id:currentUser.id, lesson_id:l.id, status:'pending'});
       if(error){
         ap.disabled=false; ap.textContent='📨 修了試験を申請する';
-        let d=error.message||'';
-        if(error.code) d+=' ['+error.code+']';
-        if(error.details) d+=' '+error.details;
-        if(/relation .*training_exams.* does not exist|schema cache/i.test(d))
-          d='training_examsテーブルが無い。setup_all.sql をSupabaseで実行してや。';
-        else if(/row-level security|RLS/i.test(d))
-          d='RLSが有効になっとる。fix_rls_disable.sql を実行してや。';
-        else if(/violates foreign key/i.test(d))
-          d='ユーザー情報が古い。一度ログアウトして入り直してみて。';
+        let raw=(error.message||'')+(error.code?' [code:'+error.code+']':'')+(error.details?' / '+error.details:'')+(error.hint?' / hint:'+error.hint:'');
+        let hint='';
+        if(/permission denied/i.test(raw)) hint='→ テーブルの権限(GRANT)が足りひん。fix_exam_access.sql を実行してや。';
+        else if(/does not exist|schema cache/i.test(raw)) hint='→ テーブルが見えてへん。fix_exam_access.sql を実行してや。';
+        else if(/row-level security/i.test(raw)) hint='→ RLSポリシーで弾かれてる。fix_exam_access.sql を実行してや。';
         const box=document.createElement('div');
         box.className='small'; box.style.color='var(--red)'; box.style.marginTop='6px';
-        box.textContent='申請に失敗:'+d;
+        box.style.wordBreak='break-all';
+        box.textContent='申請に失敗:'+raw+(hint?' '+hint:'');
         ap.parentNode.appendChild(box);
         return;
       }
