@@ -284,6 +284,10 @@ button,.btn,.opt,.tab,.lesson,.course-h,.chip,.copy,.cat,.userbtn{touch-action:m
 .exam-timer.danger .tv{color:#fff}
 body.exam-lock nav{display:none!important}
 body.exam-lock #sheetBack{display:none!important}
+/* 試験中は画面下の教材・ヘッダー操作を一切触れないようにする */
+body.exam-lock #scrollArea{pointer-events:none;filter:grayscale(.4) opacity(.35)}
+body.exam-lock #switchUser,body.exam-lock #userChip{pointer-events:none!important;opacity:.4}
+body.exam-lock .sheet{pointer-events:auto}
 .exam-apply{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:16px;text-align:center}
 .exam-apply .ea-t{font-weight:900;color:var(--navy);font-size:15px;margin-bottom:6px}
 .exam-apply .ea-d{font-size:12.5px;color:var(--muted);line-height:1.7}
@@ -4830,7 +4834,19 @@ async function fetchMyExams(lessonId){
 function setExamLock(on){
   examActive = on;
   document.body.classList.toggle('exam-lock', on);
+  if(on){
+    // 戻る操作を無効化(履歴を1つ積んでおき、戻られたら押し戻す)
+    try{ history.pushState({exam:1}, ''); }catch(e){}
+  }
 }
+// ブラウザの「戻る」を封鎖
+window.addEventListener('popstate', ()=>{
+  if(examActive){ try{ history.pushState({exam:1}, ''); }catch(e){} }
+});
+// リロード・タブを閉じる操作に警告(離脱すると試験が無効になるため)
+window.addEventListener('beforeunload', e=>{
+  if(examActive){ e.preventDefault(); e.returnValue=''; return ''; }
+});
 function stopExamTimer(){ if(examTimerId){ clearInterval(examTimerId); examTimerId=null; } }
 
 // 学習画面:修了試験の申請UI(テスト入口の代わり)
@@ -4939,16 +4955,23 @@ async function startExamMode(ci, li){
   $('#sheetBody').innerHTML='<div class="small" style="margin-bottom:2px">'+c.name+'</div>'+quizHtml;
   const qstate=initQuizState(l.quiz,'','#sheetBody');
   let finished=false;
-  function tick(){
-    remain--;
-    const mm=String(Math.max(0,Math.floor(remain/60))).padStart(2,'0');
-    const ss=String(Math.max(0,remain%60)).padStart(2,'0');
-    const tv=$('#examTv'); if(tv) tv.textContent=mm+':'+ss;
+  function fmtRemain(sec){
+    const s=Math.max(0,sec);
+    const h=Math.floor(s/3600), mm=Math.floor((s%3600)/60), ss=s%60;
+    return (h>0? h+':'+String(mm).padStart(2,'0') : String(mm).padStart(2,'0')) + ':' + String(ss).padStart(2,'0');
+  }
+  function paintTimer(){
+    const tv=$('#examTv'); if(tv) tv.textContent=fmtRemain(remain);
     const tm=$('#examTimer');
     if(tm){ tm.classList.toggle('warn',remain<=300&&remain>60); tm.classList.toggle('danger',remain<=60); }
+  }
+  function tick(){
+    remain--;
+    paintTimer();
     if(remain<=0 && !finished){ finishExam(true); }
   }
   stopExamTimer();
+  paintTimer();
   examTimerId=setInterval(tick,1000);
   async function finishExam(expired){
     if(finished) return; finished=true;
